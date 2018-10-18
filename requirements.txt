@@ -1,4 +1,4 @@
-Flask==0.10.1
 RPi.GPIO==0.6.3
 -e git+https://github.com/lthiery/SPI-Py.git#egg=spi-pi
+-e git+https://github.com/BLavery/lib_oled96#egg=lib-olde96
 PyOTA==2.0.6

@@ -5,6 +5,8 @@ import iota
 from iota import Address
 import RPi.GPIO as GPIO
 import MFRC522
+from lib_oled96 import ssd1306
+from smbus import SMBus
 import signal
 import time
 import regex
@@ -14,6 +16,17 @@ import I2C_LCD_driver
 
 # Import library for 4x3 keypad
 from keypad import keypad
+
+
+i2cbus = SMBus(0)            # 0 = Raspberry Pi 1, 1 = Raspberry Pi > 1
+oled = ssd1306(i2cbus)
+
+# Ein paar Abkürzungen, um den Code zu entschlacken
+draw = oled.canvas
+ 
+# Display zum Start löschen
+oled.cls()
+oled.display()
 
 # Define display object
 mylcd = I2C_LCD_driver.lcd()
@@ -49,7 +62,7 @@ transaction_confirmed = False
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
-    print "Ctrl+C captured, ending read."
+    print("Ctrl+C captured, ending read.")
     continue_reading = False
     GPIO.cleanup()
 
@@ -134,6 +147,8 @@ MIFAREReader = MFRC522.MFRC522()
 
 # Show welcome message
 mylcd.lcd_display_string('Number of Blinks', 1)
+draw.text((20, 16), "Hallo", fill=1)
+draw.text((60, 40), "Welt!", fill=1)
 
 # Loop while getting keypad input
 while keypad_reading:
