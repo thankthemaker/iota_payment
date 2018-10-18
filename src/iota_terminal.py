@@ -156,8 +156,8 @@ while keypad_reading:
 
     # Loop while waiting for a keypress
     digit = None
-    while digit == None:
-        digit = kp.getKey()
+ ##   while digit == None:
+ ##       digit = kp.getKey()
    
     # Manage keypad input
     if pinmode == False:
