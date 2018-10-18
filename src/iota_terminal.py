@@ -13,9 +13,6 @@ from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
 
-# Import library for LCD1602 display 
-import I2C_LCD_driver
-
 # Import library for 4x3 keypad
 from keypad import keypad
 
@@ -28,9 +25,6 @@ serial = i2c(port=0, address=0x3C)
 
 # substitute ssd1331(...) or sh1106(...) below if using that device
 device = ssd1306(serial)
-
-# Define display object
-mylcd = I2C_LCD_driver.lcd()
 
 # Define keypad object
 kp = keypad()
@@ -96,9 +90,10 @@ def read_block(blockID):
         return str_data
         
     else:
-        mylcd.lcd_clear()
-        mylcd.lcd_display_string('Auth error......', 1)
-        mylcd.lcd_display_string('Trans aborted...', 2)
+        printMessage();
+ ##       mylcd.lcd_clear()
+ ##       mylcd.lcd_display_string('Auth error......', 1)
+ ##       mylcd.lcd_display_string('Trans aborted...', 2)
 
 # Function for checking address balance 
 def checkbalance(hotel_address):
@@ -136,6 +131,11 @@ def make_pin(pin):
 
     return pin_data
 
+def printMessage():
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((30, 40), "Hello World", fill="white")
+
 # Get hotel owner address balance at startup
 currentbalance = checkbalance(hotel_address)
 lastbalance = currentbalance
@@ -147,11 +147,9 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 # Show welcome message
-mylcd.lcd_display_string('Number of Blinks', 1)
+##mylcd.lcd_display_string('Number of Blinks', 1)
 
-with canvas(device) as draw:
-    draw.rectangle(device.bounding_box, outline="white", fill="black")
-    draw.text((30, 40), "Hello World", fill="white")
+printMessage();
 
 # Loop while getting keypad input
 while keypad_reading:
@@ -164,22 +162,22 @@ while keypad_reading:
     # Manage keypad input
     if pinmode == False:
         if digit == '*':
-            mylcd.lcd_display_string(" ", 2, pos-1)
+ ##           mylcd.lcd_display_string(" ", 2, pos-1)
             pos = pos -1
             sumstring = sumstring[:-1]
         elif digit == '#':
             blinks = int(sumstring)
-            mylcd.lcd_clear()
-            mylcd.lcd_display_string('PIN code:', 1)
+ ##           mylcd.lcd_clear()
+ ##           mylcd.lcd_display_string('PIN code:', 1)
             pinmode = True
             pos = 0
         else:
-            mylcd.lcd_display_string(str(digit), 2, pos)
+##            mylcd.lcd_display_string(str(digit), 2, pos)
             pos = pos +1
             sumstring = sumstring + str(digit)
     else:
         if digit == '*':
-            mylcd.lcd_display_string(" ", 2, pos-1)
+##            mylcd.lcd_display_string(" ", 2, pos-1)
             pos = pos -1
             pincode = pincode[:-1]
         elif digit == '#':
@@ -188,7 +186,7 @@ while keypad_reading:
             
         else:
             if pos <= 3:
-                mylcd.lcd_display_string('*', 2, pos)
+##                mylcd.lcd_display_string('*', 2, pos)
                 pos = pos +1
                 pincode = pincode + str(digit)
  
@@ -196,8 +194,8 @@ while keypad_reading:
 
 
 # Show waiting for card message
-mylcd.lcd_clear()
-mylcd.lcd_display_string('Waiting for card', 1)
+##mylcd.lcd_clear()
+##mylcd.lcd_display_string('Waiting for card', 1)
 
 # This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
 while continue_reading:
@@ -207,7 +205,8 @@ while continue_reading:
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        mylcd.lcd_display_string('Card detected...', 2)
+        printMessage();
+ ##       mylcd.lcd_display_string('Card detected...', 2)
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -231,9 +230,9 @@ while continue_reading:
         api = iota.Iota(iotaNode, seed=SeedSender)
         
         # Display checking funds message
-        mylcd.lcd_clear()
-        mylcd.lcd_display_string('Checking funds..', 1)
-        mylcd.lcd_display_string('Please wait.....', 2)
+ ##       mylcd.lcd_clear()
+ ##       mylcd.lcd_display_string('Checking funds..', 1)
+ ##       mylcd.lcd_display_string('Please wait.....', 2)
               
         # Get available funds from IOTA debit card seed
         card_balance = api.get_account_data(start=0, stop=None)
@@ -242,35 +241,35 @@ while continue_reading:
         
         # Check if enough funds to pay for service
         if balance < blinks:
-            mylcd.lcd_clear()
-            mylcd.lcd_display_string('No funds........', 1)
-            mylcd.lcd_display_string('Trans aborted...', 2)
+##            mylcd.lcd_clear()
+##            mylcd.lcd_display_string('No funds........', 1)
+##            mylcd.lcd_display_string('Trans aborted...', 2)
             exit()
         
         # Create new transaction
         tx1 = iota.ProposedTransaction( address = iota.Address(hotel_address), message = None, tag = iota.Tag(b'HOTEL9IOTA'), value = blinks)
 
         # Display sending transaction message
-        mylcd.lcd_clear()
-        mylcd.lcd_display_string('Sending trans...', 1)
-        mylcd.lcd_display_string('Please wait.....', 2)
+##        mylcd.lcd_clear()
+##        mylcd.lcd_display_string('Sending trans...', 1)
+##        mylcd.lcd_display_string('Please wait.....', 2)
 
         # Send transaction to tangle
         SentBundle = api.send_transfer(depth=3,transfers=[tx1], inputs=None, change_address=None, min_weight_magnitude=14, security_level=2)
                        
         # Display confirming transaction message
-        mylcd.lcd_clear()
-        mylcd.lcd_display_string('Confirming trans', 1)
-        mylcd.lcd_display_string('Please wait.....', 2)
+##        mylcd.lcd_clear()
+##        mylcd.lcd_display_string('Confirming trans', 1)
+##        mylcd.lcd_display_string('Please wait.....', 2)
         
         # Loop executes every 10 seconds to checks if transaction is confirmed
         while transaction_confirmed == False:
             currentbalance = checkbalance(hotel_address)
             if currentbalance > lastbalance:
-                mylcd.lcd_clear()
+ ##               mylcd.lcd_clear()
                 # Display transaction confirmed message
-                mylcd.lcd_display_string('Success!!!......', 1)
-                mylcd.lcd_display_string('Trans confirmed.', 2)
+ ##               mylcd.lcd_display_string('Success!!!......', 1)
+ ##               mylcd.lcd_display_string('Trans confirmed.', 2)
                 #print("\nTransaction is confirmed")
                 blinkLED(blinks)
                 transaction_confirmed = True
