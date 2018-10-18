@@ -1,5 +1,6 @@
-import RPi.GPIO as GPIO
+import sys
 sys.path.append("/usr/src/app/src/MFRC522")
+import RPi.GPIO as GPIO
 import MFRC522
 import signal
 
