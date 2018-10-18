@@ -5,11 +5,13 @@ import iota
 from iota import Address
 import RPi.GPIO as GPIO
 import MFRC522
-from lib_oled96 import ssd1306
-from smbus import SMBus
 import signal
 import time
 import regex
+
+from luma.core.interface.serial import i2c
+from luma.core.render import canvas
+from luma.oled.device import ssd1306
 
 # Import library for LCD1602 display 
 import I2C_LCD_driver
@@ -18,15 +20,14 @@ import I2C_LCD_driver
 from keypad import keypad
 
 
-i2cbus = SMBus(0)            # 0 = Raspberry Pi 1, 1 = Raspberry Pi > 1
-oled = ssd1306(i2cbus)
 
-# Ein paar Abkürzungen, um den Code zu entschlacken
-draw = oled.canvas
- 
-# Display zum Start löschen
-oled.cls()
-oled.display()
+
+# rev.1 users set port=0
+# substitute spi(device=0, port=0) below if using that interface
+serial = i2c(port=0, address=0x3C)
+
+# substitute ssd1331(...) or sh1106(...) below if using that device
+device = ssd1306(serial)
 
 # Define display object
 mylcd = I2C_LCD_driver.lcd()
@@ -147,8 +148,10 @@ MIFAREReader = MFRC522.MFRC522()
 
 # Show welcome message
 mylcd.lcd_display_string('Number of Blinks', 1)
-draw.text((20, 16), "Hallo", fill=1)
-draw.text((60, 40), "Welt!", fill=1)
+
+with canvas(device) as draw:
+    draw.rectangle(device.bounding_box, outline="white", fill="black")
+    draw.text((30, 40), "Hello World", fill="white")
 
 # Loop while getting keypad input
 while keypad_reading:
