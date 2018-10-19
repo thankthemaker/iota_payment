@@ -124,12 +124,13 @@ def make_pin(pin):
 
     return pin_data
 
-def printMessage(msg1, msg2, waitSeconds):
+def printMessage(msg1, msg2, waitMillis):
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((10, 5), "Hello World", fill="white")
-    time.sleep(waitSeconds)
-    device.clear()
+    if(waitMillis > 0):
+        time.sleep(waitMillis)
+        device.clear()
     
     
 
