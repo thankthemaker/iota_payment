@@ -31,6 +31,7 @@ sumstring = ""
 pincode = ""
 pinmode = False
 key = ""
+uid = ""
 ##keypad_reading = True
 keypad_reading = False
 
@@ -130,7 +131,7 @@ def printMessage(msg1, msg2, waitSeconds):
 def readCard():
     global continue_reading
     global transaction_confirmed
-    global key
+    global key, uid
     # This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
     while continue_reading:
                
