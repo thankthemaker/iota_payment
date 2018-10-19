@@ -201,7 +201,7 @@ while continue_reading:
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        printMessage('Card detected...', '', 2);
+        printMessage('Card detected...', '', 0);
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -219,6 +219,7 @@ while continue_reading:
         print('reading seed from card')
         # Get seed from IOTA debit card
         SeedSender=read_seed()
+        print('seed=', SeedSender, 'len=', len(SeedSender));
         if(len(SeedSender) != 81):
             printMessage('No seed on card', 'aborting.....', 0)
             exit()
