@@ -221,7 +221,7 @@ while continue_reading:
         SeedSender=read_seed()
         print('seed=', SeedSender, 'len=', len(SeedSender));
         if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
-            printMessage('No seed on card', 'aborting.....', 0)
+            printMessage('No seed on card', 'aborting.....', 5)
             exit()
         
         # Stop reading/writing to RFID tag
