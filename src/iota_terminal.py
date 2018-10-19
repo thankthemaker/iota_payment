@@ -202,7 +202,6 @@ while continue_reading:
     # If a card is found
     if status == MIFAREReader.MI_OK:
         printMessage('Card detected...', '', 2);
-        print('status=', status, ', tagtype=', TagType)
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -214,9 +213,11 @@ while continue_reading:
         # Get authentication key
         key = make_pin(pincode)[0:6]
         
+        print('selecting tag')
         # Select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
         
+        print('reading seed from card')
         # Get seed from IOTA debit card
         SeedSender=read_seed()
         if(len(SeedSender) != 81):
