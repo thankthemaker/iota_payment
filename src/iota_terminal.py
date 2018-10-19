@@ -128,8 +128,8 @@ def printMessage(msg1, msg2, waitSeconds):
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((10, 5), "Hello World", fill="white")
-        time.sleep(waitSeconds)
-        draw.clear()
+    time.sleep(waitSeconds)
+    device.clear()
     
     
 
