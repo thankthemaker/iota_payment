@@ -220,7 +220,7 @@ while continue_reading:
         # Get seed from IOTA debit card
         SeedSender=read_seed()
         print('seed=', SeedSender, 'len=', len(SeedSender));
-        if(not SeedSender or len(SeedSender) != 81):
+        if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
             printMessage('No seed on card', 'aborting.....', 0)
             exit()
         
