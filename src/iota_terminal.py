@@ -52,13 +52,6 @@ hotel_address = b'GTZUHQSPRAQCTSQBZEEMLZPQUPAA9LPLGWCKFNEVKBINXEXZRACVKKKCYPWPKH
 continue_reading = True
 transaction_confirmed = False
        
-# Capture SIGINT for cleanup when the script is aborted
-def end_read(signal,frame):
-    global continue_reading
-    print("Ctrl+C captured, ending read.")
-    continue_reading = False
-    GPIO.cleanup()
-
 
 # Function that reads the seed stored on the IOTA debit card
 def read_seed():
@@ -136,7 +129,7 @@ def printMessage(msg1, msg2, waitSeconds):
 
 def readCard():
     # This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
-    while continue_reading:
+    while global continue_reading:
                
         # Scan for cards    
         (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
@@ -198,14 +191,14 @@ def readCard():
             printMessage('Confirming trans', 'Please wait.....', 0)
         
             # Loop executes every 10 seconds to checks if transaction is confirmed
-            while transaction_confirmed == False:
+            while global transaction_confirmed == False:
                 currentbalance = checkbalance(hotel_address)
                 if currentbalance > lastbalance:
                     printMessage('Success!!!......', 'Trans confirmed.', 0)
                     #print("\nTransaction is confirmed")
                     blinkLED(blinks)
-                    transaction_confirmed = True
-                    continue_reading = False
+                    global transaction_confirmed = True
+                    global continue_reading = False
                 time.sleep(10)
     
 # Get hotel owner address balance at startup
@@ -265,3 +258,5 @@ while True:
     # Show waiting for card message
     printMessage('Waiting for card', '', 0);
     readCard();
+
+GPIO.cleanup()
