@@ -80,7 +80,6 @@ def read_block(blockID):
     status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, blockID, key, uid)
     
     if status == MIFAREReader.MI_OK:
-        
         str_data = ""
         int_data=(MIFAREReader.MFRC522_Read(blockID))
         for number in int_data:
@@ -130,7 +129,7 @@ def printMessage(msg1, msg2, waitMillis):
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((10, 5), msg1, fill="white")
         if(msg2 != ""):
-            draw.text((30, 5), msg2, fill="white")
+            draw.text((10, 20), msg2, fill="white")
     if(waitMillis > 0):
         time.sleep(waitMillis)
         device.clear()
