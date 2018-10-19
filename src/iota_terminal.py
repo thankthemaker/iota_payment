@@ -31,7 +31,8 @@ pos = 0
 sumstring = ""
 pincode = ""
 pinmode = False
-keypad_reading = True
+##keypad_reading = True
+keypad_reading = False
 
 # Setup O/I PIN's
 LEDPIN=12
@@ -127,7 +128,9 @@ def make_pin(pin):
 def printMessage(msg1, msg2, waitMillis):
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white", fill="black")
-        draw.text((10, 5), "Hello World", fill="white")
+        draw.text((10, 5), msg1, fill="white")
+        if(msg2 != ""):
+            draw.text((30, 5), msg2, fill="white")
     if(waitMillis > 0):
         time.sleep(waitMillis)
         device.clear()
