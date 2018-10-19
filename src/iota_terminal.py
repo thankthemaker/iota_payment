@@ -5,7 +5,6 @@ import iota
 from iota import Address
 import RPi.GPIO as GPIO
 import MFRC522
-import signal
 import time
 import regex
 
@@ -206,9 +205,6 @@ def readCard():
 # Get hotel owner address balance at startup
 currentbalance = checkbalance(hotel_address)
 lastbalance = currentbalance
-
-# Hook the SIGINT
-signal.signal(signal.SIGINT, end_read)
 
 # Create an object of the class MFRC522
 MIFAREReader = MFRC522.MFRC522()
