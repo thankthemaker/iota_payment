@@ -199,8 +199,8 @@ def readCard():
                     printMessage('Success!!!......', 'Trans confirmed.', 0)
                     #print("\nTransaction is confirmed")
                     blinkLED(blinks)
-                     transaction_confirmed = True
-                     continue_reading = False
+                    transaction_confirmed = True
+                    continue_reading = False
                 time.sleep(10)
     
 # Get hotel owner address balance at startup
