@@ -129,6 +129,7 @@ def printMessage(msg1, msg2, waitSeconds):
         device.clear()
 
 def readCard():
+    print('Start reading card...')
     global continue_reading
     global transaction_confirmed
     global key, uid
@@ -158,14 +159,15 @@ def readCard():
             print('reading seed from card')
             # Get seed from IOTA debit card
             SeedSender=read_seed()
-            print('seed=', SeedSender, 'len=', len(SeedSender));
-            if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
-                printMessage('No seed on card', 'aborting.....', 5)
-                return
         
             # Stop reading/writing to RFID tag
             MIFAREReader.MFRC522_StopCrypto1()
-                      
+            
+            print('seed=', SeedSender, 'len=', len(SeedSender));
+            if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
+                printMessage('No seed on card', 'aborting.....', 5)
+                return                      
+            
             # Create PyOTA object using seed from IOTA debit card
             api = iota.Iota(iotaNode, seed=SeedSender)
         
