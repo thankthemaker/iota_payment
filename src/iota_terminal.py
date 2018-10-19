@@ -128,8 +128,10 @@ def printMessage(msg1, msg2, waitSeconds):
         device.clear()
 
 def readCard():
+    global continue_reading
+    global transaction_confirmed
     # This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
-    while global continue_reading:
+    while continue_reading:
                
         # Scan for cards    
         (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
@@ -191,14 +193,14 @@ def readCard():
             printMessage('Confirming trans', 'Please wait.....', 0)
         
             # Loop executes every 10 seconds to checks if transaction is confirmed
-            while global transaction_confirmed == False:
+            while  transaction_confirmed == False:
                 currentbalance = checkbalance(hotel_address)
                 if currentbalance > lastbalance:
                     printMessage('Success!!!......', 'Trans confirmed.', 0)
                     #print("\nTransaction is confirmed")
                     blinkLED(blinks)
-                    global transaction_confirmed = True
-                    global continue_reading = False
+                     transaction_confirmed = True
+                     continue_reading = False
                 time.sleep(10)
     
 # Get hotel owner address balance at startup
