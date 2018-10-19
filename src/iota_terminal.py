@@ -72,7 +72,7 @@ def read_seed():
     seed = seed + read_block(14)
     
     # Return the first 81 characters of the retrieved seed
-    return seed[0:81]
+    return seed[0:81].strip()
 
 # Function to read single block from RFID tag
 def read_block(blockID):
