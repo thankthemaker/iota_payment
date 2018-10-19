@@ -206,11 +206,11 @@ while continue_reading:
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
-    print('status=', status, ', uid=', uid)
 
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
-   
+        print('status=', status, ', uid=', uid)
+
         # Get authentication key
         key = make_pin(pincode)[0:6]
         
