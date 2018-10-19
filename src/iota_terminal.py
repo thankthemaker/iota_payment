@@ -86,7 +86,7 @@ def read_block(blockID):
             str_data = str_data + chr(number)
         return str_data
     else:
-        printMessage('Auth error......', 'Trans aborted...', 2000);
+        printMessage('Auth error......', 'Trans aborted...', 2);
 
 # Function for checking address balance 
 def checkbalance(hotel_address):
@@ -124,14 +124,14 @@ def make_pin(pin):
 
     return pin_data
 
-def printMessage(msg1, msg2, waitMillis):
+def printMessage(msg1, msg2, waitSecondss):
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((10, 5), msg1, fill="white")
         if(msg2 != ""):
             draw.text((10, 20), msg2, fill="white")
     if(waitMillis > 0):
-        time.sleep(waitMillis)
+        time.sleep(waitSecondss)
         device.clear()
     
     
@@ -198,11 +198,11 @@ while continue_reading:
                
     # Scan for cards    
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-    print('status=', status, ', tagtype=', TagType)
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        printMessage('Card detected...', '', 2000);
+      print('status=', status, ', tagtype=', TagType)
+      printMessage('Card detected...', '', 2);
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
