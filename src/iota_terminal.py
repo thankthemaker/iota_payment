@@ -133,9 +133,81 @@ def printMessage(msg1, msg2, waitSeconds):
     if(waitSeconds > 0):
         time.sleep(waitSeconds)
         device.clear()
-    
-    
 
+def readCard():
+    # This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
+    while continue_reading:
+               
+        # Scan for cards    
+        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+
+        # If a card is found
+        if status == MIFAREReader.MI_OK:
+            printMessage('Card detected...', '', 0);
+    
+        # Get the UID of the card
+        (status,uid) = MIFAREReader.MFRC522_Anticoll()
+
+        # If we have the UID, continue
+        if status == MIFAREReader.MI_OK:
+
+            # Get authentication key
+            key = make_pin(pincode)[0:6]
+        
+            print('selecting tag')
+            # Select the scanned tag
+            MIFAREReader.MFRC522_SelectTag(uid)
+        
+            print('reading seed from card')
+            # Get seed from IOTA debit card
+            SeedSender=read_seed()
+            print('seed=', SeedSender, 'len=', len(SeedSender));
+            if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
+                printMessage('No seed on card', 'aborting.....', 5)
+                return
+        
+            # Stop reading/writing to RFID tag
+            MIFAREReader.MFRC522_StopCrypto1()
+                      
+            # Create PyOTA object using seed from IOTA debit card
+            api = iota.Iota(iotaNode, seed=SeedSender)
+        
+            # Display checking funds message
+            printMessage('Checking funds..', 'Please wait.....', 0)
+              
+            # Get available funds from IOTA debit card seed
+            card_balance = api.get_account_data(start=0, stop=None)
+            
+            balance = card_balance['balance']
+        
+            # Check if enough funds to pay for service
+            if balance < blinks:
+                printMessage('No funds........', 'Trans aborted...', 0)
+                return
+        
+            # Create new transaction
+            tx1 = iota.ProposedTransaction( address = iota.Address(hotel_address), message = None, tag = iota.Tag(b'HOTEL9IOTA'), value = blinks)
+
+            # Display sending transaction message
+            printMessage('Sending trans...', 'Please wait.....', 0)
+
+            # Send transaction to tangle
+            SentBundle = api.send_transfer(depth=3,transfers=[tx1], inputs=None, change_address=None, min_weight_magnitude=14, security_level=2)
+                       
+            # Display confirming transaction message
+            printMessage('Confirming trans', 'Please wait.....', 0)
+        
+            # Loop executes every 10 seconds to checks if transaction is confirmed
+            while transaction_confirmed == False:
+                currentbalance = checkbalance(hotel_address)
+                if currentbalance > lastbalance:
+                    printMessage('Success!!!......', 'Trans confirmed.', 0)
+                    #print("\nTransaction is confirmed")
+                    blinkLED(blinks)
+                    transaction_confirmed = True
+                    continue_reading = False
+                time.sleep(10)
+    
 # Get hotel owner address balance at startup
 currentbalance = checkbalance(hotel_address)
 lastbalance = currentbalance
@@ -189,79 +261,7 @@ while keypad_reading:
  
     time.sleep(0.3)
 
-
-# Show waiting for card message
-printMessage('Waiting for card', '', 0);
-
-# This loop keeps checking for near by RFID tags. If one is found it will get the UID and authenticate
-while continue_reading:
-               
-    # Scan for cards    
-    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-
-    # If a card is found
-    if status == MIFAREReader.MI_OK:
-        printMessage('Card detected...', '', 0);
-    
-    # Get the UID of the card
-    (status,uid) = MIFAREReader.MFRC522_Anticoll()
-
-    # If we have the UID, continue
-    if status == MIFAREReader.MI_OK:
-
-        # Get authentication key
-        key = make_pin(pincode)[0:6]
-        
-        print('selecting tag')
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-        
-        print('reading seed from card')
-        # Get seed from IOTA debit card
-        SeedSender=read_seed()
-        print('seed=', SeedSender, 'len=', len(SeedSender));
-        if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
-            printMessage('No seed on card', 'aborting.....', 5)
-            exit()
-        
-        # Stop reading/writing to RFID tag
-        MIFAREReader.MFRC522_StopCrypto1()
-                      
-        # Create PyOTA object using seed from IOTA debit card
-        api = iota.Iota(iotaNode, seed=SeedSender)
-        
-        # Display checking funds message
-        printMessage('Checking funds..', 'Please wait.....', 0)
-              
-        # Get available funds from IOTA debit card seed
-        card_balance = api.get_account_data(start=0, stop=None)
-            
-        balance = card_balance['balance']
-        
-        # Check if enough funds to pay for service
-        if balance < blinks:
-            printMessage('No funds........', 'Trans aborted...', 0)
-            exit()
-        
-        # Create new transaction
-        tx1 = iota.ProposedTransaction( address = iota.Address(hotel_address), message = None, tag = iota.Tag(b'HOTEL9IOTA'), value = blinks)
-
-        # Display sending transaction message
-        printMessage('Sending trans...', 'Please wait.....', 0)
-
-        # Send transaction to tangle
-        SentBundle = api.send_transfer(depth=3,transfers=[tx1], inputs=None, change_address=None, min_weight_magnitude=14, security_level=2)
-                       
-        # Display confirming transaction message
-        printMessage('Confirming trans', 'Please wait.....', 0)
-        
-        # Loop executes every 10 seconds to checks if transaction is confirmed
-        while transaction_confirmed == False:
-            currentbalance = checkbalance(hotel_address)
-            if currentbalance > lastbalance:
-                printMessage('Success!!!......', 'Trans confirmed.', 0)
-                #print("\nTransaction is confirmed")
-                blinkLED(blinks)
-                transaction_confirmed = True
-                continue_reading = False
-            time.sleep(10)
+while True:
+    # Show waiting for card message
+    printMessage('Waiting for card', '', 0);
+    readCard();
