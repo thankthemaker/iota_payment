@@ -213,52 +213,53 @@ lastbalance = currentbalance
 # Create an object of the class MFRC522
 MIFAREReader = MFRC522.MFRC522()
 
-# Show welcome message
-printMessage('Number of Blinks', '', 0);
-
-# Loop while getting keypad input
-tmpStr = ""
-while keypad_reading:
-
-    # Loop while waiting for a keypress
-    digit = None
-    while digit == None:
-        digit = kp.getKey()
-   
-    # Manage keypad input
-    if pinmode == False:
-        if digit == '*':
-            tmpStr=tmpStr[0:pos-1]
-            printMessage(tmpStr, '', 0)
-            pos = pos -1
-            sumstring = sumstring[:-1]
-        elif digit == '#':
-            blinks = int(sumstring)
-            printMessage('PIN code:', '', 0);
-            pinmode = True
-            pos = 0
-        else:
-            pos = pos +1
-            sumstring = sumstring + str(digit)
-            printMessage(sumstring, '', 0);
-    else:
-        if digit == '*':
-            tmpStr=tmpStr[0:pos-1]
-            printMessage(tmpStr, '', 0)
-            pos = pos -1
-            pincode = pincode[:-1]
-        elif digit == '#':           
-            keypad_reading = False
-        else:
-            if pos <= 3:
-                tmpStr += "*"
-                printMessage(tmpStr, '', 0)
-                pos = pos +1
-                pincode = pincode + str(digit)
- 
-    time.sleep(0.3)
-
 while True:
+
+    # Show welcome message
+    printMessage('Number of Blinks', '', 0);
+
+    # Loop while getting keypad input
+    tmpStr = ""
+    while keypad_reading:
+
+        # Loop while waiting for a keypress
+        digit = None
+        while digit == None:
+            digit = kp.getKey()
+   
+        # Manage keypad input
+        if pinmode == False:
+            if digit == '*':
+                tmpStr=tmpStr[0:pos-1]
+                printMessage(tmpStr, '', 0)
+                pos = pos -1
+                sumstring = sumstring[:-1]
+            elif digit == '#':
+                blinks = int(sumstring)
+                printMessage('PIN code:', '', 0);
+                pinmode = True
+                pos = 0
+            else:
+                pos = pos +1
+                sumstring = sumstring + str(digit)
+                printMessage(sumstring, '', 0);
+        else:
+            if digit == '*':
+                tmpStr=tmpStr[0:pos-1]
+                printMessage(tmpStr, '', 0)
+                pos = pos -1
+                pincode = pincode[:-1]
+            elif digit == '#':           
+                keypad_reading = False
+            else:
+                if pos <= 3:
+                    tmpStr += "*"
+                    printMessage(tmpStr, '', 0)
+                    pos = pos +1
+                    pincode = pincode + str(digit)
+ 
+        time.sleep(0.3)
+
     # Show waiting for card message
     printMessage('Waiting for card', '', 0);
     readCard();
