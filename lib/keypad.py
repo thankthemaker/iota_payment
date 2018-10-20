@@ -14,7 +14,7 @@ class keypad():
 #    ROW         = [26,19,13,6]
 #    COLUMN      = [5,21,20]
 
-    ROW         = [7,11,15,13]
+    ROW         = [7,11,13,15]
     COLUMN      = [10,12,16,18]
 
     def __init__(self):
@@ -62,7 +62,7 @@ class keypad():
                 colVal=j
 
         # if colVal is not 0 thru 2 then no button was pressed and we can exit
-        if colVal <0 or colVal >2:
+        if colVal <0 or colVal >3:
             self.exit()
             return
 
