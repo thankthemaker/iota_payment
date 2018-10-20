@@ -14,7 +14,7 @@ class keypad():
 #    ROW         = [26,19,13,6]
 #    COLUMN      = [5,21,20]
 
-    ROW         = [7,11,15,13]
+    ROW         = [7,15,11,13]
     COLUMN      = [10,12,16,18]
 
     def __init__(self):
