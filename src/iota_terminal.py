@@ -80,6 +80,7 @@ def read_block(blockID):
         return str_data
     else:
         printMessage('Auth error......', 'Trans aborted...', 2);
+        return ""
 
 # Function for checking address balance 
 def checkbalance(hotel_address):
@@ -214,12 +215,16 @@ lastbalance = currentbalance
 MIFAREReader = MFRC522.MFRC522()
 
 while True:
+    keypad_reading = True
+    pinmode = False
+    sumstring = ""
+    tmpStr = ""
+    pincode = ""
 
     # Show welcome message
     printMessage('Number of Blinks', '', 0);
 
     # Loop while getting keypad input
-    tmpStr = ""
     while keypad_reading:
 
         # Loop while waiting for a keypress
@@ -263,7 +268,5 @@ while True:
     # Show waiting for card message
     printMessage('Waiting for card', '', 0);
     readCard();
-    keypad_reading = True
-    pinmode = False
 
 GPIO.cleanup()
