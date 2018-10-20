@@ -263,5 +263,6 @@ while True:
     # Show waiting for card message
     printMessage('Waiting for card', '', 0);
     readCard();
+    keypad_reading = True
 
 GPIO.cleanup()
