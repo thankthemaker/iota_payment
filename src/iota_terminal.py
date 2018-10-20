@@ -32,8 +32,7 @@ pincode = ""
 pinmode = False
 key = ""
 uid = ""
-##keypad_reading = True
-keypad_reading = False
+keypad_reading = True
 
 # Setup O/I PIN's
 LEDPIN=12
