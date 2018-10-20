@@ -238,9 +238,9 @@ while keypad_reading:
             pinmode = True
             pos = 0
         else:
-            printMessage(str(digit), '', 0);
             pos = pos +1
             sumstring = sumstring + str(digit)
+            printMessage(sumstring, '', 0);
     else:
         if digit == '*':
             tmpStr=tmpStr[0:pos-1]
