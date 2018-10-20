@@ -217,7 +217,7 @@ MIFAREReader = MFRC522.MFRC522()
 printMessage('Number of Blinks', '', 0);
 
 # Loop while getting keypad input
-tmpPin = ""
+tmpStr = ""
 while keypad_reading:
 
     # Loop while waiting for a keypress
