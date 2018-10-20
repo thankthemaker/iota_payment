@@ -218,6 +218,7 @@ MIFAREReader = MFRC522.MFRC522()
 printMessage('Number of Blinks', '', 0);
 
 # Loop while getting keypad input
+tmpPin = ""
 while keypad_reading:
 
     # Loop while waiting for a keypress
@@ -228,7 +229,8 @@ while keypad_reading:
     # Manage keypad input
     if pinmode == False:
         if digit == '*':
- ##           mylcd.lcd_display_string(" ", 2, pos-1)
+            tmpStr=tmpStr[0:pos-1]
+            printMessage(tmpStr, '', 0)
             pos = pos -1
             sumstring = sumstring[:-1]
         elif digit == '#':
@@ -237,21 +239,21 @@ while keypad_reading:
             pinmode = True
             pos = 0
         else:
-##            mylcd.lcd_display_string(str(digit), 2, pos)
+            printMessage(str(digit), '', 0);
             pos = pos +1
             sumstring = sumstring + str(digit)
     else:
         if digit == '*':
-##            mylcd.lcd_display_string(" ", 2, pos-1)
+            tmpStr=tmpStr[0:pos-1]
+            printMessage(tmpStr, '', 0)
             pos = pos -1
             pincode = pincode[:-1]
-        elif digit == '#':
-            
+        elif digit == '#':           
             keypad_reading = False
-            
         else:
             if pos <= 3:
-##                mylcd.lcd_display_string('*', 2, pos)
+                tmpStr += "*"
+                printMessage(tmpStr, '', 0)
                 pos = pos +1
                 pincode = pincode + str(digit)
  
