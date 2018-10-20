@@ -264,5 +264,6 @@ while True:
     printMessage('Waiting for card', '', 0);
     readCard();
     keypad_reading = True
+    pinmode = False
 
 GPIO.cleanup()
