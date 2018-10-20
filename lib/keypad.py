@@ -14,8 +14,8 @@ class keypad():
 #    ROW         = [26,19,13,6]
 #    COLUMN      = [5,21,20]
 
-    ROW         = [4,17,27,22]
-    COLUMN      = [15,18,23,24]
+    ROW         = [7,11,13,15]
+    COLUMN      = [10,12,16,18]
 
     def __init__(self):
         #GPIO.setmode(GPIO.BCM)
