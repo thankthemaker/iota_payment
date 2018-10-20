@@ -218,7 +218,6 @@ while True:
     keypad_reading = True
     pinmode = False
     sumstring = ""
-    tmpStr = ""
     pincode = ""
 
     # Show welcome message
@@ -235,10 +234,9 @@ while True:
         # Manage keypad input
         if pinmode == False:
             if digit == '*':
-                tmpStr=tmpStr[0:pos-1]
-                printMessage(tmpStr, '', 0)
                 pos = pos -1
                 sumstring = sumstring[:-1]
+                printMessage(sumstring, '', 0)
             elif digit == '#':
                 blinks = int(sumstring)
                 printMessage('PIN code:', '', 0);
@@ -250,19 +248,17 @@ while True:
                 printMessage(sumstring, '', 0);
         else:
             if digit == '*':
-                tmpStr=tmpStr[0:pos-1]
-                printMessage(tmpStr, '', 0)
                 pos = pos -1
                 pincode = pincode[:-1]
+                printMessage('PIN code:', pincode.translate(str.maketrans("0123456789","**********")), 0)
             elif digit == '#':           
                 keypad_reading = False
             else:
                 if pos <= 3:
-                    tmpStr += "*"
-                    printMessage(tmpStr, '', 0)
                     pos = pos +1
                     pincode = pincode + str(digit)
- 
+                    printMessage('PIN code:', pincode.translate(str.maketrans("0123456789","**********")), 0)
+
         time.sleep(0.3)
 
     # Show waiting for card message
