@@ -145,6 +145,9 @@ def readCard():
     
         # Get the UID of the card
         (status,uid) = MIFAREReader.MFRC522_Anticoll()
+        print('found card with uid ' + uid);
+
+
 
         # If we have the UID, continue
         if status == MIFAREReader.MI_OK:
