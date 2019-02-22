@@ -222,6 +222,7 @@ while True:
 
     # Show welcome message
     printMessage('Number of Blinks', '', 0);
+    print("starting iota payment terminal")
 
     # Loop while getting keypad input
     while keypad_reading:
