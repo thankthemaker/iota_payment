@@ -7,4 +7,5 @@ The project is inspired by blog post of Hugo Gregersen who posted his solution o
 These are the hardware components you'll need to build the project
 * Raspberry PI 1,2,3 or Zero
 * RFID/NFC Cardreader
+* OLED (ssd1306)
 * Keypad
