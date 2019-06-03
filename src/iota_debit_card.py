@@ -48,7 +48,7 @@ print ("""
 ans=input("What would you like to do? ")
 
 # In case 1, get manual seed from user
-if ans==1:
+if ans=="1":
     seed = raw_input("\nWrite or paste seed here: ")
 
     # Check that seed length is correct
@@ -62,7 +62,7 @@ if ans==1:
         exit()
 
 # In case 2, get seed from seed generator function
-elif ans==2:
+elif ans=="2":
     print("\nGenerating new seed...")
     seed = generate_seed()
    
@@ -175,7 +175,7 @@ while continue_reading:
         MIFAREReader.MFRC522_SelectTag(uid)
         
         # Write seed to IOTA debit card
-        if ans==1 or ans==2:
+        if ans=="1" or ans=="2":
             
             # Write seed to IOTA debit card
             write_seed(seed)
@@ -186,7 +186,7 @@ while continue_reading:
             
         
         # Display seed stored on IOTA debit card    
-        elif ans==3:
+        elif ans=="3":
             
             # Get seed from IOTA debit card
             seed=read_seed()
@@ -196,7 +196,7 @@ while continue_reading:
             print(seed)
         
         # Display balance of seed stored on IOTA debit card
-        elif ans==4:
+        elif ans=="4":
             
             # Get seed from IOTA debit card
             seed=read_seed()
@@ -214,7 +214,7 @@ while continue_reading:
             print("\nIOTA debit card balance is: " + str(balance) + " IOTA")
         
         # Display next unused address of seed stored on IOTA debit card
-        elif ans==5:
+        elif ans=="5":
             
             # Get seed from IOTA debit card
             seed=read_seed()
