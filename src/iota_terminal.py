@@ -184,7 +184,7 @@ def readCard():
             # Check if enough funds to pay for service
             if balance < blinks:
                 printMessage('No funds........', 'Trans aborted...', 0)
-                 print('No funds........', 'Trans aborted...')
+                print('No funds........', 'Trans aborted...')
                 return
         
             # Create new transaction
