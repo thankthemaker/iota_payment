@@ -25,5 +25,5 @@ ENV INITSYSTEM on
 
 # main.py will run when container starts up on the device
 #CMD ["python","-u","src/iota_terminal.py"]
-#CMD modprobe i2c-dev && python -u src/iota_terminal.py
-CMD modprobe i2c-dev && python -u src/iota_debit_card_pin.py
+CMD modprobe i2c-dev && python -u src/iota_terminal.py
+
