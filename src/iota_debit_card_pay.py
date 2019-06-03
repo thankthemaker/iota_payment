@@ -16,7 +16,7 @@ GPIO.setup(LEDPIN,GPIO.OUT)
 GPIO.output(LEDPIN,GPIO.LOW)
 
 # URL to IOTA fullnode used when interacting with the Tangle
-iotaNode = "https://field.deviota.com:443"
+iotaNode = "https://nodes.devnet.iota.org:443"
 api = iota.Iota(iotaNode, "")
 
 # Hotel owner recieving address, replace with your own recieving address

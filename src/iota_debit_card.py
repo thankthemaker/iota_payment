@@ -11,7 +11,7 @@ from textwrap import wrap
 seed=""
 
 # URL to IOTA fullnode used when checking balance and free addresses
-iotaNode = "https://field.deviota.com:443"
+iotaNode = "https://nodes.devnet.iota.org:443"
 
 # Function the generates and returns a random seed
 def generate_seed():
