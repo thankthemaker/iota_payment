@@ -29,7 +29,7 @@ transaction_confirmed = False
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
-    print "Ctrl+C captured, ending read."
+    print("Ctrl+C captured, ending read.")
     continue_reading = False
     GPIO.cleanup()
 
@@ -61,7 +61,7 @@ def read_block(blockID):
         return str_data
         
     else:
-        print "Authentication error"
+        print("Authentication error")
 
 # Function for checking address balance 
 def checkbalance(hotel_address):
@@ -108,7 +108,7 @@ while continue_reading:
 
     # If a card is found
     if status == MIFAREReader.MI_OK:
-        print "Card detected"
+        print("Card detected")
     
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
@@ -117,7 +117,7 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
 
         # Print UID
-        print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+        print("Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3]))
     
         # This is the default key for authentication
         key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
