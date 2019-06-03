@@ -26,13 +26,13 @@ def validate_pin(pin):
 print("\nWelcome to the IOTA debit card PIN tutorial")
 
 # Ask for old PIN code
-old_pin = raw_input("\nWrite old 4 digit PIN code here or press Enter for default PIN: ")
+old_pin = input("\nWrite old 4 digit PIN code here or press Enter for default PIN: ")
 if validate_pin(old_pin) == False:
         print("Invalid old PIN syntax")
         exit()
 
 # Ask for new PIN code
-new_pin = raw_input("\nWrite new 4 digit PIN code here or press Enter for default PIN: ")
+new_pin = input("\nWrite new 4 digit PIN code here or press Enter for default PIN: ")
 if validate_pin(new_pin) == False:
         print("Invalid new PIN syntax")
         exit()
