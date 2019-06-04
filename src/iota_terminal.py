@@ -48,6 +48,9 @@ api = iota.Iota(iotaNode, "")
 # Preparing hotel owner recieving address, replace with your own recieving address
 hotel_address = b'GTZUHQSPRAQCTSQBZEEMLZPQUPAA9LPLGWCKFNEVKBINXEXZRACVKKKCYPWPKH9AWLGJHPLOZZOYTALAWOVSIJIYVZ'
 
+### own address for faucet https://faucet.devnet.iota.org
+### PCCARCHBFN9SPFYSHLTLCLTLPJSDDDDQIPTBGUZPEQLHDMQYBRC9FYFUNSNA9DKLKYN9R9KRGKMFHFMX9RWYYUDPKZ
+
 # Some variables to control program flow 
 continue_reading = True
 transaction_confirmed = False
@@ -166,7 +169,7 @@ def readCard():
             print('seed=', SeedSender, 'len=', len(SeedSender));
             if(not regex.fullmatch("[A-Z9]{81}", SeedSender)):
                 printMessage('No seed on card', 'aborting.....', 5)
-                print('No seed on card', 'aborting.....')
+                print('No seed on card, aborting.....')
                 return                      
             
             # Create PyOTA object using seed from IOTA debit card
@@ -174,7 +177,7 @@ def readCard():
         
             # Display checking funds message
             printMessage('Checking funds..', 'Please wait.....', 0)
-            print('Checking funds..', 'Please wait.....')
+            print('Checking funds, please wait.....')
 
             # Get available funds from IOTA debit card seed
             card_balance = api.get_account_data(start=0, stop=None)
@@ -184,7 +187,7 @@ def readCard():
             # Check if enough funds to pay for service
             if balance < blinks:
                 printMessage('No funds........', 'Trans aborted...', 0)
-                print('No funds........', 'Trans aborted...')
+                print('No funds........, Trans aborted...')
                 return
         
             # Create new transaction
@@ -192,21 +195,21 @@ def readCard():
 
             # Display sending transaction message
             printMessage('Sending trans...', 'Please wait.....', 0)
-            print('Sending trans...', 'Please wait.....')
+            print('Sending trans, Please wait.....')
 
             # Send transaction to tangle
             SentBundle = api.send_transfer(depth=3,transfers=[tx1], inputs=None, change_address=None, min_weight_magnitude=14, security_level=2)
                        
             # Display confirming transaction message
             printMessage('Confirming trans', 'Please wait.....', 0)
-            print('Confirming trans', 'Please wait.....')
+            print('Confirming trans, Please wait.....')
 
             # Loop executes every 10 seconds to checks if transaction is confirmed
             while  transaction_confirmed == False:
                 currentbalance = checkbalance(hotel_address)
                 if currentbalance > lastbalance:
                     printMessage('Success!!!......', 'Trans confirmed.', 0)
-                    print('Success!!!......', 'Trans confirmed.')
+                    print('Success!!!......, Trans confirmed.')
                     #print("\nTransaction is confirmed")
                     blinkLED(blinks)
                     transaction_confirmed = True
