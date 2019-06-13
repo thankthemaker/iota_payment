@@ -4,8 +4,11 @@
 FROM balenalib/%%RESIN_MACHINE_NAME%%-ubuntu-python:3
 #FROM balenalib/jetson-nano-python:3
 
+ENV TZ=Europe/Europe
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # use apt-get if you need to install dependencies,
-RUN ln -fs /usr/share/zoneinfo/Europe/Berlin  && apt-get update && apt-get install -yq \
+RUN apt-get update && apt-get install -yq \
     make git gcc g++  build-essential libssl-dev libffi-dev zlib1g-dev libjpeg-dev python python-dev python-pip curl software-properties-common  \
     python-tk xserver-xorg-core xserver-xorg-input-all xserver-xorg-video-fbdev xorg tk-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
