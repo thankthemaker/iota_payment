@@ -1,18 +1,14 @@
 # base-image for python on any machine using a template variable,
 # see more about dockerfile templates here:http://docs.resin.io/pages/deployment/docker-templates
 #FROM resin/%%RESIN_MACHINE_NAME%%-python:3
-FROM balenalib/%%RESIN_MACHINE_NAME%%-ubuntu-python:3
+FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3
 #FROM balenalib/jetson-nano-python:3
 
-ENV TZ=Europe/Europe
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 # use apt-get if you need to install dependencies,
-RUN apt-get update && apt-get install -yq \
+RUN install_packages \
     make git gcc g++  build-essential libssl-dev libffi-dev zlib1g-dev libjpeg-dev python python-dev python-pip curl software-properties-common  \
-    python-tk xserver-xorg-core xserver-xorg-input-all xserver-xorg-video-fbdev xorg tk-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
+    python-tk xserver-xorg-core xserver-xorg-input-all xserver-xorg-video-fbdev xorg tk-dev
+    
 RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
   && echo "" >> /etc/X11/xinit/xserverrc \
   && echo 'exec /usr/bin/X -s 0 dpms -nocursor -nolisten tcp "$@"' >> /etc/X11/xinit/xserverrc
