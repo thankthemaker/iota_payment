@@ -1,7 +1,7 @@
 # base-image for python on any machine using a template variable,
 # see more about dockerfile templates here:http://docs.resin.io/pages/deployment/docker-templates
 #FROM resin/%%RESIN_MACHINE_NAME%%-python:3
-FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3-build
+FROM balenalib/%%BALENA_MACHINE_NAME%%
 #FROM balenalib/jetson-nano-python:3
 
 # use apt-get if you need to install dependencies,
