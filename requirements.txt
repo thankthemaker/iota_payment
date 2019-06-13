@@ -3,4 +3,3 @@ RPi.GPIO==0.6.3
 -e git+https://github.com/rm-hull/luma.oled#egg=luma-oled
 PyOTA==2.0.6
 Pillow
-python-tk
