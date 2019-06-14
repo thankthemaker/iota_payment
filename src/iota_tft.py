@@ -34,11 +34,11 @@ def exitGUI():
 
 # Seed used for generating addresses and collecting funds.
 # IMPORTANT!!! Replace with your own seed
-MySeed = b"JUCDSVWWCMRUCPWDUQGA9CCMHEHVFIFXMVIFQXFWKBDSJFYTDRNONHUTGLGVMAIMNSQHAJEVJEPBNYYSZ"
-
+MySeed = b"VKPWZUTNWGIKHRUSQIT9NQTBLLSVAISGXLNMECFAAQGNYYEXAPHTML9XLY9KGYKO9FSRGETNIM9PFOYFI"
+UCDSVWW
 
 # URL to IOTA fullnode used when checking balance
-iotaNode = "https://nodes.thetangle.org:443"
+iotaNode = "https://iri.thank-the-maker.org"
 
 # Create an IOTA object
 api = Iota(iotaNode, MySeed)
