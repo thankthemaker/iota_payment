@@ -31,4 +31,4 @@ ENV DISPLAY :0
 # main.py will run when container starts up on the device
 #CMD modprobe i2c-dev && python -u src/iota_terminal.py
 #CMD modprobe i2c-dev && python -u src/iota_tft.py
-CMD bash # src/start.sh
+CMD bash src/start.sh
