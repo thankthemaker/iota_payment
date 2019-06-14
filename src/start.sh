@@ -1,3 +1,3 @@
 #!/bin/bash
 nohup /etc/X11/xinit/xserverrc &
-python -u iota_tft.py
+/usr/bin/python3 -u iota_tft.py
