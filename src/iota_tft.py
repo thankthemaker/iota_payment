@@ -202,7 +202,7 @@ def getTransExist(addr):
 # The let_there_be_light.ini file can be dowloaded from: https://gist.github.com/huggre/c5185df916ca00d2e1d12943a9d9d03a
 def getNewIndex():
     config = configparser.ConfigParser()
-    config.read('let_there_be_light.ini')
+    config.read('iota_addresses.ini')
     oldIndex = config.getint('IndexCounter', 'addrIndexCount')
     newIndex = oldIndex +1
     config.set('IndexCounter', 'addrIndexCount', str(newIndex))
