@@ -191,6 +191,7 @@ def getTransExist(addr):
         result = api.find_transactions(addresses=addr)
         myhashes = result['hashes']
         if len(myhashes) > 0:
+            print("Transactions found: " + myhashes)
             transFound = True
         else:
             transFound = False
@@ -237,10 +238,11 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
 
 
     # Check for new funds and add to lightbalance when found.
-    if balcheckcount == 300:
+    if balcheckcount == 30:
 
         # Check if address has any transactions   
         if transFound == False:
+            print("checking for transactions at address: " + addr)
             transFound = getTransExist(addr)
             if transFound == True:
                 showXBM()
@@ -249,6 +251,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
         # If new transactions has been found, check for positive balance and add to lightbalance
         if transFound == True:
             balance = checkbalance(addr)
+            print("Balance is now: " + balance)
             if int(balance) > 0:
                 lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                 addrIndex = getNewIndex()
