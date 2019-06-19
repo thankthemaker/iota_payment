@@ -242,7 +242,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
 
         # Check if address has any transactions   
         if transFound == False:
-            print("checking for transactions at address: " + str(addr)
+            print("checking for transactions at address: " + str(addr))
             transFound = getTransExist(addr)
             if transFound == True:
                 showXBM()
