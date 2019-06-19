@@ -191,7 +191,7 @@ def getTransExist(addr):
         result = api.find_transactions(addresses=addr)
         myhashes = result['hashes']
         if len(myhashes) > 0:
-            print("Transactions found: " + myhashes)
+            print("Transactions found: " + str(myhashes))
             transFound = True
         else:
             transFound = False
@@ -242,7 +242,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
 
         # Check if address has any transactions   
         if transFound == False:
-            print("checking for transactions at address: " + addr)
+            print("checking for transactions at address: " + str(addr)
             transFound = getTransExist(addr)
             if transFound == True:
                 showXBM()
