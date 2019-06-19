@@ -251,7 +251,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
         # If new transactions has been found, check for positive balance and add to lightbalance
         if transFound == True:
             balance = checkbalance(addr)
-            print("Balance is now: " + balance)
+            print("Balance is now: " + str(balance))
             if int(balance) > 0:
                 lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                 addrIndex = getNewIndex()
