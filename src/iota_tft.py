@@ -239,7 +239,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
 
 
     # Check for new funds and add to lightbalance when found.
-    if balcheckcount == 30:
+    if balcheckcount == 10:
 
         # Check if address has any transactions   
         if transFound == False:
