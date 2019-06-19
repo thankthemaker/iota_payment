@@ -255,7 +255,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
             print("Balance is now: " + str(balance))
             if int(balance) > 0:
                 #lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
-                lightbalance = lightbalance + int(((balance * 60) / (getLightPriceIOTA()))
+                lightbalance = lightbalance + int((balance * 60) / (getLightPriceIOTA()))
                 print("Lightbalance is now: " + str(lightbalance))
                 addrIndex = getNewIndex()
                 addr = generateNewAddress(addrIndex)
