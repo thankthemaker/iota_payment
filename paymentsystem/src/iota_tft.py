@@ -108,7 +108,7 @@ progFrame = tkinter.Frame(mainFrame)
 progFrame.grid(row=4,column=0,columnspan=2)
 mpb = tkinter.ttk.Progressbar(progFrame,orient ="horizontal",length = 435, mode ="determinate")
 mpb.grid(row=4,column=0)
-mpb["maximum"] = 30
+mpb["maximum"] = 10
 mpb["value"] = 0
 
 

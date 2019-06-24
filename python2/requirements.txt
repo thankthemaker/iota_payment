@@ -1,0 +1,6 @@
+Flask==0.12.3
+RPi.GPIO==0.6.3
+-e git+https://github.com/lthiery/SPI-Py.git#egg=spi-pi
+-e git+https://github.com/AdamLaurie/RFIDIOt.git#egg=rfidiot
+pyscard
+pycrypto
