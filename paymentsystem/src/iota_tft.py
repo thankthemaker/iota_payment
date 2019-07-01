@@ -255,7 +255,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
                 transCount = getTransExist(addr)
                 print("Transaction count on address " + str(transCount))
                 if int(balance) == 0:
-                    sdfdsfsfspentFromAddr = False
+                    spentFromAddr = False
             else:
                 showXBM()
                 updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
