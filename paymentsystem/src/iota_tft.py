@@ -259,7 +259,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
                     addrIndex = getNewIndex()
                     addr = generateNewAddress(addrIndex)
                     updatePaymentStatus("Waiting for new transactions")
-                else:
+            else:
                 showXBM()
                 updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
                 # If new transactions has been found, check for positive balance and add to lightbalance
