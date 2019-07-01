@@ -192,13 +192,12 @@ def getTransExist(addr):
         result = api.find_transactions(addresses=addr)
         myhashes = result['hashes']
         transCount = int(len(myhashes))
-        print("Anzahl Transaktionen: " + str(transCount));
         if len(myhashes) > 0:
-            print("Transactions found: " + str(myhashes))
+            print(str(transCount) + " transactions found: " + str(myhashes))
             transFound = True
         else:
-            transFound = Falsed
-        return(transFound)
+            transFound = False
+        return(transCount)
 
 # Define function for reading and storing address indexes
 # Make sure you download and place the "let_there_be_light.ini" file in the same folder as your python file.
@@ -247,7 +246,9 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
         # Check if address has any transactions   
         if transFound == False:
             print("checking for transactions at address: " + str(addr))
-            transFound = getTransExist(addr)
+            transCount = getTransExist(addr)
+            if transCount > 0:
+                transFound = True
             if transFound == True:
                 showXBM()
                 updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
