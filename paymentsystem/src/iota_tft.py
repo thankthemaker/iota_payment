@@ -254,7 +254,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
                 print("checking for transactions at address: " + str(addr))
                 transCount = getTransExist(addr)
                 print("Transaction count on address " + str(transCount))
-                if int(balance) == 0:
+                if transCount == 0 and int(balance) == 0:
                     spentFromAddr = False
                     addrIndex = getNewIndex()
                     addr = generateNewAddress(addrIndex)
