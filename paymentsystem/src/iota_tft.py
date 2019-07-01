@@ -194,8 +194,10 @@ def getTransExist(addr):
         if len(myhashes) > 0:
             print("Transactions found: " + str(myhashes))
             transFound = True
+            transCount = len(myhashes)
         else:
             transFound = False
+            transCount = 0
         return(transFound)
 
 # Define function for reading and storing address indexes
@@ -218,6 +220,7 @@ balcheckcount = 0
 lightstatus = False
 addrfound = False
 transFound = False
+transCount = 0
 
 # The price of the service in USD pr. minute. Change at will
 lightprice_USD = 0.01
@@ -253,7 +256,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
         if transFound == True:
             balance = checkbalance(addr)
             print("Balance is now: " + str(balance))
-            if int(balance) > 0:
+            if int(balance) > 0 and transCount < 2:
                 lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                 print("Lightbalance is now: " + str(lightbalance))
                 addrIndex = getNewIndex()
