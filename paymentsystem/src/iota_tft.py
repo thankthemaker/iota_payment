@@ -78,7 +78,7 @@ qrcode.grid(row=0, column=0)
 # Create and render logo
 # Make sure you download and place the "iota_logo75.jpg" file in the same folder as your python file.
 # The logofile can be dowloaded from: http://imagebucket.net/6jrt31fbb4js/iota_logo75.jpg
-path = "iota_logo75.jpg"
+path = "Iota_logo75.jpg"
 img = ImageTk.PhotoImage(Image.open(path))
 iotalogo = tkinter.Label(mainFrame, image = img, borderwidth = 0)
 iotalogo.grid(row=0,column=1)
