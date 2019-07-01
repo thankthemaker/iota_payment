@@ -211,14 +211,14 @@ transCount = 0
 # The price of the service in USD pr. minute. Change at will
 lightprice_USD = 0.01
 
-# Generate new payment address
-addr = generateNewAddress()
-
 # Display price in GUI
 displayprice()
 
 # Display payment status in GUI
 updatePaymentStatus("Waiting for new transactions")
+
+# Generate new payment address
+addr = generateNewAddress()
 
 # Main loop that executes every 1 second
 def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
