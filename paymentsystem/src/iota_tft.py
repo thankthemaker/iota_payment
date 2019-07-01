@@ -256,6 +256,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrInd
         if transFound == True:
             balance = checkbalance(addr)
             print("Balance is now: " + str(balance))
+            print("Transaction count on address " + str(transCount))
             if int(balance) > 0 or transCount >= 2:
                 lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                 print("Lightbalance is now: " + str(lightbalance))
