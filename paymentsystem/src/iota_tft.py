@@ -245,7 +245,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
     # Check for new funds and add to lightbalance when found.
     if balcheckcount == 10:
 
-        while spentFromAddr
+        while spentFromAddr:
             balance = checkbalance(addr)
             print("Balance is now: " + str(balance))
 
