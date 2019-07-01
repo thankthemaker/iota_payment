@@ -244,26 +244,27 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
     # Check for new funds and add to lightbalance when found.
     if balcheckcount == 10:
 
-        # Check if address has any transactions   
-        if transCount == 0:
-            print("checking for transactions at address: " + str(addr))
-            transCount = getTransExist(addr)
-            if transCount > 0:
-                showXBM()
-                updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
+        while transCount > 0:
+            # Check if address has any transactions   
+            if transCount == 0:
+                print("checking for transactions at address: " + str(addr))
+                transCount = getTransExist(addr)
+                if transCount > 0:
+                    showXBM()
+                    updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
 
-        # If new transactions has been found, check for positive balance and add to lightbalance
-        if transCount > 0:
-            balance = checkbalance(addr)
-            print("Balance is now: " + str(balance))
-            print("Transaction count on address " + str(transCount))
-            if int(balance) > 0 or transCount >= 1:
-                lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
-                print("Lightbalance is now: " + str(lightbalance))
-                addrIndex = getNewIndex()
-                addr = generateNewAddress(addrIndex)
-                updatePaymentStatus("Waiting for new transactions")
-                transCount = 0
+            # If new transactions has been found, check for positive balance and add to lightbalance
+            if transCount > 0:
+                balance = checkbalance(addr)
+                print("Balance is now: " + str(balance))
+                print("Transaction count on address " + str(transCount))
+                if int(balance) > 0 or transCount >= 1:
+                    lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
+                    print("Lightbalance is now: " + str(lightbalance))
+                    addrIndex = getNewIndex()
+                    addr = generateNewAddress(addrIndex)
+                    updatePaymentStatus("Waiting for new transactions")
+                    transCount = 0
 
         balcheckcount = 0
 
