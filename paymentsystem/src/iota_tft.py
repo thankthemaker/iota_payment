@@ -239,6 +239,7 @@ updatePaymentStatus("Waiting for new transactions")
 # Main loop that executes every 1 second
 def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrIndex):
 
+    global transCount
 
     # Check for new funds and add to lightbalance when found.
     if balcheckcount == 10:
