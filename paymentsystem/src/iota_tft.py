@@ -237,7 +237,7 @@ displayprice()
 updatePaymentStatus("Waiting for new transactions")
 
 # Main loop that executes every 1 second
-def maintask(balcheckcount, lightbalance, lightstatus, transFound, addr, addrIndex):
+def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
 
     global transCount
 
