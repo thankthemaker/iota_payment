@@ -256,16 +256,16 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
                 print("Transaction count on address " + str(transCount))
                 if int(balance) == 0:
                     spentFromAddr = False
-            else:
+                    addrIndex = getNewIndex()
+                    addr = generateNewAddress(addrIndex)
+                    updatePaymentStatus("Waiting for new transactions")
+                else:
                 showXBM()
                 updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
                 # If new transactions has been found, check for positive balance and add to lightbalance
                 if int(balance) > 0 or transCount >= 1:
                     lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                     print("Lightbalance is now: " + str(lightbalance))
-                    addrIndex = getNewIndex()
-                    addr = generateNewAddress(addrIndex)
-                    updatePaymentStatus("Waiting for new transactions")
                     transCount = 0
 
         balcheckcount = 0
