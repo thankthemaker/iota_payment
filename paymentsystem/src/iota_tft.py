@@ -192,7 +192,7 @@ def getTransExist(addr):
         result = api.find_transactions(addresses=addr)
         myhashes = result['hashes']
         print("Anzahl Transaktionen: " + str(len(myhashes)));
-        transCount = len(myhashes)
+        transCount = int(len(myhashes))
         if len(myhashes) > 0:
             print("Transactions found: " + str(myhashes))
             transFound = True
