@@ -191,13 +191,12 @@ def displayprice():
 def getTransExist(addr):
         result = api.find_transactions(addresses=addr)
         myhashes = result['hashes']
+        transCount = len(myhashes)
         if len(myhashes) > 0:
             print("Transactions found: " + str(myhashes))
             transFound = True
-            transCount = len(myhashes)
         else:
             transFound = False
-            transCount = 0
         return(transFound)
 
 # Define function for reading and storing address indexes
