@@ -149,8 +149,8 @@ def showXBM():
 
 
 # Define function to generate new IOTA address
-def generateNewAddress(addrIndexCount):
-    result = api.get_new_addresses(index=addrIndexCount, count=1, security_level=2)
+def generateNewAddress():
+    result = api.get_new_addresses(index=1, None, security_level=2)
     addresses = result['addresses']
     QRaddr=str(addresses[0].with_valid_checksum())
     updateQRcode(QRaddr)
@@ -199,19 +199,6 @@ def getTransExist(addr):
             transFound = False
         return(transCount)
 
-# Define function for reading and storing address indexes
-# Make sure you download and place the "let_there_be_light.ini" file in the same folder as your python file.
-# The let_there_be_light.ini file can be dowloaded from: https://gist.github.com/huggre/c5185df916ca00d2e1d12943a9d9d03a
-def getNewIndex():
-    config = configparser.ConfigParser()
-    config.read('iota_addresses.ini')
-    oldIndex = config.getint('IndexCounter', 'addrIndexCount')
-    newIndex = oldIndex +1
-    config.set('IndexCounter', 'addrIndexCount', str(newIndex))
-    with open('iota_addresses.ini', 'w') as configfile:
-        config.write(configfile)
-    return(newIndex)
-
 
 # Define some variables
 lightbalance = 0
@@ -225,11 +212,8 @@ spentFromAddr = True
 # The price of the service in USD pr. minute. Change at will
 lightprice_USD = 0.01
 
-# Function that returns next index used by the generateNewAddress function
-addrIndex = getNewIndex()
-
 # Generate new payment address
-addr = generateNewAddress(addrIndex)
+addr = generateNewAddress()
 
 # Display price in GUI
 displayprice()
@@ -245,31 +229,27 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
     # Check for new funds and add to lightbalance when found.
     if balcheckcount == 10:
 
-        while spentFromAddr:
-            balance = checkbalance(addr)
-            print("Balance is now: " + str(balance))
+        balance = checkbalance(addr)
+        print("Balance is now: " + str(balance))
 
-            # Check if address has any transactions   
+        # Check if address has any transactions   
+        if transCount == 0:
+            print("checking for transactions at address: " + str(addr))
+            transCount = getTransExist(addr)
+            print("Transaction count on address " + str(transCount))
+            if int(balance) == 0:
+                addr = generateNewAddress()
             if transCount == 0:
-                print("checking for transactions at address: " + str(addr))
-                transCount = getTransExist(addr)
-                print("Transaction count on address " + str(transCount))
-                if int(balance) == 0:
-                    addrIndex = getNewIndex()
-                    addr = generateNewAddress(addrIndex)
-                    print("checking address: " + str(addrIndex))
-                    updatePaymentStatus("checking address: " + str(addrIndex))
-                if transCount == 0:
-                    spentFromAddr = False
-                    updatePaymentStatus("Waiting for new transactions")
-            else:
-                showXBM()
-                updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
-                # If new transactions has been found, check for positive balance and add to lightbalance
-                if int(balance) > 0 or transCount >= 1:
-                    lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
-                    print("Lightbalance is now: " + str(lightbalance))
-                    transCount = 0
+                spentFromAddr = False
+                updatePaymentStatus("Waiting for new transactions")
+        else:
+            showXBM()
+            updatePaymentStatus("New transaction found, please wait while transaction is confirmed")
+            # If new transactions has been found, check for positive balance and add to lightbalance
+            if int(balance) > 0 or transCount >= 1:
+                lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
+                print("Lightbalance is now: " + str(lightbalance))
+                transCount = 0
 
         balcheckcount = 0
 
