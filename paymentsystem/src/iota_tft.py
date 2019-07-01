@@ -150,7 +150,7 @@ def showXBM():
 
 # Define function to generate new IOTA address
 def generateNewAddress():
-    result = api.get_new_addresses(index=1, None, security_level=2)
+    result = api.get_new_addresses(index=1, count=None, security_level=2)
     addresses = result['addresses']
     QRaddr=str(addresses[0].with_valid_checksum())
     updateQRcode(QRaddr)
