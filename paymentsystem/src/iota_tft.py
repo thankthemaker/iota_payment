@@ -207,7 +207,6 @@ lightstatus = False
 addrfound = False
 transFound = False
 transCount = 0
-spentFromAddr = True
 
 # The price of the service in USD pr. minute. Change at will
 lightprice_USD = 0.01
@@ -224,7 +223,7 @@ updatePaymentStatus("Waiting for new transactions")
 # Main loop that executes every 1 second
 def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
 
-    global transCount, spentFromAddr
+    global transCount
 
     # Check for new funds and add to lightbalance when found.
     if balcheckcount == 10:
@@ -237,10 +236,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
             print("checking for transactions at address: " + str(addr))
             transCount = getTransExist(addr)
             print("Transaction count on address " + str(transCount))
-            if int(balance) == 0:
-                addr = generateNewAddress()
             if transCount == 0:
-                spentFromAddr = False
                 updatePaymentStatus("Waiting for new transactions")
         else:
             showXBM()
@@ -249,6 +245,7 @@ def maintask(balcheckcount, lightbalance, lightstatus, addr, addrIndex):
             if int(balance) > 0 or transCount >= 1:
                 lightbalance = lightbalance + int(((balance/1000000) * 60) / (getLightPriceIOTA()))
                 print("Lightbalance is now: " + str(lightbalance))
+                addr = generateNewAddress()
                 transCount = 0
 
         balcheckcount = 0
