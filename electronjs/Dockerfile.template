@@ -81,10 +81,10 @@ RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
 
 # Move app to filesystem
 COPY ./app ./
-#COPY ./paymentsystem/www ./
 
 # Copy the modules from the build step
 COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/paymentsystem/www .
 
 # Start app
 CMD ["bash", "/usr/src/app/start.sh"]
