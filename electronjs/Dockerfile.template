@@ -85,7 +85,7 @@ COPY --from=build /usr/src/app/paymentsystem/node_modules ./node_modules
 #COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Move app to filesystem
-COPY ./app ./
+COPY ./app/start.sh ./
 
 # Start app
 CMD ["bash", "/usr/src/app/start.sh"]

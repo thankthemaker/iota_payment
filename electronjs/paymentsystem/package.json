@@ -28,12 +28,12 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "core-js": "^2.5.4",
+    "electron": "^1.6.18",
+    "electron-rebuild": "^1.7.2",
+    "lockfile": "^1.0.4",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.29",
-    "electron": "~1.6.16",
-    "electron-rebuild": "^1.7.2",
-    "lockfile": "^1.0.4"
+    "zone.js": "~0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.13.8",
