@@ -31,7 +31,7 @@ RUN install_packages \
 # Move package.json to filesystem
 COPY ./app/package.json .
 
-RUN npm install ionic
+RUN npm install ionic -g
 
 # Install npm modules for the application
 RUN    JOBS=MAX npm install --unsafe-perm --production \
