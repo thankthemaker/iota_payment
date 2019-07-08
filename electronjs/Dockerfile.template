@@ -37,6 +37,8 @@ RUN npm install ionic -g
 RUN    JOBS=MAX npm install --unsafe-perm --production \
     && node_modules/.bin/electron-rebuild
 
+WORKDIR /usr/src/app/paymentsystem
+
 RUN ionic build
 
 ###
