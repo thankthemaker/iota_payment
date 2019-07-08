@@ -29,14 +29,14 @@ RUN install_packages \
   libexpat-dev 
 
 # Move package.json to filesystem
-COPY ./app/package.json .
+#COPY ./app/package.json .
 COPY ./paymentsystem ./paymentsystem
 
 RUN npm install ionic @angular/cli -g
 
 # Install npm modules for the application
-RUN    JOBS=MAX npm install --unsafe-perm --production \
-    && node_modules/.bin/electron-rebuild
+#RUN    JOBS=MAX npm install --unsafe-perm --production \
+#    && node_modules/.bin/electron-rebuild
 
 WORKDIR /usr/src/app/paymentsystem
 
