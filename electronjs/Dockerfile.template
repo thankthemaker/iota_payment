@@ -30,6 +30,7 @@ RUN install_packages \
 
 # Move package.json to filesystem
 COPY ./app/package.json .
+COPY ./paymentsystem .
 
 RUN npm install ionic -g
 
