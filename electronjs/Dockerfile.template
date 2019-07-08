@@ -32,7 +32,7 @@ RUN install_packages \
 COPY ./app/package.json .
 COPY ./paymentsystem ./paymentsystem
 
-RUN npm install ionic -g
+RUN npm install ionic @angular/cli -g
 
 # Install npm modules for the application
 RUN    JOBS=MAX npm install --unsafe-perm --production \
