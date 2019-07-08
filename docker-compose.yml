@@ -1,15 +1,20 @@
 version: '2'
 services:
-  paymentsystem:
-    build: ./paymentsystem
+#  paymentsystem:
+#    build: ./paymentsystem
+#    privileged: true
+#    restart: always
+#    labels:
+#      - "io.balena.features.kernel-modules=1"
+#  python2:
+#    build: ./python2
+#    privileged: true
+#    restart: always
+#    labels:
+#      - "io.balena.features.kernel-modules=1"
+  electronjs:
+    build: ./electronjs
     privileged: true
     restart: always
     labels:
       - "io.balena.features.kernel-modules=1"
-  python2:
-    build: ./python2
-    privileged: true
-    restart: always
-    labels:
-      - "io.balena.features.kernel-modules=1"
-
