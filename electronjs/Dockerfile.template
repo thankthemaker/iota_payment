@@ -29,10 +29,9 @@ RUN install_packages \
   libexpat-dev 
 
 # Move package.json to filesystem
-#COPY ./app/package.json .
 COPY ./paymentsystem .
 
-RUN npm install ionic @angular/cli -g
+RUN npm install ionic @angular/cli -g && node_modules/.bin/electron-rebuild
 
 # Install npm modules for the application
 #RUN    JOBS=MAX npm install --unsafe-perm --production \
@@ -80,10 +79,10 @@ RUN echo "#!/bin/bash" > /etc/X11/xinit/xserverrc \
 # Copy the modules from the build step
 COPY --from=build /usr/src/app/www .
 COPY --from=build /usr/src/app/node_modules ./node_modules
-#COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Move app to filesystem
 COPY ./app ./
+COPY ./paymentsystem/package.json .
 
 # Start app
 CMD ["bash", "/usr/src/app/start.sh"]
