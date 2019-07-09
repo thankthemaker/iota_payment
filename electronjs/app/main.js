@@ -87,7 +87,7 @@ if (electronConfig.ELECTRON_RESIN_UPDATE_LOCK) {
           event.sender.send('resin-update-lock', error, isLocked);
         });
         break;
-      default:
+      default:  
         event.sender.send('resin-update-lock', new Error(`Unknown command "${command}"`));
         break;
     }
