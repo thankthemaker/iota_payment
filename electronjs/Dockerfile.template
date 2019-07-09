@@ -82,6 +82,7 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Move app to filesystem
 COPY ./app ./
+COPY ./paymentsystem/electron-starter.js .
 COPY ./paymentsystem/package.json .
 
 # Start app
