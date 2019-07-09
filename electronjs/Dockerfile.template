@@ -51,6 +51,7 @@ WORKDIR /usr/src/app
 RUN install_packages \
   xserver-xorg-core \
   xserver-xorg-input-all \
+  xserver-xorg-input-libinput \
   xserver-xorg-video-fbdev \
   xorg \
   libxcb-image0 \
