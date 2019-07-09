@@ -37,7 +37,7 @@ RUN npm install ionic @angular/cli -g
 #RUN    JOBS=MAX npm install --unsafe-perm --production \
 #    && node_modules/.bin/electron-rebuild
 
-RUN npm install && ionic build && node_modules/.bin/electron-rebuild
+RUN ls -libasound2
 
 ###
 # Runtime
@@ -82,7 +82,7 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Move app to filesystem
 COPY ./app ./
-COPY ./paymentsystem/electron-starter.js .
+COPY ./paymentsystem/index.js .
 COPY ./paymentsystem/package.json .
 
 # Start app
