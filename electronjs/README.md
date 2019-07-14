@@ -1,3 +1,19 @@
+# Paymentsystem based on Electron JS & Ionic
+
+## Build
+
+```
+npm install ionic -g
+```
+
+```
+ionic serve -c -s
+```
+
+Then point yout browser to
+
+http://localhost:8100
+
 # resin-electronjs
 
 a boilerplate for developing kiosks, digital signage or other human-machine interaction projects based on [ElectronJS](http://electron.atom.io/) and [resin.io](http://resin.io)

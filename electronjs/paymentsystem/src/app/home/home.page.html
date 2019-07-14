@@ -8,40 +8,41 @@
 
 <ion-grid fixed>
     <ion-row class="ion-align-items-stretch">
-        <ion-col size="4" class="ion-text-center">
+        <ion-col size="12" size-md="6" class="ion-text-center">
+            <ion-card class="speaker-card">
+                <ion-thumbnail class="ion-margin-end">
+                  <img src="assets/postbank_logo.png" />
+                </ion-thumbnail>
+                <ion-card-header>
+                  <ion-card-subtitle>No active transaction found</ion-card-subtitle>
+                  <ion-card-title>Your Credit: 
+                    {{balance | number:'1.2-2'}} MIOTA</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  {{text}}
+                </ion-card-content>
+            </ion-card>
+          </ion-col>        <ion-col size="4" class="ion-text-center">
             <ion-card class="speaker-card">
                 <ion-card-content>
                     <img *ngIf="displayQrCode()" [src]="qrImage" />
                 </ion-card-content>
               </ion-card> 
         </ion-col>
-        <ion-col size="12" size-md="6">
-        <ion-card class="speaker-card">
-            <ion-thumbnail class="ion-margin-end">
-              <img src="assets/postbank_logo.png" />
-            </ion-thumbnail>
-            <ion-card-header>
-              <ion-card-subtitle>No active transaction found</ion-card-subtitle>
-              <ion-card-title>Your Credit: 0 MIOTA</ion-card-title>
-            </ion-card-header>
-        </ion-card>
-      </ion-col>
-
     </ion-row>
     <ion-row class="ion-align-items-stretch">
-        <ion-col size="4" class="ion-text-center">
+        <ion-col size="12" size-md="6">
+            <ion-card class="speaker-card">
+                  <ion-button color="danger" (click)="nextAdress()">Next address</ion-button>
+            </ion-card>
+          </ion-col>
+          <ion-col size="4" class="ion-text-center">
             <ion-card class="speaker-card">
                 <ion-card-header>
-                    <ion-card-subtitle>powered by</ion-card-subtitle>
+                    <ion-card-subtitle>pay with</ion-card-subtitle>
                     <img  src="assets/iota_logo.png" />
                   </ion-card-header>
               </ion-card> 
         </ion-col>
-        <ion-col size="12" size-md="6">
-          <ion-card class="speaker-card">
-                <ion-button color="danger" (click)="presentToast()">Beenden</ion-button>
-          </ion-card>
-        </ion-col>
-
       </ion-row>
     </ion-grid>
