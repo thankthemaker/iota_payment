@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import QRCode from 'qrcode';
-import { composeAPI } from '@iota/core'
+import { IotaApiService } from '../iotaApi.service';
 
-const iota = composeAPI({
-  // replace with your IRI node address 
-  // or connect to a Devnet node for testing: 'https://nodes.devnet.iota.org:443'
-  provider: 'https://iri.thank-the-maker.org'
-})
-
+const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 
 @Component({
   selector: 'app-home',
@@ -16,29 +11,24 @@ const iota = composeAPI({
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
   qrImage = '';
-  
-  seed = 'REPLACE999WITH999YOUR999SEED'
-  address = ''
-
+  address = '';
   text = '';
   balance: number = 0;
-  myIndex: number = 20;
-  transCount = 0;
+  transactions = [];
   transactionTimer: any;
   balanceTimer: any;
 
-  constructor(public toastController: ToastController) {}
+  constructor(public toastController: ToastController, public iotaApi: IotaApiService) {}
 
   ionViewDidEnter() {
     this.nextAdress();
     this.processQRCode();
     this.displayQrCode();
-    this.getAccountData()
-    this.findTransactions()
+    this.getAccountData();
+    this.getAddressData();
     this.transactionTimer = setInterval(() => {
-      this.findTransactions()
+      this.getAddressData()
     }, 10 * 1000);
     this.balanceTimer = setInterval(() => {
       this.getAccountData()
@@ -46,52 +36,34 @@ export class HomePage {
   }
 
   async getAccountData() {
-    const options = {
-      index: this.myIndex,
-      security: 2,
-      checksum: true,
-    };
-    iota.getAccountData(this.seed, options).then(accountData => {
-      console.log('Balance:' + accountData.balance)
-      this.balance=accountData.balance / 1000000.00;
-//      this.text = JSON.stringify(inputs)
-    })
-    .catch(err => {
-        console.log(`Request error: ${err.message}`)
-    }) 
   }
 
-  async findTransactions() {
-    this.processQRCode(); 
-
-    iota.findTransactions({ addresses: [this.address] }).then(hashes => {
-      console.log('Transactions:' + hashes)
-      this.transCount = hashes.length;
-    })
-    .catch(err => {
-      console.log(`Request error: ${err.message}`)
-    })
+  async getAddressData() {
+    if (this.address) {
+      await this.iotaApi.getAddressInfo(this.address).subscribe(accountData => {
+        const balance = accountData.balances.balances[0];
+        const transactions = accountData.transactions;
+        console.log('Balance:' + balance);
+        this.balance = balance / 1000000.00;
+        this.transactions = transactions;
+      })
+    }
 
     const toast = await this.toastController.create({
-      message: 'Transactions at address ' + this.address.substr(0, 20) + ': '  + this.transCount,
+      message: 'Transactions at address ' + this.address.substr(0, 20) + ': '  + this.transactions.length,
       duration: 2000
     });
     toast.present();
   }
 
   nextAdress() {
-   this.myIndex++
-   const options = {
-      index: this.myIndex,
-      security: 2,
-      checksum: true,
-  };
-    iota.getNewAddress(this.seed, options).then(address => {
-      console.log('New address [' + this.myIndex + ']: ' + address)
-      this.address = address;
-    })
-    .catch(err => {
-      console.log(`Request error: ${err.message}`)
+    staticAddress ? this.address = staticAddress :
+    this.iotaApi.getNewAddress().subscribe(data => {
+      console.log('New address [' + data.index + ']: ' + data.address);
+      if (typeof data.address === "string") {
+        this.address = data.address;
+        this.processQRCode();
+      }
     })
   }
 
@@ -99,11 +71,10 @@ export class HomePage {
     return this.qrImage !== '';
   }
 
-
   processQRCode() {
     const qrcode = QRCode;
     const self = this;
-    qrcode.toDataURL(self.address, { 
+    qrcode.toDataURL(self.address, {
       errorCorrectionLevel: 'H',
       colorDark : "#00357a",
       colorLight : "#fecb0a",

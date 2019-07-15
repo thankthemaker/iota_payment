@@ -14,9 +14,23 @@
                   <img src="assets/postbank_logo.png" />
                 </ion-thumbnail>
                 <ion-card-header>
-                  <ion-card-subtitle>No active transaction found</ion-card-subtitle>
-                  <ion-card-title>Your Credit: 
+                  <ion-card-title>Your Credit:
                     {{balance | number:'1.2-2'}} MIOTA</ion-card-title>
+                  <ion-card-subtitle>
+                      <div *ngIf="transactions.length === 0">No active transaction found</div>
+                      <div *ngIf="transactions.length > 0">
+                          transaction found:<br /><br />
+                          <ion-list>
+                              <ion-item *ngFor="let transaction of transactions">
+                                  <ion-label>{{ transaction.hash }}</ion-label>
+                                  <ion-badge *ngIf="!transaction.confirmed" color="warning">{{ transaction.value }}</ion-badge>
+                                  <ion-badge *ngIf="transaction.confirmed"color="success">{{ transaction.value }}</ion-badge>
+                                  <ion-icon *ngIf="!transaction.confirmed" name="swap"></ion-icon>
+                                  <ion-icon *ngIf="transaction.confirmed" name="checkmark-circle-outline"></ion-icon>
+                              </ion-item>
+                          </ion-list>
+                      </div>
+                  </ion-card-subtitle>
                 </ion-card-header>
                 <ion-card-content>
                   {{text}}
@@ -27,7 +41,7 @@
                 <ion-card-content>
                     <img *ngIf="displayQrCode()" [src]="qrImage" />
                 </ion-card-content>
-              </ion-card> 
+              </ion-card>
         </ion-col>
     </ion-row>
     <ion-row class="ion-align-items-stretch">
@@ -42,7 +56,7 @@
                     <ion-card-subtitle>pay with</ion-card-subtitle>
                     <img  src="assets/iota_logo.png" />
                   </ion-card-header>
-              </ion-card> 
+              </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
