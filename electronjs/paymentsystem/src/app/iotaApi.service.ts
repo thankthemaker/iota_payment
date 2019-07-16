@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const addressesUrl = 'https://iota-api.thank-the-maker.org/addresses';
+const baseUrl = 'https://iota-api.thank-the-maker.org';
 
 @Injectable()
 export class IotaApiService {
@@ -9,10 +9,14 @@ export class IotaApiService {
     }
 
     getNewAddress() {
-        return this.http.post<any>(addressesUrl, null);
+        return this.http.post<any>(baseUrl + '/addresses', null);
     }
 
     getAddressInfo(address) {
-        return this.http.get<any>(addressesUrl + '/' + address)
+        return this.http.get<any>(baseUrl+ '/addresses' + '/' + address)
+    }
+
+    getSeedInfo() {
+        return this.http.get<any>(baseUrl+ '/seeds' + '/' + '1')
     }
 }

@@ -3,7 +3,10 @@ import { ToastController } from '@ionic/angular';
 import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
 
-const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+// For testing:
+// const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+const staticAddress = undefined;
+const toast = false;
 
 @Component({
   selector: 'app-home',
@@ -14,7 +17,7 @@ export class HomePage {
   qrImage = '';
   address = '';
   text = '';
-  balance: number = 0;
+  balance: number;
   transactions = [];
   transactionTimer: any;
   balanceTimer: any;
@@ -32,28 +35,29 @@ export class HomePage {
     }, 10 * 1000);
     this.balanceTimer = setInterval(() => {
       this.getAccountData()
-    }, 60 * 1000);
+    }, 120 * 1000);
   }
 
   async getAccountData() {
+    this.iotaApi.getSeedInfo().subscribe(seedInfo => {
+      this.balance = seedInfo.balance;
+    })
   }
 
   async getAddressData() {
     if (this.address) {
-      await this.iotaApi.getAddressInfo(this.address).subscribe(accountData => {
-        const balance = accountData.balances.balances[0];
-        const transactions = accountData.transactions;
-        console.log('Balance:' + balance);
-        this.balance = balance / 1000000.00;
-        this.transactions = transactions;
+      await this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
+        this.transactions = addressData.transactions;
       })
     }
 
-    const toast = await this.toastController.create({
-      message: 'Transactions at address ' + this.address.substr(0, 20) + ': '  + this.transactions.length,
-      duration: 2000
-    });
-    toast.present();
+    if (toast) {
+      const toast = await this.toastController.create({
+        message: 'Transactions at address ' + this.address.substr(0, 20) + ': ' + this.transactions.length,
+        duration: 2000
+      });
+      toast.present();
+    }
   }
 
   nextAdress() {

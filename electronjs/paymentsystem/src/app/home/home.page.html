@@ -15,7 +15,11 @@
                 </ion-thumbnail>
                 <ion-card-header>
                   <ion-card-title>Your Credit:
-                    {{balance | number:'1.2-2'}} MIOTA</ion-card-title>
+                      <span *ngIf="balance">
+                          <span> {{(balance / 1000000.00) | number}} MIOTA</span>
+                      </span>
+                      <span *ngIf="!balance">&nbsp;<ion-spinner name="bubbles"></ion-spinner></span>
+                  </ion-card-title>
                   <ion-card-subtitle>
                       <div *ngIf="transactions.length === 0">No active transaction found</div>
                       <div *ngIf="transactions.length > 0">
