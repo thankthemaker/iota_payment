@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
 
 // For testing:
-// const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+//const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
 const toast = false;
 
@@ -46,7 +46,7 @@ export class HomePage {
 
   async getAddressData() {
     if (this.address) {
-      await this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
+      this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
         this.transactions = addressData.transactions;
       })
     }
