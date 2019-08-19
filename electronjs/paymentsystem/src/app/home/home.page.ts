@@ -5,8 +5,8 @@ import { IotaApiService } from '../iotaApi.service';
 import { isEqual } from 'lodash';
 
 // For testing:
-const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
-// const staticAddress = undefined;
+// const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+const staticAddress = undefined;
 const toast = false;
 
 @Component({
