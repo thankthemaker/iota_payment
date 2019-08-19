@@ -17,10 +17,8 @@ export class HomePage {
   qrImage = '';
   address = '';
   text = '';
-  balance: number;
   transactions = [];
   transactionTimer: any;
-  balanceTimer: any;
 
   constructor(public toastController: ToastController, public iotaApi: IotaApiService) {}
 
@@ -28,25 +26,15 @@ export class HomePage {
     this.nextAdress();
     this.processQRCode();
     this.displayQrCode();
-    this.getAccountData();
     this.getAddressData();
     this.transactionTimer = setInterval(() => {
       this.getAddressData()
     }, 10 * 1000);
-    this.balanceTimer = setInterval(() => {
-      this.getAccountData()
-    }, 120 * 1000);
-  }
-
-  async getAccountData() {
-    this.iotaApi.getSeedInfo().subscribe(seedInfo => {
-      this.balance = seedInfo.balance;
-    })
   }
 
   async getAddressData() {
     if (this.address) {
-      await this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
+      this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
         this.transactions = addressData.transactions;
       })
     }

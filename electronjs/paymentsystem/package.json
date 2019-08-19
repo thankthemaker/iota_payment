@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron-serve": "ng build --prod && electron ."
+    "electron-serve": "ng build --prod && electron .",
+    "ionic": "ionic serve"
   },
   "private": true,
   "dependencies": {
