@@ -159,6 +159,41 @@ main(int argc, const char *argv[])
     exit(EXIT_FAILURE);
   printf("\n");
 
+  // UpdateBinary - send NDEF data
+ // memcpy(capdu, "\x00\xd6\x00\x00\x05\xd1\x01\x0D\x55\x01\x61\x64\x61\x66\x72\x75\x69\x74\x2E\x63\x6F\x6D", 22); 
+
+  if (argc >= 2) {
+   char source[strlen( argv[1] )];
+   strcpy(source, argv[1]);
+   int len = strlen( source );
+
+   capdu[0]  = 0x00; // Class byte (CLA)
+   capdu[1]  = 0xd6; // Instruction byte (INS) for UpdateBinary command
+   capdu[2]  = 0x00; // Parameter byte (P1), offset inside the CC file
+   capdu[3]  = 0x00; // Parameter byte (P2), offset inside the CC file
+   capdu[4]  = 0x05; // Le field
+
+   capdu[5]  = 0xd1; // NDEF Record Header
+   capdu[6]  = 0x01; // Type Length of RTI
+   capdu[7]  = len+1; // Payload Length
+   capdu[8]  = 0x55; // Record Type Indicator (0x55 or 'U' = URI Record)
+
+   capdu[9]  = 0x01; // start of payload, here URI Identifier ("http://www.")
+
+   for (int i = 0; i <= len; i++){
+     capdu[i+10] = source[i];
+   }
+   capdulen = 10 + len;
+
+   rapdulen=sizeof(rapdu);
+   printf("Sending UpdateBinary, send NDEF data...\n");
+   if (CardTransmit(pnd, capdu, capdulen, rapdu, &rapdulen) < 0)
+     exit(EXIT_FAILURE);
+   if (rapdulen < 2 || rapdu[rapdulen-2] != 0x90 || rapdu[rapdulen-1] != 0x00)
+     exit(EXIT_FAILURE);
+   printf("\n");
+  }
+
   printf("Wrapping up, closing session.\n\n");
 
   nfc_close(pnd);
