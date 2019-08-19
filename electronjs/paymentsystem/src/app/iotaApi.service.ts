@@ -5,7 +5,7 @@ const baseUrl = 'https://iota-api.thank-the-maker.org';
 
 const options = {
     headers: {
-        'x-api-key': 'iotapoc-88gbFGg8HoPn2LyNvZcac3NJudd'
+        'x-api-key': 'prod-iotapoc-88gbFGg8HoPn2LyNvZcac3NJudd'
     }
 };
 
