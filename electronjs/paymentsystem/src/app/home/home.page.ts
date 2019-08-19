@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
+import { isEqual } from 'lodash';
 
 // For testing:
-// const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
-const staticAddress = undefined;
+const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+// const staticAddress = undefined;
 const toast = false;
 
 @Component({
@@ -35,7 +36,12 @@ export class HomePage {
   async getAddressData() {
     if (this.address) {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
-        this.transactions = addressData.transactions;
+        console.log('this.transactions ', this.transactions);
+        console.log('addressData.transactions ', addressData.transactions);
+        // prevents flickering on slow devices
+        if (!isEqual(this.transactions, addressData.transactions)) {
+          this.transactions = addressData.transactions;
+        }
       })
     }
 
