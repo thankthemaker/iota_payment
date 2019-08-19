@@ -9,6 +9,9 @@ import { isEqual } from 'lodash';
 const staticAddress = undefined;
 const toast = false;
 
+// the amount shoud be transfered by the coffee-machine
+const amount = 3;
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -72,7 +75,12 @@ export class HomePage {
   processQRCode() {
     const qrcode = QRCode;
     const self = this;
-    qrcode.toDataURL(self.address, {
+    qrcode.toDataURL(`{
+      "address": "${self.address}",
+      "amount": ${amount},
+      "message": "",
+      "tag": ""
+    }`, {
       errorCorrectionLevel: 'H',
       colorDark : "#00357a",
       colorLight : "#fecb0a",
