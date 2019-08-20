@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
+import { isEqual } from 'lodash';
 
 // For testing:
 //const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
 const toast = false;
+
+// the amount shoud be transfered by the coffee-machine
+const amount = 3;
 
 @Component({
   selector: 'app-home',
@@ -17,10 +21,8 @@ export class HomePage {
   qrImage = '';
   address = '';
   text = '';
-  balance: number;
   transactions = [];
   transactionTimer: any;
-  balanceTimer: any;
 
   constructor(public toastController: ToastController, public iotaApi: IotaApiService) {}
 
@@ -28,26 +30,22 @@ export class HomePage {
     this.nextAdress();
     this.processQRCode();
     this.displayQrCode();
-    this.getAccountData();
     this.getAddressData();
     this.transactionTimer = setInterval(() => {
       this.getAddressData()
     }, 10 * 1000);
-    this.balanceTimer = setInterval(() => {
-      this.getAccountData()
-    }, 120 * 1000);
-  }
-
-  async getAccountData() {
-    this.iotaApi.getSeedInfo().subscribe(seedInfo => {
-      this.balance = seedInfo.balance;
-    })
   }
 
   async getAddressData() {
     if (this.address) {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
-        this.transactions = addressData.transactions;
+
+        console.log('this.transactions ', this.transactions);
+        console.log('addressData.transactions ', addressData.transactions);
+        // prevents flickering on slow devices
+        if (!isEqual(this.transactions, addressData.transactions)) {
+          this.transactions = addressData.transactions;
+        }
       })
     }
 
@@ -78,7 +76,12 @@ export class HomePage {
   processQRCode() {
     const qrcode = QRCode;
     const self = this;
-    qrcode.toDataURL(self.address, {
+    qrcode.toDataURL(`{
+      "address": "${self.address}",
+      "amount": ${amount},
+      "message": "",
+      "tag": ""
+    }`, {
       errorCorrectionLevel: 'H',
       colorDark : "#00357a",
       colorLight : "#fecb0a",
