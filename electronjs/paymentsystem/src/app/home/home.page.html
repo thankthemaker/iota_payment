@@ -14,12 +14,6 @@
                   <img src="assets/postbank_logo.png" />
                 </ion-thumbnail>
                 <ion-card-header>
-                  <ion-card-title>Your Credit:
-                      <span *ngIf="balance">
-                          <span> {{(balance / 1000000.00) | number}} MIOTA</span>
-                      </span>
-                      <span *ngIf="!balance">&nbsp;<ion-spinner name="bubbles"></ion-spinner></span>
-                  </ion-card-title>
                   <ion-card-subtitle>
                       <div *ngIf="transactions.length === 0">No active transaction found</div>
                       <div *ngIf="transactions.length > 0">
