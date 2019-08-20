@@ -39,8 +39,6 @@ export class HomePage {
   async getAddressData() {
     if (this.address) {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
-        console.log('this.transactions ', this.transactions);
-        console.log('addressData.transactions ', addressData.transactions);
         // prevents flickering on slow devices
         if (!isEqual(this.transactions, addressData.transactions)) {
           this.transactions = addressData.transactions;
