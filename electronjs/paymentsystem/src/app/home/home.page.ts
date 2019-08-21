@@ -28,7 +28,6 @@ export class HomePage {
 
   ionViewDidEnter() {
     this.nextAdress();
-    this.processQRCode();
     this.displayQrCode();
     this.getAddressData();
     this.transactionTimer = setInterval(() => {
