@@ -5,6 +5,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'standby', pathMatch: 'full' },
   { path: 'standby', loadChildren: './standby/standby.module#StandbyModule' },
   { path: 'payment', loadChildren: './payment/payment.module#PaymentModule' },
+  { path: 'brewing', loadChildren: './brewing/brewing.module#BrewingModule' },
 ];
 
 @NgModule({
