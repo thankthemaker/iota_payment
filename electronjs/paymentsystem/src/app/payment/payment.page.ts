@@ -1,57 +1,45 @@
 import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
-import { isEqual } from 'lodash';
+import { isEmpty } from 'lodash';
+import { Router } from '@angular/router';
 
 // For testing:
 //const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
-const toast = false;
+const refreshTransactionIntervalSeconds = 5;
+const amountToCheck = 2; // TODO Iotas to pay
 
 // the amount shoud be transfered by the coffee-machine
 const amount = 3;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-payment',
+  templateUrl: 'payment.page.html',
+  styleUrls: ['payment.page.scss'],
 })
-export class HomePage {
+export class PaymentPage {
   qrImage = '';
   address = '';
   text = '';
   transactions = [];
   transactionTimer: any;
 
-  constructor(public toastController: ToastController, public iotaApi: IotaApiService) {}
+  constructor(public iotaApi: IotaApiService, private router: Router) {}
 
   ionViewDidEnter() {
     this.nextAdress();
     this.displayQrCode();
-    this.getAddressData();
     this.transactionTimer = setInterval(() => {
       this.getAddressData()
-    }, 10 * 1000);
+    }, refreshTransactionIntervalSeconds * 1000);
   }
 
-  async getAddressData() {
-    if (this.address) {
-      this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
-        // prevents flickering on slow devices
-        if (!isEqual(this.transactions, addressData.transactions)) {
-          this.transactions = addressData.transactions;
-        }
-      })
-    }
-
-    if (toast) {
-      const toast = await this.toastController.create({
-        message: 'Transactions at address ' + this.address.substr(0, 20) + ': ' + this.transactions.length,
-        duration: 2000
-      });
-      toast.present();
-    }
+  ngOnDestroy() {
+    this.qrImage = '';
+    this.address = '';
+    this.transactions = [];
+    this.transactionTimer = undefined;
   }
 
   nextAdress() {
@@ -63,6 +51,21 @@ export class HomePage {
         this.processQRCode();
       }
     })
+  }
+
+  async getAddressData() {
+    if (this.address) {
+      this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
+        if (!isEmpty(addressData.transactions)) {
+          // check amount-value on all transactions on an address
+          const amount = addressData.transactions.reduce((a, b) => a + b.value, 0);
+          console.log('amount: ', amount);
+          if (amount >= amountToCheck) {
+            this.router.navigate(['/standby'])
+          }
+        }
+      })
+    }
   }
 
   displayQrCode() {
