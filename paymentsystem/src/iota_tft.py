@@ -29,8 +29,17 @@ def exitGUI():
 
 # Seed used for generating addresses and collecting funds.
 # IMPORTANT!!! Replace with your own seed
-MySeed = b"USE999YOUR999SEED"
+# IMPORTANT!!! Replace with your own seed
+##### Mainnet #####
+##MySeed = b"VKPWZUTNWGIKHRUSQIT9NQTBLLSVAISGXLNMECFAAQGNYYEXAPHTML9XLY9KGYKO9FSRGETNIM9PFOYFI"
 
+##### Devnet #####
+MySeed = b"ZBIBM9OE9ZSS9DAHVFBDUGWVWTPICDRAROBKTWJQGUOPGQXSVBNDFQLWNVCEMIKCFZGI9GAQFATMZYZZB"
+
+
+# URL to IOTA fullnode used when checking balance
+#iotaNode = "https://iri.thank-the-maker.org"
+iotaNode = "https://nodes.devnet.iota.org:443"
 # URL to IOTA fullnode used when checking balance
 iotaNode = "https://iri.thank-the-maker.org"
 
