@@ -8,10 +8,6 @@ import { Router } from '@angular/router';
 //const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
 const refreshTransactionIntervalSeconds = 5;
-const amountToCheck = 2; // TODO Iotas to pay
-
-// the amount shoud be transfered by the coffee-machine
-const amount = 3;
 
 @Component({
   selector: 'app-payment',
@@ -24,6 +20,8 @@ export class PaymentPage {
   text = '';
   transactions = [];
   transactionTimer: any;
+  // the amount shoud be transfered by the coffee-machine
+  amount = 3;
 
   constructor(public iotaApi: IotaApiService, private router: Router) {}
 
@@ -58,9 +56,8 @@ export class PaymentPage {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
         if (!isEmpty(addressData.transactions)) {
           // check amount-value on all transactions on an address
-          const amount = addressData.transactions.reduce((a, b) => a + b.value, 0);
-          console.log('amount: ', amount);
-          if (amount >= amountToCheck) {
+          const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
+          if (receivedAmount >= this.amount) {
             this.router.navigate(['/standby'])
           }
         }
@@ -77,7 +74,7 @@ export class PaymentPage {
     const self = this;
     qrcode.toDataURL(`{
       "address": "${self.address}",
-      "amount": ${amount},
+      "amount": ${self.amount},
       "message": "",
       "tag": ""
     }`, {
