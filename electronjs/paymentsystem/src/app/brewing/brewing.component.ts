@@ -7,19 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./brewing.component.scss'],
 })
 export class BrewingComponent implements OnInit {
-  redirectTimer: any;
-
   constructor(private router: Router) { }
 
-  ngOnInit() {
-    this.redirectTimer = setTimeout(() => {
+  redirectTimer() {
+    setTimeout(() => {
       this.router.navigate(['standby']);
-    }, 5000);
+    }, 11000);
+  }
+
+  ngOnInit() {
     this.redirectTimer();
   }
-
-  ngOnDestroy() {
-    this.redirectTimer = undefined;
-  }
-
 }
