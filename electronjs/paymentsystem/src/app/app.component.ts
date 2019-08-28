@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { environment } from '../environments/environment';
 
 import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import { AWS } from '@aws-amplify/core';
@@ -33,16 +32,10 @@ export class AppComponent {
 
 
 AWS.config.update({
-  credentials: new AWS.Credentials ({
-    accessKeyId: environment.accessKeyId,
-    secretAccessKey: environment.secretAccessKey
-  })
+  credentials: new AWS.Credentials (awsamplify.auth)
 })
 
-Amplify.addPluggable(new AWSIoTProvider({
-  aws_pubsub_region: 'eu-central-1',
-  aws_pubsub_endpoint: 'wss://a3dtjrh1oco8co-ats.iot.eu-central-1.amazonaws.com/mqtt',
-}));
+Amplify.addPluggable(new AWSIoTProvider(awsamplify.pubsub));
 
 Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {

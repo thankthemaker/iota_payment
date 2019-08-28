@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  accessKeyId: "AKIAR3JAPMLCCVUPEFE6",
-  secretAccessKey: "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"
+  accessKeyId: "<secret>",
+  secretAccessKey: "<secret>"
 };
 
 /*
