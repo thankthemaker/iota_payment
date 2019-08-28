@@ -61,7 +61,9 @@ export class PaymentPage {
           // check amount-value on all transactions on an address
           const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
           if (receivedAmount >= this.amount) {
-            this.router.navigate(['/standby'])
+            // prevent double-redirecting
+            this.address = undefined;
+            this.router.navigate(['/brewing'])
           }
         }
       })
