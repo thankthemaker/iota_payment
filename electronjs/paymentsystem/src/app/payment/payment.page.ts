@@ -29,7 +29,7 @@ export class PaymentPage {
   // the amount shoud be transfered by the coffee-machine
   amount = 3;
 
-  constructor(public iotaApi: IotaApiService, private router: Router, private store: Store<State>) {}
+  constructor(private iotaApi: IotaApiService, private router: Router, private store: Store<State>) {}
 
   ionViewDidEnter() {
     this.nextAddress();

@@ -25,4 +25,8 @@ export class IotaApiService {
     getSeedInfo() {
         return this.http.get<any>(baseUrl + '/seeds' + '/' + '1', options);
     }
+
+    getNodeInfo() {
+        return this.http.get<any>(baseUrl + '/nodes', options);
+    }
 }
