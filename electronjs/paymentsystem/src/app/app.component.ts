@@ -33,13 +33,13 @@ export class AppComponent {
 
 AWS.config.update({
   credentials: new AWS.Credentials (awsamplify.auth)
-})
+});
 
 Amplify.addPluggable(new AWSIoTProvider(awsamplify.pubsub));
 
 Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {
-    console.log('Message received', data)
+    console.log('Message received', data);
     this.router.navigate(['/payment'])
   },
   error: error => console.error(error),

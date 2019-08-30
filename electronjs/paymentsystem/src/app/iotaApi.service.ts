@@ -19,10 +19,10 @@ export class IotaApiService {
     }
 
     getAddressInfo(address) {
-        return this.http.get<any>(baseUrl+ '/addresses' + '/' + address, options)
+        return this.http.get<any>(baseUrl + '/addresses' + '/' + address, options);
     }
 
     getSeedInfo() {
-        return this.http.get<any>(baseUrl+ '/seeds' + '/' + '1', options)
+        return this.http.get<any>(baseUrl + '/seeds' + '/' + '1', options);
     }
 }

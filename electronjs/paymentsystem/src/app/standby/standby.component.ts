@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Amplify, { Analytics } from 'aws-amplify';
+//import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-standby',
@@ -8,12 +9,13 @@ import Amplify, { Analytics } from 'aws-amplify';
 })
 export class StandbyComponent implements OnInit {
 
-  constructor(){}
+  constructor(/*private router: Router*/) {}
 
   ngOnInit() {}
 
   getCoffee() {
     console.log('getCoffee ');
     Amplify.PubSub.publish('/iota-poc', 'coffee');
+    //this.router.navigate(['/payment'])
   }
 }
