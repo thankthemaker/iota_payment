@@ -13,7 +13,7 @@ let refreshTransactionIntervalSeconds = 10;
     templateUrl: './transactions.component.html',
     styleUrls: ['./transactions.component.scss'],
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent {
     transactions = [];
     transactionTimer: any;
     address;
@@ -24,15 +24,15 @@ export class TransactionsComponent implements OnInit {
         this.address$ = store.pipe(selectAddressToWatch);
         this.address$.subscribe(addressFromStore => {
             console.log('addressToWatch: ', addressFromStore);
-            this.address = addressFromStore
+            this.address = addressFromStore;
+            this.getAddressData();
+            this.transactionTimer = setInterval(() => {
+                this.getAddressData();
+            }, refreshTransactionIntervalSeconds * 1000);
         });
     }
 
     ngOnInit() {
-        this.getAddressData();
-        this.transactionTimer = setInterval(() => {
-            this.getAddressData();
-        }, refreshTransactionIntervalSeconds * 1000);
     }
 
     async getAddressData() {
