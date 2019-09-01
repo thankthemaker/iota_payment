@@ -42,6 +42,7 @@ AWS.config.update({
   )
 })
 
+
 Amplify.addPluggable(new AWSIoTProvider(
   {
     aws_pubsub_region: 'eu-central-1',
@@ -51,7 +52,7 @@ Amplify.addPluggable(new AWSIoTProvider(
 
 Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {
-    console.log('Message received', data)
+    console.log('Message received', data);
     this.router.navigate(['/payment'])
   },
   error: error => console.error(error),

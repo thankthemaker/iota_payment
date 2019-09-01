@@ -4,11 +4,14 @@ import { IotaApiService } from '../iotaApi.service';
 import { isEmpty } from 'lodash';
 import { Router } from '@angular/router';
 import Amplify, { PubSub } from 'aws-amplify';
+import { Store } from '@ngrx/store';
+import { State } from '../store/store.reducer';
+import { setAddressToWatch } from '../store/store.actions';
 
 
 
 // For testing:
-//const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
+// const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
 const refreshTransactionIntervalSeconds = 5;
 
@@ -26,13 +29,13 @@ export class PaymentPage {
   // the amount shoud be transfered by the coffee-machine
   amount = 3;
 
-  constructor(public iotaApi: IotaApiService, private router: Router) {}
+  constructor(private iotaApi: IotaApiService, private router: Router, private store: Store<State>) {}
 
   ionViewDidEnter() {
     this.nextAddress();
     this.displayQrCode();
     this.transactionTimer = setInterval(() => {
-      this.getAddressData()
+      this.getAddressData();
     }, refreshTransactionIntervalSeconds * 1000);
   }
 
@@ -47,11 +50,12 @@ export class PaymentPage {
     staticAddress ? this.address = staticAddress :
     this.iotaApi.getNewAddress().subscribe(data => {
       console.log('New address [' + data.index + ']: ' + data.address);
-      if (typeof data.address === "string") {
+      if (typeof data.address === 'string') {
         this.address = data.address;
+        this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
         this.processQRCode();
       }
-    })
+    });
   }
 
   async getAddressData() {
@@ -63,10 +67,10 @@ export class PaymentPage {
           if (receivedAmount >= this.amount) {
             // prevent double-redirecting
             this.address = undefined;
-            this.router.navigate(['/brewing'])
+            this.router.navigate(['/brewing']);
           }
         }
-      })
+      });
     }
   }
 
@@ -84,10 +88,10 @@ export class PaymentPage {
       "tag": ""
     }`, {
       errorCorrectionLevel: 'H',
-      colorDark : "#00357a",
-      colorLight : "#fecb0a",
-     }, function (err, url) {
+      colorDark : '#00357a',
+      colorLight : '#fecb0a',
+     }, function(err, url) {
       self.qrImage = url;
-    })
+    });
   }
 }

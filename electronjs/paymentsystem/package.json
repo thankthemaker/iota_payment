@@ -30,6 +30,8 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "@iota/core": "^1.0.0-beta.17",
+    "@ngrx/store": "^8.3.0",
+    "@ngrx/store-devtools": "^8.3.0",
     "aws-amplify": "^1.1.36",
     "aws-amplify-angular": "^3.0.11",
     "core-js": "^2.5.4",
