@@ -1,5 +1,7 @@
 {
   "name": "paymentsystem",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

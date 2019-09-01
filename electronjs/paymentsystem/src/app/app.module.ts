@@ -11,11 +11,18 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IotaApiService } from './iotaApi.service';
 import { HeaderComponent } from './header/header.component';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   entryComponents: [],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule, 
+    HttpClientModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    NgxElectronModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,

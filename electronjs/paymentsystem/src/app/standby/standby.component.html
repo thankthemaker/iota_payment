@@ -1,1 +1,22 @@
-<ion-button color="danger" (click)="getCoffee()">Kaffee</ion-button>
+<!--
+<ion-card>
+    <ion-card-content>
+      <img src="assets/coffee.png"/>
+      <ion-card-title>
+        Nine Inch Nails Live
+      </ion-card-title>
+      <p>
+        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+      </p>
+    </ion-card-content>
+</ion-card>
+-->
+
+<div text-center>
+    <p>
+        Bitte wähle ein Produkt. Verwende dazu die Produktwahltasten der Kaffeemaschine.
+    </p>
+    <img src="assets/coffee.png" [height]="300"/>
+</div>
+
+<ion-button color="secondary" (click)="getCoffee()">Kaffee</ion-button>
