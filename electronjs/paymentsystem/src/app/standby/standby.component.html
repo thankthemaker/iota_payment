@@ -13,12 +13,13 @@
 -->
 
 <div text-center>
-        <p>
-            Bitte wähle ein Produkt. Verwende dazu die Produktwahltasten der Kaffeemaschine.
-        </p>
-        <img src="assets/coffee.png" [height]="200"/>
-    </div>
-    
+    <p>
+        Bitte wähle ein Produkt. Verwende dazu die Produktwahltasten der Kaffeemaschine.
+    </p>
+    <img src="assets/coffee.png" [height]="150" /> <br />
     <ion-button color="secondary" (click)="getCoffee()">Kaffee</ion-button>
-<app-nodeinfo></app-nodeinfo>
-<app-transactions></app-transactions>
+    <app-nodeinfo></app-nodeinfo>
+    <app-transactions></app-transactions>
+
+    <img [height]="60" src="assets/gifs/arrow.gif" />
+</div>
