@@ -1,4 +1,3 @@
-from flask import Flask
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import os
 import logging
@@ -6,16 +5,19 @@ import time
 import json
 import subprocess
 
-app = Flask(__name__)
-
 # Custom MQTT message callback
 def msgCallback(client, userdata, message):
     print("Received a new message: ")
     jsonMsg = json.loads(message.payload)
-    print("command: " + jsonMsg['command'])
-    print("--------------\n\n")
-    output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg['command']])
-    print output
+    if jsonMsg['command'] == "payment":
+        print("command: " + jsonMsg['command'])
+        print("--------------\n\n")
+        output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg['command']])
+        print output
+        message = {}
+        message['command'] = "coffee"
+        messageJson = json.dumps(message)
+        myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
 
 if __name__ == '__main__':
     clientId = "python2-card-reader"
@@ -53,10 +55,5 @@ if __name__ == '__main__':
     # Publish to the same topic in a loop forever
     loopCount = 0
     while True:
-##        message = {}
-##        message['message'] = "test"
-##        message['sequence'] = loopCount
-##        messageJson = json.dumps(message)
-##        ##myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
         loopCount += 1
         time.sleep(5)
