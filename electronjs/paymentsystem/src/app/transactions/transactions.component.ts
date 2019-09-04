@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { selectAddressToWatch } from '../store/store.selectors';
+import { setTransactionState } from '../store/store.actions';
 
 let refreshTransactionIntervalSeconds = 10;
 
@@ -45,6 +46,7 @@ export class TransactionsComponent {
                     let allTransactionsConfirmed = true;
                     this.transactions.map(transaction => !transaction.confirmed ? allTransactionsConfirmed = false : null);
                     if (allTransactionsConfirmed) {
+                        this.store.dispatch(setTransactionState({ transactionState: 'payment_confirmed' }));
                         clearInterval(this.transactionTimer);
                     }
                 }

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import Amplify, { PubSub } from 'aws-amplify';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
-import { setAddressToWatch } from '../store/store.actions';
+import { setAddressToWatch, setTransactionState } from '../store/store.actions';
 
 
 
@@ -52,8 +52,9 @@ export class PaymentPage {
       console.log('New address [' + data.index + ']: ' + data.address);
       if (typeof data.address === 'string') {
         this.address = data.address;
-        this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
         this.processQRCode();
+        this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
+        this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
       }
     });
   }
@@ -68,6 +69,7 @@ export class PaymentPage {
             // prevent double-redirecting
             this.address = undefined;
             clearInterval(this.transactionTimer);
+            this.store.dispatch(setTransactionState({ transactionState: 'payment_attached' }));
             this.router.navigate(['/brewing']);
           }
         }
