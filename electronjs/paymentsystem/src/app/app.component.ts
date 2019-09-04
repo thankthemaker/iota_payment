@@ -9,6 +9,7 @@ import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import { AWS } from '@aws-amplify/core';
 import Amplify, { Analytics } from 'aws-amplify';
 import { ElectronService } from 'ngx-electron';
+import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-accessors/value-accessor';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +54,18 @@ Amplify.addPluggable(new AWSIoTProvider(
 Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {
     console.log('Message received', data);
-    this.router.navigate(['/payment'])
+    switch (data.value.command) {
+      case "coffee": 
+        this.router.navigate(['/payment'])
+        break;
+      case "standby":
+          this.router.navigate(['/standby'])
+        break;
+      case "":
+        break;
+      default:
+        console.log("Unknown command " + data.value);
+    }
   },
   error: error => console.error(error),
   close: () => console.log('Done'),
