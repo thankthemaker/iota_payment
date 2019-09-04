@@ -21,6 +21,8 @@ if __name__ == '__main__':
     clientId = "python2-card-reader"
     host = os.getenv("AWS_HOST", "a3dtjrh1oco8co.iot.eu-central-1.amazonaws.com")
     port = os.getenv("AWS_PORT", 443)
+    ca_cert_path = os.getenv("AWS_CA_CERT_PATH", ".")
+
 
     # Configure logging
     logger = logging.getLogger("AWSIoTPythonSDK.core")
@@ -34,7 +36,7 @@ if __name__ == '__main__':
     myAWSIoTMQTTClient = None
     myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId, useWebsocket=True)
     myAWSIoTMQTTClient.configureEndpoint(host, port)
-    myAWSIoTMQTTClient.configureCredentials("./VeriSign-Class 3-Public-Primary-Certification-Authority-G5.pem"), 
+    myAWSIoTMQTTClient.configureCredentials(ca_cert_path  + "/VeriSign-Class 3-Public-Primary-Certification-Authority-G5.pem"), 
 
     # AWSIoTMQTTClient connection configuration
     myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
