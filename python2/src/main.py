@@ -9,15 +9,18 @@ import subprocess
 def msgCallback(client, userdata, message):
     print("Received a new message: ")
     jsonMsg = json.loads(message.payload)
-    if jsonMsg['command'] == "payment":
-        print("command: " + jsonMsg['command'])
-        print("--------------\n\n")
-        output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg['command']])
-        print output
-        message = {}
-        message['command'] = "coffee"
-        messageJson = json.dumps(message)
-        myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
+    try:
+        if jsonMsg['command'] == "payment":
+            print("command: " + jsonMsg['command'])
+            print("--------------\n\n")
+            output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg['command']])
+            print output
+            message = {}
+            message['command'] = "coffee"
+            messageJson = json.dumps(message)
+            myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
+    except:
+        print("Exception occured")
 
 if __name__ == '__main__':
     clientId = "python2-card-reader"
