@@ -15,7 +15,7 @@ export class IotaApiService {
     }
 
     getNewAddress() {
-        return this.http.post<any>(baseUrl + '/addresses', null, options);
+        return this.http.post<any>(baseUrl + '/addresses', { seedId: 1}, options);
     }
 
     getAddressInfo(address) {
@@ -28,5 +28,11 @@ export class IotaApiService {
 
     getNodeInfo() {
         return this.http.get<any>(baseUrl + '/nodes', options);
+    }
+
+    getIotaTicker() {
+        let iotaticker = this.http.get<any>('https://api.coinmarketcap.com/v1/ticker/iota/');
+
+        return iotaticker;
     }
 }

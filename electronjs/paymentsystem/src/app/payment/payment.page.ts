@@ -67,6 +67,7 @@ export class PaymentPage {
           if (receivedAmount >= this.amount) {
             // prevent double-redirecting
             this.address = undefined;
+            clearInterval(this.transactionTimer);
             this.router.navigate(['/brewing']);
           }
         }
