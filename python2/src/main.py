@@ -14,7 +14,7 @@ def msgCallback(client, userdata, message):
     jsonMsg = json.loads(message.payload)
     print("command: " + jsonMsg['command'])
     print("--------------\n\n")
-    output = subprocess.check_output(["./apdu_tag_test",jsonMsg['command']])
+    output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg['command']])
     print output
 
 if __name__ == '__main__':
