@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 const baseUrl = 'https://iota-api.thank-the-maker.org';
 
@@ -30,9 +30,7 @@ export class IotaApiService {
         return this.http.get<any>(baseUrl + '/nodes', options);
     }
 
-    getIotaTicker() {
-        let iotaticker = this.http.get<any>('https://api.coinmarketcap.com/v1/ticker/iota/');
-
-        return iotaticker;
+    getIotaFromEur(eurs) {
+        return this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
     }
 }

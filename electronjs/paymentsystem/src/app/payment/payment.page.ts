@@ -27,16 +27,20 @@ export class PaymentPage {
   transactions = [];
   transactionTimer: any;
   // the amount shoud be transfered by the coffee-machine
-  amount = 3;
+  eurs = 0.01;
+  iotas;
 
   constructor(private iotaApi: IotaApiService, private router: Router, private store: Store<State>) {}
 
   ionViewDidEnter() {
-    this.nextAddress();
-    this.displayQrCode();
-    this.transactionTimer = setInterval(() => {
-      this.getAddressData();
-    }, refreshTransactionIntervalSeconds * 1000);
+    this.iotaApi.getIotaFromEur(this.eurs).subscribe(response => {
+      this.iotas = Math.round(response.MIOTA.price * 1000000);
+      this.nextAddress();
+      this.displayQrCode();
+      this.transactionTimer = setInterval(() => {
+        this.getAddressData();
+      }, refreshTransactionIntervalSeconds * 1000);
+    })
   }
 
   ngOnDestroy() {
@@ -63,9 +67,9 @@ export class PaymentPage {
     if (this.address) {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
         if (!isEmpty(addressData.transactions)) {
-          // check amount-value on all transactions on an address
+          // check iotas-value on all transactions on an address
           const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
-          if (receivedAmount >= this.amount) {
+          if (receivedAmount >= this.iotas) {
             // prevent double-redirecting
             this.address = undefined;
             clearInterval(this.transactionTimer);
@@ -86,7 +90,7 @@ export class PaymentPage {
     const self = this;
     qrcode.toDataURL(`{
       "address": "${self.address}",
-      "amount": ${self.amount},
+      "amount": ${self.iotas},
       "message": "",
       "tag": ""
     }`, {
