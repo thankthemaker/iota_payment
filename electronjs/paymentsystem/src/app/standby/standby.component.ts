@@ -15,7 +15,6 @@ export class StandbyComponent implements OnInit {
 
   getCoffee() {
     console.log('getCoffee ');
-    Amplify.PubSub.publish('/iota-poc', 'coffee');
-    //this.router.navigate(['/payment'])
+    Amplify.PubSub.publish('/iota-poc', 'payment');
   }
 }

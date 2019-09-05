@@ -17,6 +17,7 @@ def msgCallback(client, userdata, message):
             print output
             message = {}
             message['command'] = "coffee"
+            message['product'] = "PAA"
             messageJson = json.dumps(message)
             myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
     except:

@@ -55,13 +55,17 @@ Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {
     console.log('Message received', data);
     switch (data.value.command) {
-      case "coffee": 
-        this.router.navigate(['/payment'])
+      case "payment": 
+        this.router.navigate(['/payment/' + data.value.product + "/" + data.value.price])
         break;
       case "standby":
           this.router.navigate(['/standby'])
         break;
-      case "":
+      case "processing":
+            this.router.navigate(['/processing'])
+          break;
+      case "coffee":
+        Amplify.PubSub.publish('/iota-poc', data.value.product);
         break;
       default:
         console.log("Unknown command " + data.value);

@@ -3,12 +3,10 @@ import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
 import { isEmpty } from 'lodash';
 import { Router } from '@angular/router';
-import Amplify, { PubSub } from 'aws-amplify';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { setAddressToWatch } from '../store/store.actions';
-
-
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
@@ -27,9 +25,15 @@ export class PaymentPage {
   transactions = [];
   transactionTimer: any;
   // the amount shoud be transfered by the coffee-machine
-  amount = 3;
+  amount = 0;
+  product = '';
 
-  constructor(private iotaApi: IotaApiService, private router: Router, private store: Store<State>) {}
+
+  constructor(
+    private iotaApi: IotaApiService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private store: Store<State>) {}
 
   ionViewDidEnter() {
     this.nextAddress();
@@ -37,6 +41,11 @@ export class PaymentPage {
     this.transactionTimer = setInterval(() => {
       this.getAddressData();
     }, refreshTransactionIntervalSeconds * 1000);
+  }
+
+  ngOnInit() {
+    this.product = this.activatedRoute.snapshot.paramMap.get('product');
+    this.amount = Number(this.activatedRoute.snapshot.paramMap.get('price'));
   }
 
   ngOnDestroy() {
