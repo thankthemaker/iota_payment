@@ -67,6 +67,9 @@ Amplify.PubSub.subscribe('/iota-poc').subscribe({
       case "coffee":
         Amplify.PubSub.publish('/iota-poc', data.value.product);
         break;
+      case "brewing":
+          this.router.navigate(['/brewing'])
+          break;     
       default:
         console.log("Unknown command " + data.value);
     }
