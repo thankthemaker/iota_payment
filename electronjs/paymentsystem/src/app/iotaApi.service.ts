@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 const baseUrl = 'https://iota-api.thank-the-maker.org';
 
@@ -15,7 +15,7 @@ export class IotaApiService {
     }
 
     getNewAddress() {
-        return this.http.post<any>(baseUrl + '/addresses', null, options);
+        return this.http.post<any>(baseUrl + '/addresses', { seedId: 1}, options);
     }
 
     getAddressInfo(address) {
@@ -28,5 +28,9 @@ export class IotaApiService {
 
     getNodeInfo() {
         return this.http.get<any>(baseUrl + '/nodes', options);
+    }
+
+    getIotaFromEur(eurs) {
+        return this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
     }
 }

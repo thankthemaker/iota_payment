@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
-import { setAddressToWatch } from '../store/store.actions';
+import { setAddressToWatch, setTransactionState } from '../store/store.actions';
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
@@ -25,9 +25,9 @@ export class PaymentPage {
   transactions = [];
   transactionTimer: any;
   // the amount shoud be transfered by the coffee-machine
-  amount = 0;
   product = '';
-
+  eurs = 0.01;
+  iotas;
 
   constructor(
     private iotaApi: IotaApiService, 
@@ -36,16 +36,19 @@ export class PaymentPage {
     private store: Store<State>) {}
 
   ionViewDidEnter() {
-    this.nextAddress();
-    this.displayQrCode();
-    this.transactionTimer = setInterval(() => {
-      this.getAddressData();
-    }, refreshTransactionIntervalSeconds * 1000);
+    this.product = this.activatedRoute.snapshot.paramMap.get('product');
+    this.eurs = Number(this.activatedRoute.snapshot.paramMap.get('price'));
+    this.iotaApi.getIotaFromEur(this.eurs).subscribe(response => {
+      this.iotas = Math.round(response.MIOTA.price * 1000000);
+      this.nextAddress();
+      this.displayQrCode();
+      this.transactionTimer = setInterval(() => {
+        this.getAddressData();
+      }, refreshTransactionIntervalSeconds * 1000);
+    })
   }
 
   ngOnInit() {
-    this.product = this.activatedRoute.snapshot.paramMap.get('product');
-    this.amount = Number(this.activatedRoute.snapshot.paramMap.get('price'));
   }
 
   ngOnDestroy() {
@@ -61,8 +64,9 @@ export class PaymentPage {
       console.log('New address [' + data.index + ']: ' + data.address);
       if (typeof data.address === 'string') {
         this.address = data.address;
-        this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
         this.processQRCode();
+        this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
+        this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
       }
     });
   }
@@ -71,11 +75,13 @@ export class PaymentPage {
     if (this.address) {
       this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
         if (!isEmpty(addressData.transactions)) {
-          // check amount-value on all transactions on an address
+          // check iotas-value on all transactions on an address
           const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
-          if (receivedAmount >= this.amount) {
+          if (receivedAmount >= this.iotas) {
             // prevent double-redirecting
             this.address = undefined;
+            clearInterval(this.transactionTimer);
+            this.store.dispatch(setTransactionState({ transactionState: 'payment_attached' }));
             this.router.navigate(['/brewing']);
           }
         }
@@ -92,7 +98,7 @@ export class PaymentPage {
     const self = this;
     qrcode.toDataURL(`{
       "address": "${self.address}",
-      "amount": ${self.amount},
+      "amount": ${self.iotas},
       "message": "",
       "tag": ""
     }`, {

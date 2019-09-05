@@ -1,0 +1,4 @@
+<span *ngIf="transactionState !== 'payment_requested'">{{transactionState}}</span>
+<ng-container *ngIf="transactionState === 'payment_requested'">
+  <img [height]="60" src="assets/gifs/arrow.gif"/>
+</ng-container>

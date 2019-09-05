@@ -17,24 +17,28 @@ import { StoreModule } from '@ngrx/store';
 import { storeReducer } from './store/store.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { FooterModule } from './footer/footer.module';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule, 
-    StoreModule.forRoot({ global: storeReducer }), 
-    HttpClientModule, 
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
-    NgxElectronModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    IotaApiService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, HeaderComponent],
+    entryComponents: [],
+    imports: [
+        BrowserModule,
+        StoreModule.forRoot({global: storeReducer}),
+        HttpClientModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        NgxElectronModule,
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+        FooterModule,
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        IotaApiService,
+    ],
+    bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
