@@ -13,7 +13,7 @@ def msgCallback(client, userdata, message):
         if jsonMsg['command'] == "payment":
             print("command: " + jsonMsg['command'])
             print("--------------\n\n")
-            output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test",jsonMsg])
+            output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test", message.payload])
             print output
             message = {}
             message['command'] = "coffee"
