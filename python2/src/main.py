@@ -21,7 +21,8 @@ def msgCallback(client, userdata, message):
             messageJson = json.dumps(message)
             myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
     except Exception as exp:
-        print("Exception occured: " + exp)
+        print("Exception occured: ")
+        print(exp)
 
 if __name__ == '__main__':
     clientId = "python2-card-reader"
