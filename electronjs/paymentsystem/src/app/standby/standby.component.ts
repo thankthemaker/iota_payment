@@ -15,6 +15,11 @@ export class StandbyComponent implements OnInit {
 
   getCoffee() {
     console.log('getCoffee ');
-    Amplify.PubSub.publish('/iota-poc', 'payment');
+    Amplify.PubSub.publish('/iota-poc', 
+    {
+      'command': 'payment', 
+      'product': 'Espresso',
+      'price': 1
+    });
   }
 }
