@@ -73,7 +73,7 @@ export class PaymentPage {
         { 
           'command': 'hcepayment',
           'product': this.product,
-          'price': this.eurs,
+          'price': this.eurs*100,
           'address': data.address,
           'productCode': 'PAA',
           'amountIota': this.iotas
