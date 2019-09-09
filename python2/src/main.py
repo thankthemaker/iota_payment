@@ -10,16 +10,16 @@ def msgCallback(client, userdata, message):
     print("Received a new message: ")
     jsonMsg = json.loads(message.payload)
     try:
-        if jsonMsg['command'] == "payment":
+        if jsonMsg['command'] == "hcepayment":
             print("command: " + jsonMsg['command'])
             print("--------------\n\n")
             output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test", message.payload])
             print output
-            message = {}
-            message['command'] = "coffee"
-            message['product'] = "PAA"
-            messageJson = json.dumps(message)
-            myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
+#            message = {}
+#            message['command'] = "coffee"
+#            message['product'] = "PAA"
+#            messageJson = json.dumps(message)
+#            myAWSIoTMQTTClient.publish("/iota-poc", messageJson, 1)
     except Exception as exp:
         print("Exception occured: ")
         print(exp)

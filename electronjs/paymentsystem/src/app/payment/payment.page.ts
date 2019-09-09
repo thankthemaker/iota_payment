@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { setAddressToWatch, setTransactionState } from '../store/store.actions';
+import Amplify, { Analytics } from 'aws-amplify';
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
@@ -67,6 +68,16 @@ export class PaymentPage {
         this.processQRCode();
         this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
         this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
+
+        Amplify.PubSub.publish('/iota-poc', 
+        { 
+          'command': 'hcepayment',
+          'product': this.product,
+          'price': this.eurs,
+          'address': data.address,
+          'productCode': 'PAA',
+          'amountIota': this.iotas
+        });
       }
     });
   }
