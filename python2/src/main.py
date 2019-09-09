@@ -14,7 +14,7 @@ def msgCallback(client, userdata, message):
             print("command: " + jsonMsg['command'])
             print("--------------\n\n")
             while subprocess.call(["/usr/src/app/src/apdu_tag_test", message.payload]) != 0:
-                print "reading hce...")
+                print()"reading hce...")
 
 #            message = {}
 #            message['command'] = "coffee"
