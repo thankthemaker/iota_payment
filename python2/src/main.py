@@ -13,8 +13,9 @@ def msgCallback(client, userdata, message):
         if jsonMsg['command'] == "hcepayment":
             print("command: " + jsonMsg['command'])
             print("--------------\n\n")
-            output = subprocess.check_output(["/usr/src/app/src/apdu_tag_test", message.payload])
-            print output
+            while subprocess.call(["/usr/src/app/src/apdu_tag_test", message.payload]) != 0:
+                print "reading hce...")
+
 #            message = {}
 #            message['command'] = "coffee"
 #            message['product'] = "PAA"
