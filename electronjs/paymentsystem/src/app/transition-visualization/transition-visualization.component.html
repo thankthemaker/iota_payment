@@ -1,4 +1,31 @@
-<span *ngIf="transactionState !== 'payment_requested'">{{transactionState}}</span>
-<ng-container *ngIf="transactionState === 'payment_requested'">
-  <img [height]="60" src="assets/gifs/arrow.gif"/>
-</ng-container>
+<!--initial-->
+<!--payment_requested-->
+<!--payment_attached-->
+<!--payment_confirmed-->
+
+
+<!--<span *ngIf="transactionState !== 'payment_requested' && transactionState !== 'initial'">{{transactionState}}</span>-->
+<div style="display: inline-flex; width: 300px">
+    <ion-icon class="human-icon" src="assets/human-icon.svg" [@changeColorHuman]=transactionState></ion-icon>
+<!--    <ion-icon [@changeDivSize]=transactionState *ngIf="transactionState === 'payment_requested'" class="h2m-transition-icon" src="assets/arrow.svg"></ion-icon>-->
+    <ion-icon *ngIf="transactionState === 'payment_requested'" class="h2m-transition-icon" src="assets/Iota_logo_black.svg" [@transitionH2M_requested]=h2mstate (@transitionH2M_requested.done)="onEndH2mReqeust($event)"></ion-icon>
+    <ion-icon *ngIf="transactionState === 'payment_attached'" class="h2m-transition-icon" src="assets/Cup_of_coffee_2.svg" [@transitionH2M_attached]=h2mstate (@transitionH2M_attached.done)="onEndH2mAttached($event)"></ion-icon>
+</div>
+
+<div style="display: inline-flex; width: 300px">
+    <ion-icon class="coffee-machine-icon" src="assets/coffee_machine-icon.svg" [@changeColorCoffeeMachine]=transactionState></ion-icon>
+    <ion-icon *ngIf="transactionState === 'payment_attached'"
+            class="m2h-transition-icon"
+            src="assets/gifs/arrow_gyphy.gif">
+    </ion-icon>
+</div>
+
+<ion-icon class="energy-icon" src="assets/energy-icon.svg"></ion-icon>
+
+<!--for debugging-->
+<div *ngIf="false" style="display: inline-flex">
+    <ion-button (click)="changeState('initial')">i</ion-button>
+    <ion-button (click)="changeState('payment_requested')">r</ion-button>
+    <ion-button (click)="changeState('payment_attached')">a</ion-button>
+    <ion-button (click)="changeState('payment_confirmed')">c</ion-button>
+</div>

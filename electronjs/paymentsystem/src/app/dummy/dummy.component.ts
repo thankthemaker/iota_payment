@@ -3,11 +3,11 @@ import Amplify, { Analytics } from 'aws-amplify';
 //import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-standby',
-  templateUrl: './standby.component.html',
-  styleUrls: ['./standby.component.scss'],
+  selector: 'app-dummy',
+  templateUrl: './dummy.component.html',
+  styleUrls: ['./dummy.component.scss'],
 })
-export class StandbyComponent implements OnInit {
+export class DummyComponent implements OnInit {
 
   constructor(/*private router: Router*/) {}
 
@@ -21,6 +21,5 @@ export class StandbyComponent implements OnInit {
       'product': 'Espresso',
       'price': 1
     });
-    // this.router.navigate(['/payment/kaffee/1'])
   }
 }

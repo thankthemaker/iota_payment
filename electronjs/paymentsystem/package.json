@@ -17,6 +17,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^8.2.7",
     "@angular/common": "^7.2.2",
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
@@ -32,6 +33,7 @@
     "@iota/core": "^1.0.0-beta.17",
     "@ngrx/store": "^8.3.0",
     "@ngrx/store-devtools": "^8.3.0",
+    "animejs": "^3.1.0",
     "aws-amplify": "^1.1.36",
     "aws-amplify-angular": "^3.0.11",
     "core-js": "^2.5.4",

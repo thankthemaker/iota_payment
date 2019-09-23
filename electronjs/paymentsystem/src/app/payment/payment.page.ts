@@ -31,8 +31,8 @@ export class PaymentPage {
   iotas = 0;
 
   constructor(
-    private iotaApi: IotaApiService, 
-    private router: Router, 
+    private iotaApi: IotaApiService,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<State>) {}
 
@@ -55,7 +55,7 @@ export class PaymentPage {
   ngOnDestroy() {
     this.qrImage = '';
     this.address = '';
-    this.iotas = '';
+    this.iotas = undefined;
     this.eurs = 0;
     this.transactions = [];
     this.transactionTimer = undefined;
@@ -71,8 +71,8 @@ export class PaymentPage {
         this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
         this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
 
-        Amplify.PubSub.publish('/iota-poc', 
-        { 
+        Amplify.PubSub.publish('/iota-poc',
+        {
           'command': 'hcepayment',
           'product': this.product,
           'price': this.eurs*100,

@@ -4,17 +4,18 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 import { FooterComponent } from './footer.component';
-import { TransitionVisualizationComponent } from '../transition-visualization/transition-visualization.component';
+import { TransitionVisualizationModule } from '../transition-visualization/transition-visualization.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TransitionVisualizationModule
   ],
   exports: [
     FooterComponent,
   ],
-  declarations: [FooterComponent, TransitionVisualizationComponent],
+  declarations: [FooterComponent],
 })
 export class FooterModule {}

@@ -9,7 +9,9 @@ import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import { AWS } from '@aws-amplify/core';
 import Amplify, { Analytics } from 'aws-amplify';
 import { ElectronService } from 'ngx-electron';
-import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-accessors/value-accessor';
+import { Store } from '@ngrx/store';
+import { State } from './store/store.reducer';
+import { setTransactionState } from './store/store.actions';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private store: Store<State>
   ) {
     this.initializeApp();
   }
@@ -33,16 +36,14 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-
 AWS.config.update({
   credentials: new AWS.Credentials (
-    {  
+    {
       accessKeyId: this.electronService.process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: this.electronService.process.env.AWS_SECRET_ACCESS_KEY
     }
   )
-})
-
+});
 
 Amplify.addPluggable(new AWSIoTProvider(
   {
@@ -55,21 +56,24 @@ Amplify.PubSub.subscribe('/iota-poc').subscribe({
   next: data => {
     console.log('Message received', data);
     switch (data.value.command) {
-      case "payment": 
-        this.router.navigate(['/payment/' + data.value.product + "/" + data.value.price])
+      case "payment":
+        this.router.navigate(['/payment/' + data.value.product + "/" + data.value.price]);
+        this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
         break;
       case "standby":
-          this.router.navigate(['/standby'])
+          this.router.navigate(['/standby']);
+          this.store.dispatch(setTransactionState({ transactionState: 'initial' }));
         break;
       case "processing":
-            this.router.navigate(['/processing'])
+            this.router.navigate(['/processing']);
           break;
       case "coffee":
         Amplify.PubSub.publish('/iota-poc', data.value.product);
         break;
       case "brewing":
-          this.router.navigate(['/brewing'])
-          break;     
+          this.router.navigate(['/brewing']);
+          this.store.dispatch(setTransactionState({ transactionState: 'payment_attached' }));
+          break;
       default:
         console.log("Unknown command " + data.value);
     }
