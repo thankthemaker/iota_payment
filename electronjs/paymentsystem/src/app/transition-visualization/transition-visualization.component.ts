@@ -13,6 +13,12 @@ import {
   transition,
   // ...
 } from '@angular/animations';
+import {
+  H2M_INITIAL,
+  H2M_PAYMENT_ATTACHED,
+  H2M_PAYMENT_CONFIRMED,
+  H2M_PAYMENT_REQUESTED,
+} from '../store/transactionStatus.constants';
 
 @Component({
   selector: 'app-transition-visualization',
@@ -20,28 +26,28 @@ import {
   styleUrls: ['./transition-visualization.component.scss'],
   animations: [
     trigger('changeColorCoffeeMachine', [
-      state('initial', style({
+      state(H2M_INITIAL, style({
         stroke: 'grey',
       })),
-      state('payment_requested', style({
+      state(H2M_PAYMENT_REQUESTED, style({
         stroke: 'orange',
       })),
 
       state('*', style({
         stroke: 'green',
       })),
-      transition('*=>payment_requested', animate('1500ms')),
-      transition('*=>payment_attached', animate('1500ms')),
-      transition('*=>*', animate('1500ms'))
+      transition('*=>' + H2M_PAYMENT_REQUESTED, animate('2000ms')),
+      transition('*=>' + H2M_PAYMENT_ATTACHED, animate('2000ms')),
+      transition('*=>*', animate('2000ms'))
     ]),
     trigger('changeColorHuman', [
-      state('initial', style({
+      state(H2M_INITIAL, style({
         fill: 'grey',
       })),
       state('*', style({
         fill: 'green',
       })),
-      transition('initial=>payment_requested', animate('1500ms')),
+      transition(H2M_INITIAL + '=>' + H2M_PAYMENT_REQUESTED, animate('2000ms')),
     ]),
     trigger('transitionH2M_requested', [
       state('h2m_request_start', style({
@@ -50,20 +56,20 @@ import {
       })),
       state('h2m_request_end', style({
         fill: 'orange',
-        'padding-left': '170px',
+        'padding-left': '120px',
       })),
-      transition('h2m_request_start=>h2m_request_end', animate('2000ms')),
+      transition('h2m_request_start=>h2m_request_end', animate('2500ms')),
     ]),
     trigger('transitionH2M_attached', [
       state('h2m_attached_start', style({
         fill: '#6f4e37',
-        'padding-left': '170px',
+        'padding-left': '120px',
       })),
       state('h2m_attached_end', style({
         fill: '#6f4e37',
         'padding-left': '0px',
       })),
-      transition('h2m_attached_start=>h2m_attached_end', animate('2000ms')),
+      transition('h2m_attached_start=>h2m_attached_end', animate('2500ms')),
     ]),
   ]
 })
@@ -74,8 +80,13 @@ export class TransitionVisualizationComponent implements OnInit {
   transactionState: string;
   transactionState$: Observable<string>;
 
+  h2minitial = H2M_INITIAL;
+  h2mpaymentrequested = H2M_PAYMENT_REQUESTED;
+  h2mpaymentattached = H2M_PAYMENT_ATTACHED;
+  h2mpaymentconfirmed = H2M_PAYMENT_CONFIRMED;
+
   doAnimation() {
-    if (this.transactionState === 'payment_requested') {
+    if (this.transactionState === H2M_PAYMENT_REQUESTED) {
       anime({
         targets: ['.h2m-transition-icon'],
         translateX: '150',
@@ -93,10 +104,10 @@ export class TransitionVisualizationComponent implements OnInit {
       this.transactionState = transactionStateFromStore;
       this.h2mstate = 'human';
       setTimeout(() => {
-        if (this.transactionState === 'payment_requested') {
+        if (this.transactionState === H2M_PAYMENT_REQUESTED) {
           this.h2mstate = 'h2m_request_start';
         }
-        if (this.transactionState === 'payment_attached') {
+        if (this.transactionState === H2M_PAYMENT_ATTACHED) {
           this.h2mstate = 'h2m_attached_start';
         }
       }, 0);
@@ -123,7 +134,7 @@ export class TransitionVisualizationComponent implements OnInit {
 
   onEndH2mReqeust(event) {
     this.h2mstate = 'h2m_request_start';
-    if (this.transactionState === 'payment_requested' && event.toState === 'h2m_request_start') {
+    if (this.transactionState === H2M_PAYMENT_REQUESTED && event.toState === 'h2m_request_start') {
       setTimeout(() => {
         this.h2mstate = 'h2m_request_end';
       }, 0);
@@ -132,7 +143,7 @@ export class TransitionVisualizationComponent implements OnInit {
 
   onEndH2mAttached(event) {
     this.h2mstate = 'h2m_attached_start';
-    if (this.transactionState === 'payment_attached' && event.toState === 'h2m_attached_start') {
+    if (this.transactionState === H2M_PAYMENT_ATTACHED && event.toState === 'h2m_attached_start') {
       setTimeout(() => {
         this.h2mstate = 'h2m_attached_end';
       }, 0);

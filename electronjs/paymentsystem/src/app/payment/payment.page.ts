@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { setAddressToWatch, setTransactionState } from '../store/store.actions';
 import Amplify, { Analytics } from 'aws-amplify';
+import { H2M_PAYMENT_ATTACHED, H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
@@ -69,7 +70,7 @@ export class PaymentPage {
         this.address = data.address;
         this.processQRCode();
         this.store.dispatch(setAddressToWatch({ addressToWatch: data.address }));
-        this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
+        this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_REQUESTED }));
 
         Amplify.PubSub.publish('/iota-poc',
         {
@@ -94,7 +95,7 @@ export class PaymentPage {
             // prevent double-redirecting
             this.address = undefined;
             clearInterval(this.transactionTimer);
-            this.store.dispatch(setTransactionState({ transactionState: 'payment_attached' }));
+            this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_ATTACHED }));
             this.router.navigate(['/brewing']);
           }
         }

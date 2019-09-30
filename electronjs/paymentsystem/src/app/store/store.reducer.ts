@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { setAddressToWatch, setTransactionState } from './store.actions';
+import { H2M_INITIAL } from './transactionStatus.constants';
 
 export interface State {
     addressToWatch: string;
@@ -8,7 +9,7 @@ export interface State {
 
 export const initialState: State = {
     addressToWatch: '',
-    transactionState: 'initial',
+    transactionState: H2M_INITIAL,
 };
 
 const _storeReducer = createReducer(initialState,

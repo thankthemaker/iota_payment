@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { selectAddressToWatch } from '../store/store.selectors';
 import { setTransactionState } from '../store/store.actions';
+import { H2M_PAYMENT_CONFIRMED } from '../store/transactionStatus.constants';
 
 let refreshTransactionIntervalSeconds = 10;
 
@@ -46,7 +47,7 @@ export class TransactionsComponent {
                     let allTransactionsConfirmed = true;
                     this.transactions.map(transaction => !transaction.confirmed ? allTransactionsConfirmed = false : null);
                     if (allTransactionsConfirmed) {
-                        this.store.dispatch(setTransactionState({ transactionState: 'payment_confirmed' }));
+                        this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_CONFIRMED }));
                         clearInterval(this.transactionTimer);
                     }
                 }

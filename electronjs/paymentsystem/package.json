@@ -13,6 +13,7 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "electron-serve": "ng build --prod && electron .",
+    "electron-start": "ionic build && npx cap copy && npx cap open electron",
     "ionic": "ionic serve"
   },
   "private": true,
@@ -26,6 +27,7 @@
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
     "@capacitor/core": "1.1.1",
+    "@capacitor/electron": "^1.2.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
@@ -38,6 +40,7 @@
     "aws-amplify-angular": "^3.0.11",
     "core-js": "^2.5.4",
     "electron": "^4.0.2",
+    "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.7.2",
     "lockfile": "^1.0.4",
     "lodash": "^4.17.15",
