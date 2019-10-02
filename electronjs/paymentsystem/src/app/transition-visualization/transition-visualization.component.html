@@ -6,21 +6,19 @@
 
 <!--<span *ngIf="transactionState !== 'payment_requested' && transactionState !== 'initial'">{{transactionState}}</span>-->
 <div style="display: inline-flex; width: 300px">
-    <ion-icon class="human-icon" src="assets/human-icon.svg" [@changeColorHuman]=transactionState></ion-icon>
+    <ion-icon class="human-icon" src="assets/human-icon.svg" [@human]=transactionState></ion-icon>
 <!--    <ion-icon [@changeDivSize]=transactionState *ngIf="transactionState === 'payment_requested'" class="h2m-transition-icon" src="assets/arrow.svg"></ion-icon>-->
-    <ion-icon *ngIf="transactionState === h2mpaymentrequested" class="h2m-transition-icon" src="assets/Iota_logo_black.svg" [@transitionH2M_requested]=h2mstate (@transitionH2M_requested.done)="onEndH2mReqeust($event)"></ion-icon>
-    <ion-icon *ngIf="transactionState === h2mpaymentattached" class="h2m-transition-icon" src="assets/Cup_of_coffee_2.svg" [@transitionH2M_attached]=h2mstate (@transitionH2M_attached.done)="onEndH2mAttached($event)"></ion-icon>
+    <ion-icon *ngIf="transactionState === h2mpaymentrequested" class="h2m-transition-icon" src="assets/Iota_logo_black.svg" [@human-coffeemachine]=h2mstate (@human-coffeemachine.done)="onEndH2mReqeust($event)"></ion-icon>
+    <ion-icon *ngIf="transactionState === h2mpaymentattached" class="h2m-transition-icon" src="assets/Cup_of_coffee_2.svg" [@coffeemachine-human]=h2mstate (@coffeemachine-human.done)="onEndH2mAttached($event)"></ion-icon>
 </div>
 
 <div style="display: inline-flex; width: 300px">
-    <ion-icon class="coffee-machine-icon" src="assets/coffee_machine-icon.svg" [@changeColorCoffeeMachine]=transactionState></ion-icon>
-    <ion-icon *ngIf="transactionState === h2mpaymentattached"
-            class="m2h-transition-icon"
-            src="assets/gifs/arrow_gyphy.gif">
-    </ion-icon>
+    <ion-icon class="coffee-machine-icon" src="assets/coffee_machine-icon.svg" [@coffeemachine]=transactionState></ion-icon>
+<!--    <ion-icon *ngIf="transactionState === h2mpaymentrequested" class="h2m-transition-icon" src="assets/Iota_logo_black.svg" [@coffeemachine-energy]=h2mstate (@human-coffeemachine.done)="onEndH2mReqeust($event)"></ion-icon>-->
+    <ion-icon *ngIf="m2mTransactionState === m2mrequested" class="h2m-transition-icon" src="assets/Iota_logo_black.svg" [@coffeemachine-energy]=m2mstate (@coffeemachine-energy.done)="onEndM2mReqeust($event)"></ion-icon>
 </div>
 
-<ion-icon class="energy-icon" src="assets/energy-icon.svg"></ion-icon>
+<ion-icon class="energy-icon" src="assets/energy-icon.svg" [@energy]=m2mTransactionState></ion-icon>
 
 <!--for debugging-->
 <div *ngIf="false" style="display: inline-flex">
@@ -28,4 +26,7 @@
     <ion-button (click)="changeState(h2mpaymentrequested)">r</ion-button>
     <ion-button (click)="changeState(h2mpaymentattached)">a</ion-button>
     <ion-button (click)="changeState(h2mpaymentconfirmed)">c</ion-button>
+    <ion-button (click)="changeState(m2minitial)">mi</ion-button>
+    <ion-button (click)="changeState(m2mrequested)">mr</ion-button>
+    <ion-button (click)="changeState(m2mconfirmed)">mc</ion-button>
 </div>

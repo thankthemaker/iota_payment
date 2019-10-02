@@ -14,23 +14,15 @@ export class IotaApiService {
     constructor(private http: HttpClient) {
     }
 
-    getNewAddress() {
-        return this.http.post<any>(baseUrl + '/addresses', { seedId: 1}, options);
-    }
+    payThirdparty = address => this.http.post<any>(baseUrl + '/addresses' + '/' + address + '/paythirdparty', null, options);
 
-    getAddressInfo(address) {
-        return this.http.get<any>(baseUrl + '/addresses' + '/' + address, options);
-    }
+    getNewAddress = () => this.http.post<any>(baseUrl + '/addresses', {seedId: 1}, options);
 
-    getSeedInfo() {
-        return this.http.get<any>(baseUrl + '/seeds' + '/' + '1', options);
-    }
+    getAddressInfo = address => this.http.get<any>(baseUrl + '/addresses' + '/' + address, options);
 
-    getNodeInfo() {
-        return this.http.get<any>(baseUrl + '/nodes', options);
-    }
+    getSeedInfo = () => this.http.get<any>(baseUrl + '/seeds' + '/' + '1', options);
 
-    getIotaFromEur(eurs) {
-        return this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
-    }
+    getNodeInfo = () => this.http.get<any>(baseUrl + '/nodes', options);
+
+    getIotaFromEur = eurs => this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
 }

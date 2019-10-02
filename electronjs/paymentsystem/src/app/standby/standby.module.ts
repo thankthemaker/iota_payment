@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { StandbyComponent } from './standby.component';
-import { TransactionsComponent } from '../transactions/transactions.component';
 import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
 
 @NgModule({
@@ -20,6 +19,6 @@ import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
       }
     ])
   ],
-  declarations: [StandbyComponent, TransactionsComponent, NodeinfoComponent]
+  declarations: [StandbyComponent, NodeinfoComponent]
 })
 export class StandbyModule {}

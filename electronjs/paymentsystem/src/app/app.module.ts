@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IotaApiService } from './iotaApi.service';
 import { HeaderComponent } from './header/header.component';
@@ -20,7 +21,7 @@ import { environment } from '../environments/environment';
 import { FooterModule } from './footer/footer.module';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent],
+    declarations: [AppComponent, HeaderComponent, TransactionsComponent],
     entryComponents: [],
     imports: [
         BrowserModule,
