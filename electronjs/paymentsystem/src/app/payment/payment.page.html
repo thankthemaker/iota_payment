@@ -1,5 +1,6 @@
-<div text-center>
-    <img [height]="300" [width]="300" *ngIf="displayQrCode()" [src]="qrImage" />
-    <br/>
-    Dein {{product}} kostet {{iotas}} IOTA ({{eurs}} €)
+<div *ngIf="displayQrCode()" text-center>
+    <img [height]="300" [width]="300" [src]="qrImage" />
+    <div style="font-size: 18px">
+        Dein {{product}} kostet {{iotas.toLocaleString('de-De', {currencyDisplay: 'symbol'})}} IOTA ({{eurs}} €)
+    </div>
 </div>

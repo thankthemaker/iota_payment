@@ -7,12 +7,12 @@
         <span style="font-size: 30px">{{iotaQuotes.price.toFixed(4)}}</span><span>EUR</span>
     </span>
 
-    <span *ngIf="iotaQuotes.percent_change_24h" style="padding-left: 30px" [ngStyle]="{'color': getSign((iotaQuotes.percent_change_24h)) === '+' ? 'green' : 'red'}">
+    <span *ngIf="iotaQuotes.percent_change_24h" style="padding-left: 30px" [ngStyle]="{'color': iotaQuotes.percent_change_24h < 0 ? 'red' : 'green'}">
         <span style="font-size: 30px">{{getSign(iotaQuotes.percent_change_24h)}}</span>
         <span style="font-size: 30px">{{iotaQuotes.percent_change_24h.toFixed(2)}}</span><span>%</span>
     </span>
 
-    <span *ngIf="iotaQuotes.absolut_change_24h" style="padding-left: 30px" [ngStyle]="{'color': getSign((iotaQuotes.absolut_change_24h)) === '+' ? 'green' : 'red'}">
+    <span *ngIf="iotaQuotes.absolut_change_24h" style="padding-left: 30px" [ngStyle]="{'color': iotaQuotes.absolut_change_24h < 0 ? 'red' : 'green'}">
         <span style="font-size: 30px">{{getSign(iotaQuotes.absolut_change_24h)}}</span>
         <span style="font-size: 30px">{{iotaQuotes.absolut_change_24h.toFixed(4)}}</span><span>EUR</span>
     </span>

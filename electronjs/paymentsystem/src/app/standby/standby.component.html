@@ -1,22 +1,7 @@
-<!--
-<ion-card>
-    <ion-card-content>
-      <img src="assets/coffee.png"/>
-      <ion-card-title>
-        Nine Inch Nails Live
-      </ion-card-title>
-      <p>
-        The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
-      </p>
-    </ion-card-content>
-</ion-card>
--->
-
 <div text-center>
     <p style="font-size: 18px">
         Bitte wähle ein Produkt an der Kaffeemaschine.
     </p>
-
 
     <ion-slides [options]="slideOptions" pager="false" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
         <ion-slide>
@@ -26,11 +11,11 @@
             <app-marketdata></app-marketdata>
         </ion-slide>
         <ion-slide>
-            <app-nodeinfo></app-nodeinfo>
+            <div style="padding-top:30px;">
+                <app-nodeinfo></app-nodeinfo>
+            </div>
         </ion-slide>
     </ion-slides>
 
-
     <ion-button *ngIf="false" color="secondary" (click)="getCoffee()">Kaffee</ion-button>
-<!--    <app-nodeinfo></app-nodeinfo>-->
 </div>

@@ -30,9 +30,6 @@ export class MarketdataComponent {
         if (Math.sign(value) > 0) {
             return '+'
         }
-        if (Math.sign(value) < 0) {
-            return '-'
-        }
         return '';
     }
 }
