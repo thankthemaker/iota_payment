@@ -3,19 +3,20 @@
         Bitte wähle ein Produkt an der Kaffeemaschine.
     </p>
 
-    <ion-slides [options]="slideOptions" pager="false" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
-        <ion-slide>
-            <img src="assets/coffee.png" style="height: 200px" alt="coffee-cup"/> <br />
-        </ion-slide>
-        <ion-slide>
-            <app-marketdata></app-marketdata>
-        </ion-slide>
-        <ion-slide>
-            <div style="padding-top:30px;">
-                <app-nodeinfo></app-nodeinfo>
-            </div>
-        </ion-slide>
-    </ion-slides>
-
-    <ion-button *ngIf="false" color="secondary" (click)="getCoffee()">Kaffee</ion-button>
+    <div *ngIf="router.isActive('/standby', false)">
+        <ion-slides [options]="slideOptions" pager="false" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
+            <ion-slide>
+                <img src="assets/coffee.png" style="height: 200px" alt="coffee-cup"/> <br />
+            </ion-slide>
+            <ion-slide>
+                <app-marketdata></app-marketdata>
+            </ion-slide>
+            <ion-slide>
+                <div style="padding-top:30px;">
+                    <app-nodeinfo></app-nodeinfo>
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div>
+<!--    <ion-button *ngIf="true" color="secondary" (click)="router.navigate(['/payment/kaffee/1'])">Kaffee</ion-button>-->
 </div>
