@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IotaApiService } from '../iotaApi.service';
 
-const refresDataInMinutes = 30;
+const refresDataInMinutes = 10;
 
 @Component({
     selector: 'app-marketdata',
