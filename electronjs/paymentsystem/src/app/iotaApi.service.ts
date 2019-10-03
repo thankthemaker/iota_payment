@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 const baseUrl = 'https://iota-api.thank-the-maker.org';
+// const baseUrl = 'http://localhost:3000';
 
 const options = {
     headers: {
@@ -25,4 +26,6 @@ export class IotaApiService {
     getNodeInfo = () => this.http.get<any>(baseUrl + '/nodes', options);
 
     getIotaFromEur = eurs => this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
+
+    getIotaQuotes = () => this.http.get<any>(baseUrl + '/market/iota/quotes', options);
 }

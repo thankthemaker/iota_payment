@@ -91,8 +91,6 @@ export class TransactionsComponent {
                     if (addressData.balances.balances[0] === 0) {
                         this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_PAYMENT_CONFIRMED, m2mTransactionValue: 0 }))
                         clearInterval(this.m2mTransactionTimer);
-                    } else {
-                        console.log(`addres has [${addressData.balances.balances[0]}]`);
                     }
                 }
             });

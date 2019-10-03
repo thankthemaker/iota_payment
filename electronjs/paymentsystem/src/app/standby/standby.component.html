@@ -16,7 +16,21 @@
     <p>
         Bitte wähle ein Produkt. Verwende dazu die Produktwahltasten der Kaffeemaschine.
     </p>
-    <img src="assets/coffee.png" [height]="130" /> <br />
+
+
+    <ion-slides [options]="slideOptions" pager="true" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
+        <ion-slide>
+            <img src="assets/coffee.png" style="height: 200px" alt="coffee-cup"/> <br />
+        </ion-slide>
+        <ion-slide>
+            <app-marketdata></app-marketdata>
+        </ion-slide>
+        <ion-slide>
+            <app-nodeinfo></app-nodeinfo>
+        </ion-slide>
+    </ion-slides>
+
+
     <ion-button *ngIf="false" color="secondary" (click)="getCoffee()">Kaffee</ion-button>
 <!--    <app-nodeinfo></app-nodeinfo>-->
 </div>

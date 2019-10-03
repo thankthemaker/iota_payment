@@ -1,0 +1,43 @@
+{
+  "market_iota_quotes": {
+    "price": 0.25250306451609233,
+    "volume_24h": 5192913.592631737,
+    "percent_change_1h": -0.04429483,
+    "percent_change_24h": 1.74248718,
+    "percent_change_7d": 4.2274144,
+    "market_cap": 701839914.3727814,
+    "last_updated": "2019-10-03T09:27:10.000Z",
+    "absolut_change_24h": 0.004399833528300038
+  },
+  "nodes": [
+    {
+      "provider": "https://iri.thank-the-maker.org:443",
+      "appName": "IRI",
+      "appVersion": "1.8.1-RELEASE",
+      "jreAvailableProcessors": 10,
+      "jreFreeMemory": 3315554520,
+      "jreVersion": "1.8.0_181",
+      "jreMaxMemory": 16822304768,
+      "jreTotalMemory": 8232370176,
+      "latestMilestone": "WVPKVUSDUOXNOQEWXAOSGOLEFUXCBRTVQWWVB9GOWVUNHWKMEKVVJWUVVAKZCJVKBTUUNTPANEZQ99999",
+      "latestMilestoneIndex": 1196157,
+      "latestSolidSubtangleMilestone": "WVPKVUSDUOXNOQEWXAOSGOLEFUXCBRTVQWWVB9GOWVUNHWKMEKVVJWUVVAKZCJVKBTUUNTPANEZQ99999",
+      "latestSolidSubtangleMilestoneIndex": 1196157,
+      "milestoneStartIndex": 1156049,
+      "lastSnapshottedMilestoneIndex": 1196048,
+      "neighbors": 7,
+      "packetsQueueSize": 0,
+      "time": 1570098067516,
+      "tips": 1268,
+      "transactionsToRequest": 0,
+      "features": [
+        "snapshotPruning",
+        "dnsRefresher",
+        "zeroMessageQueue",
+        "RemotePOW"
+      ],
+      "coordinatorAddress": "EQSAUZXULTTYZCLNJNTXQTQHOMOFZERHTCGTXOLTVAHKSA9OGAZDEKECURBRIXIJWNPFCQIOVFVVXJVD9",
+      "duration": 0
+    }
+  ]
+}
