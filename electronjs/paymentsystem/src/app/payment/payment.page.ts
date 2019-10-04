@@ -27,6 +27,7 @@ export class PaymentPage {
   transactionTimer: any;
   // the amount shoud be transfered by the coffee-machine
   product = '';
+  productcode = '';
   eurs = 0.01;
   iotas = 0;
 
@@ -37,9 +38,10 @@ export class PaymentPage {
     private store: Store<State>) {}
 
   ionViewDidEnter() {
+    this.product = this.activatedRoute.snapshot.paramMap.get('product');
+    this.productcode = this.activatedRoute.snapshot.paramMap.get('productcode');
+    this.eurs = Number(this.activatedRoute.snapshot.paramMap.get('price'))/100;
     this.iotaApi.getIotaFromEur(this.eurs).subscribe(response => {
-      this.product = this.activatedRoute.snapshot.paramMap.get('product');
-      this.eurs = Number(this.activatedRoute.snapshot.paramMap.get('price'))/100;
       this.iotas = Math.round(response.MIOTA.price * 1000000);
       this.nextAddress();
       this.displayQrCode();
@@ -56,6 +58,8 @@ export class PaymentPage {
     this.qrImage = '';
     this.address = '';
     this.iotas = undefined;
+    this.product = '';
+    this.productcode = '';
     this.eurs = 0;
     this.transactions = [];
     this.transactionTimer = undefined;
@@ -77,7 +81,7 @@ export class PaymentPage {
           'product': this.product,
           'price': this.eurs*100,
           'address': data.address,
-          'productCode': 'PAA',
+          'productCode': this.productcode,
           'amountIota': this.iotas
         });
       }

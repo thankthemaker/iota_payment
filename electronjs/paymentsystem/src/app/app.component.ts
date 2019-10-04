@@ -57,7 +57,7 @@ Amplify.PubSub.subscribe('/iota-poc').subscribe({
     console.log('Message received', data);
     switch (data.value.command) {
       case "payment":
-        this.router.navigate(['/payment/' + data.value.product + "/" + data.value.price]);
+        this.router.navigate(['/payment/' + data.value.productcode + "/" + data.value.product + "/" + data.value.price]);
         this.store.dispatch(setTransactionState({ transactionState: 'payment_requested' }));
         break;
       case "standby":
