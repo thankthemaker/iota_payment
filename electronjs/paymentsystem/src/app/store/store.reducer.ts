@@ -5,9 +5,11 @@ import {
     setM2mTransactionState,
     setRunUnderElectron,
     setTransactionState,
+    setCoffeemachineState,
 } from './store.actions';
 import { H2M_INITIAL } from './transactionStatus.constants';
 import { M2M_INITIAL } from './transactionM2MStatus.constants';
+import { COFFEEMACHINE_STANDBY } from './coffeemachineState.constants';
 
 export interface State {
     addressToWatch: string;
@@ -16,6 +18,7 @@ export interface State {
     m2mTransactionState: string;
     m2mTransactionValue: number;
     runUnderElectron: boolean;
+    coffeemachineState: string;
 }
 
 export const initialState: State = {
@@ -25,6 +28,7 @@ export const initialState: State = {
     m2mTransactionState: M2M_INITIAL,
     m2mTransactionValue: 0,
     runUnderElectron: false,
+    coffeemachineState: COFFEEMACHINE_STANDBY,
 };
 
 const _storeReducer = createReducer(initialState,
@@ -33,6 +37,7 @@ const _storeReducer = createReducer(initialState,
     on(setTransactionState, (state, { transactionState }) => ({ ...state, transactionState })),
     on(setM2mTransactionState, (state, { m2mTransactionState, m2mTransactionValue }) => ({ ...state, m2mTransactionState, m2mTransactionValue })),
     on(setRunUnderElectron, (state, { runUnderElectron }) => ({ ...state, runUnderElectron })),
+    on(setCoffeemachineState, (state, { coffeemachineState }) => ({ ...state, coffeemachineState })),
 );
 
 export function storeReducer(state: State | undefined, action: Action) {
