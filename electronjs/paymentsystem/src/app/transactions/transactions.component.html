@@ -1,13 +1,13 @@
 <div *ngIf="transactions.length > 0">
-  <ion-list>
-    <ion-item *ngFor="let transaction of transactions">
-      <ion-label>{{ transaction.hash }}</ion-label>
-      <ion-badge *ngIf="!transaction.confirmed"
-                 color="warning">{{ transaction.value }}</ion-badge>
-      <ion-badge *ngIf="transaction.confirmed"
-                 color="success">{{ transaction.value }}</ion-badge>
-      <ion-icon *ngIf="!transaction.confirmed" name="swap"></ion-icon>
-      <ion-icon *ngIf="transaction.confirmed" name="checkmark-circle-outline"></ion-icon>
-    </ion-item>
-  </ion-list>
+<!--  <ion-list>-->
+<!--    <ion-item *ngFor="let transaction of transactions">-->
+<!--      <ion-label>{{ transaction.hash }}</ion-label>-->
+<!--      <ion-badge *ngIf="!transaction.confirmed"-->
+<!--                 color="warning">{{ transaction.value }}</ion-badge>-->
+<!--      <ion-badge *ngIf="transaction.confirmed"-->
+<!--                 color="success">{{ transaction.value }}</ion-badge>-->
+<!--      <ion-icon *ngIf="!transaction.confirmed" name="swap"></ion-icon>-->
+<!--      <ion-icon *ngIf="transaction.confirmed" name="checkmark-circle-outline"></ion-icon>-->
+<!--    </ion-item>-->
+<!--  </ion-list>-->
 </div>

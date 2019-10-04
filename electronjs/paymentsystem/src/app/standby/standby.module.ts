@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { StandbyComponent } from './standby.component';
-import { TransactionsComponent } from '../transactions/transactions.component';
 import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
+import { MarketdataComponent } from '../marketdata/marketdata.component';
 
 @NgModule({
   imports: [
@@ -16,10 +16,13 @@ import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
     RouterModule.forChild([
       {
         path: '',
-        component: StandbyComponent
-      }
-    ])
+        component: StandbyComponent,
+      },
+    ]),
   ],
-  declarations: [StandbyComponent, TransactionsComponent, NodeinfoComponent]
+  exports: [
+    NodeinfoComponent,
+  ],
+  declarations: [StandbyComponent, NodeinfoComponent, MarketdataComponent],
 })
 export class StandbyModule {}

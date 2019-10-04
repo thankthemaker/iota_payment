@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import Amplify, { Analytics } from 'aws-amplify';
-//import { Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
+
+const slideChangeIntervalInSeconds = 10;
 
 @Component({
   selector: 'app-standby',
@@ -8,19 +10,30 @@ import Amplify, { Analytics } from 'aws-amplify';
   styleUrls: ['./standby.component.scss'],
 })
 export class StandbyComponent implements OnInit {
+  slides: any;
+  slidesTimer: any;
 
-  constructor(/*private router: Router*/) {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  slideOptions = {
+    initialSlide: 0,
+    speed: 1000,
+    watchSlidesProgress: false,
+    loop: true,
+  };
 
-  getCoffee() {
-    console.log('getCoffee ');
-    Amplify.PubSub.publish('/iota-poc',
-    {
-      'command': 'payment',
-      'product': 'Espresso',
-      'price': 1
-    });
-    // this.router.navigate(['/payment/kaffee/1'])
+  slidesDidLoad(slides: IonSlides) {
+    this.slides = slides;
+
+    this.slidesTimer = setInterval(() => {
+      if (this.router.isActive('/standby', false)) {
+        this.slides.slideNext();
+      } else {
+        clearInterval(this.slidesTimer);
+      }
+      }, slideChangeIntervalInSeconds * 1000);
+  }
+
+  ngOnInit() {
   }
 }

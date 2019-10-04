@@ -1,9 +1,20 @@
 <div text-center>
-    <img src="assets/background.jpg" [height]="280" /> <br />
-    <p>
-      Bitte wähle ein Produkt. Verwende dazu die Produktwahltasten der Kaffeemaschine.
-  </p>
-    <!--<ion-button color="secondary" (click)="getCoffee()">Kaffee</ion-button>-->
-    <!--<app-nodeinfo></app-nodeinfo>-->
-    <app-transactions></app-transactions>
+    <p style="font-size: 18px">
+        Bitte wähle ein Produkt an der Kaffeemaschine.
+    </p>
+    <div *ngIf="router.isActive('/standby', false)">
+        <ion-slides [options]="slideOptions" pager="false" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
+            <ion-slide>
+                <img src="assets/coffee.png" style="height: 200px" alt="coffee-cup"/> <br />
+            </ion-slide>
+            <ion-slide>
+                <app-marketdata></app-marketdata>
+            </ion-slide>
+            <ion-slide>
+                <div style="padding-top:30px;">
+                    <app-nodeinfo></app-nodeinfo>
+                </div>
+            </ion-slide>
+        </ion-slides>
+    </div>
 </div>

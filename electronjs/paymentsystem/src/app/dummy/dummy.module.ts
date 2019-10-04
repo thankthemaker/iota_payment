@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { DummyComponent } from './dummy.component';
+import { MarketdataComponent } from '../marketdata/marketdata.component';
+import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { DummyComponent } from './dummy.component';
       }
     ])
   ],
-  declarations: [DummyComponent, ]
+  declarations: [DummyComponent, NodeinfoComponent, MarketdataComponent]
 })
 export class DummyModule {}

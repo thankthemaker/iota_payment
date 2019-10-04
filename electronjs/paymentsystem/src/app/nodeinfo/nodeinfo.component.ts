@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IotaApiService } from '../iotaApi.service';
 
-const refreshIntervalSeconds = 60;
+const refresDataInMinutes = 30;
 
 @Component({
     selector: 'app-nodeinfo',
@@ -26,6 +26,6 @@ export class NodeinfoComponent implements OnInit {
         this.getNodeInfo();
         this.nodeinfoTimer = setInterval(() => {
             this.getNodeInfo();
-        }, refreshIntervalSeconds * 1000);
+        }, refresDataInMinutes * 60 * 1000);
     }
 }
