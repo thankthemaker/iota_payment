@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { PaymentPage } from './payment.page';
+import { ThousandSuffixesPipe } from './iotaPipe';
+
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { PaymentPage } from './payment.page';
       }
     ])
   ],
-  declarations: [PaymentPage]
+  declarations: [PaymentPage,ThousandSuffixesPipe]
 })
 export class PaymentModule {}
