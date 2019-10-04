@@ -61,7 +61,7 @@ export class AppComponent {
         console.log('Message received', data);
         switch (data.value.command) {
           case "payment":
-            this.router.navigate(['/payment/' + data.value.productcode + "/" + data.value.product + "/" + data.value.price]);
+            this.router.navigate(['/payment/' + data.value.productCode + "/" + data.value.product + "/" + data.value.price]);
             this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_REQUESTED }));
             break;
           case "standby":
