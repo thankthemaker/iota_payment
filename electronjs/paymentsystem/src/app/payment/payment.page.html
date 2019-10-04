@@ -1,6 +1,19 @@
-<div *ngIf="displayQrCode()" text-center>
-    <img [height]="300" [width]="300" [src]="qrImage" />
-    <div style="font-size: 18px">
+<div text-center>
+        <ion-grid fixed>
+                <ion-row>
+                        <ion-col>
+                                <img src="assets/{{productcode}}.png" style="height: 250px" alt="coffee-cup"/> <br />
+                          </ion-col>                 
+                           <ion-col>
+                               <div *ngIf="displayQrCode()">
+                                    <img [height]="250" [width]="250" [src]="qrImage" />
+                               </div>
+                               <ion-spinner *ngIf="!displayQrCode()" name="dots"></ion-spinner>
+                          </ion-col>
+                </ion-row>
+        </ion-grid>
+            
+    <div style="font-size: 20px">
         Dein {{product}} kostet {{iotas.toLocaleString('de-De', {currencyDisplay: 'symbol'})}} IOTA ({{eurs}} €)
     </div>
 <!--    <ion-button *ngIf="true" color="secondary" (click)="router.navigate(['/standby'])">zurück</ion-button>-->
