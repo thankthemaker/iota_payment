@@ -3,6 +3,7 @@ import { isEqual } from 'lodash';
 import { IotaApiService } from '../iotaApi.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { isEmpty } from 'lodash';
 import { State } from '../store/store.reducer';
 import { selectAddressM2MToWatch, selectAddressToWatch } from '../store/store.selectors';
 import {
@@ -11,8 +12,14 @@ import {
     setM2mTransactionState,
     setTransactionState,
 } from '../store/store.actions';
-import { H2M_INITIAL, H2M_PAYMENT_CONFIRMED, H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
-import { M2M_PAYMENT_CONFIRMED, M2M_PAYMENT_REQUESTED } from '../store/transactionM2MStatus.constants';
+import {
+    H2M_PAYMENT_CONFIRMED,
+} from '../store/transactionStatus.constants';
+import {
+    M2M_PAYMENT_ATTACHED,
+    M2M_PAYMENT_CONFIRMED,
+    M2M_PAYMENT_REQUESTED,
+} from '../store/transactionM2MStatus.constants';
 
 const refreshTransactionIntervalSeconds = 10;
 
@@ -87,10 +94,16 @@ export class TransactionsComponent {
     async getAddressM2MData() {
         if (this.addressM2M) {
             this.iotaApi.getAddressInfo(this.addressM2M).subscribe(addressData => {
-                if(addressData) {
-                    if (addressData.balances.balances[0] === 0) {
-                        this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_PAYMENT_CONFIRMED, m2mTransactionValue: 0 }))
-                        clearInterval(this.m2mTransactionTimer);
+                if (addressData.balances.balances[0] === 0) {
+                    this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_PAYMENT_CONFIRMED, m2mTransactionValue: 0 }));
+                    clearInterval(this.m2mTransactionTimer);
+                } else if (!isEmpty(addressData.transactions)) {
+                    // check iotas-value on all transactions on an address
+                    // if value is null then the transaction to the thirdparty + retained address is attached
+                    const totalTransactionValue = addressData.transactions.reduce((a, b) => a + b.value, 0);
+                    console.log(`totalTransactionValue [${totalTransactionValue}]`);
+                    if(totalTransactionValue === 0) {
+                        this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_PAYMENT_ATTACHED, m2mTransactionValue: 0 }));
                     }
                 }
             });

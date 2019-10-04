@@ -5,7 +5,7 @@
     <div *ngIf="router.isActive('/standby', false)">
         <ion-slides [options]="slideOptions" pager="false" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
             <ion-slide>
-                <img src="assets/coffee.png" style="height: 200px" alt="coffee-cup"/> <br />
+                <img src="assets/background.jpg" style="height: 250px" alt="coffee-cup"/> <br />
             </ion-slide>
             <ion-slide>
                 <app-marketdata></app-marketdata>
@@ -17,4 +17,5 @@
             </ion-slide>
         </ion-slides>
     </div>
+    <ion-button *ngIf="false" color="secondary" (click)="router.navigate(['/payment/paa/kaffee/1'])">Kaffee</ion-button>
 </div>
