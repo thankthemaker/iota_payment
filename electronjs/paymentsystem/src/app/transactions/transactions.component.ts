@@ -73,7 +73,7 @@ export class TransactionsComponent {
         if (this.address) {
             this.iotaApi.getAddressInfo(this.address).subscribe(async addressData => {
                 // prevents unnecessary cycles
-                if (!isEqual(this.transactions, addressData.transactions)) {
+                if (!isEmpty(addressData.transactions) && !isEqual(this.transactions, addressData.transactions)) {
                     this.transactions = addressData.transactions;
                     // remove timer if all transactions confirmed
                     let allTransactionsConfirmed = true;

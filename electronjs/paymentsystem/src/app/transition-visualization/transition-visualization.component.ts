@@ -24,7 +24,7 @@ import {
   M2M_PAYMENT_CONFIRMED,
   M2M_PAYMENT_REQUESTED,
 } from '../store/transactionM2MStatus.constants';
-import { COFFEEMACHINE_OUTGO, COFFEEMACHINE_STANDBY } from '../store/coffeemachineState.constants';
+import { COFFEEMACHINE_BREWING } from '../store/coffeemachineState.constants';
 
 @Component({
   selector: 'app-transition-visualization',
@@ -119,7 +119,7 @@ export class TransitionVisualizationComponent implements OnInit {
   coffeemachineState: string;
   coffeemachineState$: Observable<string>;
 
-  coffeemachineoutgo = COFFEEMACHINE_OUTGO;
+  coffeemachineoutgo = COFFEEMACHINE_BREWING;
 
   h2minitial = H2M_INITIAL;
   h2mpaymentrequested = H2M_PAYMENT_REQUESTED;
@@ -131,31 +131,27 @@ export class TransitionVisualizationComponent implements OnInit {
   m2mattached = M2M_PAYMENT_ATTACHED;
   m2mconfirmed = M2M_PAYMENT_CONFIRMED;
 
-  doAnimation() {
-    if (this.transactionState === H2M_PAYMENT_REQUESTED) {
-      anime({
-        targets: ['.h2m-transition-icon'],
-        translateX: '150',
-        duration: 4000,
-        loop: true,
-        easing: 'easeInOutQuad'
-      });
-    }
-  }
+  // doAnimation() {
+  //   if (this.transactionState === H2M_PAYMENT_REQUESTED) {
+  //     anime({
+  //       targets: ['.h2m-transition-icon'],
+  //       translateX: '150',
+  //       duration: 4000,
+  //       loop: true,
+  //       easing: 'easeInOutQuad'
+  //     });
+  //   }
+  // }
 
   constructor(private store: Store<State>) {
     this.coffeemachineState$ = this.store.pipe(selectCoffeemachineState);
     this.coffeemachineState$.subscribe(coffeemachineState => {
-      this.coffeemachineState = coffeemachineState;
-      if (this.coffeemachineState === COFFEEMACHINE_OUTGO) {
-        // show Coffeecup only for a defined time
+      setTimeout(() => {
+        this.coffeemachineState = coffeemachineState;
+      }, 0);
+      if (coffeemachineState === COFFEEMACHINE_BREWING) {
         setTimeout(() => {
-          this.store.dispatch(setCoffeemachineState({ coffeemachineState: COFFEEMACHINE_STANDBY }));
-        }, 45000);
-        setTimeout(() => {
-          if (this.coffeemachineState === COFFEEMACHINE_OUTGO) {
-            this.h2mstate = 'coffee_outgo_start';
-          }
+          this.h2mstate = 'coffee_outgo_start';
         }, 0);
       }
     });
@@ -172,25 +168,24 @@ export class TransitionVisualizationComponent implements OnInit {
         if (this.transactionState === H2M_PAYMENT_REQUESTED) {
           this.h2mstate = 'h2m_request_start';
         }
-        if (this.transactionState === H2M_PAYMENT_ATTACHED) {
-          this.store.dispatch(setCoffeemachineState({ coffeemachineState: COFFEEMACHINE_OUTGO }));
-        }
       }, 0);
     });
     this.m2mTransactionState$ = this.store.pipe(selectM2mTransactionState);
     this.m2mTransactionState$.subscribe(m2mTransactionStateFromStore => {
-      this.m2mTransactionState = m2mTransactionStateFromStore;
-      if (this.m2mTransactionState === M2M_PAYMENT_CONFIRMED) {
+      setTimeout(() => {
+        this.m2mTransactionState = m2mTransactionStateFromStore;
+      }, 0);
+      if (m2mTransactionStateFromStore === M2M_PAYMENT_CONFIRMED) {
         setTimeout(() => {
           this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_INITIAL, m2mTransactionValue: 0}));
         }, 8000);
       }
 
       setTimeout(() => {
-        if (this.m2mTransactionState === M2M_PAYMENT_REQUESTED) {
+        if (m2mTransactionStateFromStore === M2M_PAYMENT_REQUESTED) {
           this.m2mstate = 'm2m_request_start';
         }
-        if (this.m2mTransactionState === M2M_PAYMENT_ATTACHED) {
+        if (m2mTransactionStateFromStore === M2M_PAYMENT_ATTACHED) {
           this.m2mstate = 'm2m_attached_start';
         }
       }, 0);
@@ -223,7 +218,7 @@ export class TransitionVisualizationComponent implements OnInit {
 
   onEndCoffeeOutgo(event) {
     this.h2mstate = 'coffee_outgo_start';
-    if (this.coffeemachineState === COFFEEMACHINE_OUTGO && event.toState === 'coffee_outgo_start') {
+    if (this.coffeemachineState === COFFEEMACHINE_BREWING && event.toState === 'coffee_outgo_start') {
       setTimeout(() => {
         this.h2mstate = 'coffee_outgo_end';
       }, 0);

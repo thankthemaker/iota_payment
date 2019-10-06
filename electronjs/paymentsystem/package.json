@@ -15,7 +15,7 @@
     "electron-serve": "ng build --prod && electron .",
     "electron-start": "ionic build && npx cap copy && npx cap open electron",
     "ionic": "ionic serve",
-    "jsonserver": "json-server --watch mock/db.json --routes mock/routes.json"
+    "jsonserver": "nodemon --watch mock mock/server.js"
   },
   "private": true,
   "dependencies": {
@@ -74,6 +74,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nodemon": "^1.19.3",
     "protractor": "~5.4.0",
     "ts-node": "~8.3.0",
     "tslint": "~5.17.0",
