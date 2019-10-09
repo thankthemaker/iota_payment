@@ -78,7 +78,7 @@ export class TransactionsComponent {
                     // remove timer if all transactions confirmed
                     let allTransactionsConfirmed = true;
                     this.transactions.map(transaction => !transaction.confirmed ? allTransactionsConfirmed = false : null);
-                    if (allTransactionsConfirmed) {
+                    if (allTransactionsConfirmed) { // TODO check value->if value is to low then nothing happens
                         this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_CONFIRMED }));
                         this.store.dispatch(setAddressM2MToWatch({ addressM2MToWatch: this.address }));
                         this.iotaApi.payThirdparty(this.address).subscribe((response) => console.log(response));

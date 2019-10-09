@@ -95,6 +95,7 @@ export class PaymentPage {
         if (!isEmpty(addressData.transactions)) {
           // check iotas-value on all transactions on an address
           const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
+          // if value < price show message
           if (receivedAmount >= this.iotas) {
             // prevent double-redirecting
             this.address = undefined;
