@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
-import { setAddressToWatch, setTransactionState } from '../store/store.actions';
+import { setAddressToWatch, setPrice, setTransactionState } from '../store/store.actions';
 import Amplify, { Analytics } from 'aws-amplify';
 import { H2M_PAYMENT_ATTACHED, H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
 
@@ -46,9 +46,7 @@ export class PaymentPage {
       this.iotas = Math.round(response.MIOTA.price * 1000000);
       this.nextAddress();
       this.displayQrCode();
-      this.transactionTimer = setInterval(() => {
-        this.getAddressData();
-      }, refreshTransactionIntervalSeconds * 1000);
+      this.store.dispatch(setPrice({ price: this.iotas }))
     })
   }
 
@@ -87,25 +85,6 @@ export class PaymentPage {
         });
       }
     });
-  }
-
-  async getAddressData() {
-    if (this.address) {
-      this.iotaApi.getAddressInfo(this.address).subscribe(addressData => {
-        if (!isEmpty(addressData.transactions)) {
-          // check iotas-value on all transactions on an address
-          const receivedAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
-          // if value < price show message
-          if (receivedAmount >= this.iotas) {
-            // prevent double-redirecting
-            this.address = undefined;
-            clearInterval(this.transactionTimer);
-            this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_ATTACHED }));
-            this.router.navigate(['/brewing']);
-          }
-        }
-      });
-    }
   }
 
   displayQrCode() {

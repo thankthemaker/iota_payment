@@ -5,7 +5,12 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { isEmpty } from 'lodash';
 import { State } from '../store/store.reducer';
-import { selectAddressM2MToWatch, selectAddressToWatch } from '../store/store.selectors';
+import {
+    selectAddressM2MToWatch,
+    selectAddressToWatch,
+    selectPrice,
+    selectTransactionState,
+} from '../store/store.selectors';
 import {
     setAddressToWatch,
     setAddressM2MToWatch,
@@ -13,13 +18,15 @@ import {
     setTransactionState,
 } from '../store/store.actions';
 import {
-    H2M_PAYMENT_CONFIRMED,
+    H2M_PAYMENT_ATTACHED,
+    H2M_PAYMENT_CONFIRMED, H2M_PAYMENT_REQUESTED,
 } from '../store/transactionStatus.constants';
 import {
     M2M_PAYMENT_ATTACHED,
     M2M_PAYMENT_CONFIRMED,
     M2M_PAYMENT_REQUESTED,
 } from '../store/transactionM2MStatus.constants';
+import { Router } from '@angular/router';
 
 const refreshTransactionIntervalSeconds = 10;
 
@@ -31,8 +38,14 @@ const refreshTransactionIntervalSeconds = 10;
 export class TransactionsComponent {
     transactions = [];
     transactionTimer: any;
+    transactionState;
+    transactionState$: Observable<string>;
+
     address;
     address$: Observable<object>;
+
+    price;
+    price$: Observable<number>;
 
     m2mTransactionTimer: any;
     addressM2M;
@@ -40,7 +53,7 @@ export class TransactionsComponent {
 
     iotaApi;
 
-    constructor(private store: Store<State>, private iotaApiInj: IotaApiService) {
+    constructor(private store: Store<State>, private iotaApiInj: IotaApiService, private router: Router) {
         this.iotaApi = iotaApiInj;
         this.address$ = store.pipe(selectAddressToWatch);
         this.addressM2M$ = store.pipe(selectAddressM2MToWatch);
@@ -64,6 +77,10 @@ export class TransactionsComponent {
                 }, refreshTransactionIntervalSeconds * 1000);
             }
         });
+        this.price$ = store.pipe(selectPrice);
+        this.price$.subscribe(price => this.price = price);
+        this.transactionState$ = store.pipe(selectTransactionState);
+        this.transactionState$.subscribe(transactionState => this.transactionState = transactionState);
     }
 
     ngOnInit() {
@@ -75,16 +92,24 @@ export class TransactionsComponent {
                 // prevents unnecessary cycles
                 if (!isEmpty(addressData.transactions) && !isEqual(this.transactions, addressData.transactions)) {
                     this.transactions = addressData.transactions;
+
+                    // check iotas-value on all transactions on an address
+                    const totalTransactionAmount = addressData.transactions.reduce((a, b) => a + b.value, 0);
+                    const confirmedTransactionAmount = addressData.transactions.reduce((a, b) => a + (b.confirmed ? b.value: 0), 0);
+
                     // remove timer if all transactions confirmed
                     let allTransactionsConfirmed = true;
                     this.transactions.map(transaction => !transaction.confirmed ? allTransactionsConfirmed = false : null);
-                    if (allTransactionsConfirmed) { // TODO check value->if value is to low then nothing happens
+                    if (confirmedTransactionAmount >= this.price && this.transactionState === H2M_PAYMENT_ATTACHED) {
                         this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_CONFIRMED }));
                         this.store.dispatch(setAddressM2MToWatch({ addressM2MToWatch: this.address }));
                         this.iotaApi.payThirdparty(this.address).subscribe((response) => console.log(response));
                         this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_PAYMENT_REQUESTED, m2mTransactionValue: 0 }));
                         this.store.dispatch(setAddressToWatch({ addressToWatch: null }));
                         clearInterval(this.transactionTimer);
+                    } else if (totalTransactionAmount >= this.price && this.transactionState === H2M_PAYMENT_REQUESTED) {
+                        this.store.dispatch(setTransactionState({ transactionState: H2M_PAYMENT_ATTACHED }));
+                        this.router.navigate(['/brewing']);
                     }
                 }
             });

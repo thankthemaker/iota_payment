@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {
     setAddressToWatch,
+    setPrice,
     setAddressM2MToWatch,
     setM2mTransactionState,
     setRunUnderElectron,
@@ -13,6 +14,7 @@ import { COFFEEMACHINE_STANDBY } from './coffeemachineState.constants';
 
 export interface State {
     addressToWatch: string;
+    price: number;
     addressM2MToWatch: string;
     transactionState: string;
     m2mTransactionState: string;
@@ -23,6 +25,7 @@ export interface State {
 
 export const initialState: State = {
     addressToWatch: '',
+    price: 0,
     addressM2MToWatch: '',
     transactionState: H2M_INITIAL,
     m2mTransactionState: M2M_INITIAL,
@@ -33,6 +36,7 @@ export const initialState: State = {
 
 const _storeReducer = createReducer(initialState,
     on(setAddressToWatch, (state, { addressToWatch }) => ({ ...state, addressToWatch })),
+    on(setPrice, (state, { price }) => ({ ...state, price })),
     on(setAddressM2MToWatch, (state, { addressM2MToWatch }) => ({ ...state, addressM2MToWatch })),
     on(setTransactionState, (state, { transactionState }) => ({ ...state, transactionState })),
     on(setM2mTransactionState, (state, { m2mTransactionState, m2mTransactionValue }) => ({ ...state, m2mTransactionState, m2mTransactionValue })),
