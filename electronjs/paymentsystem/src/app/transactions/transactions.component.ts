@@ -18,17 +18,20 @@ import {
     setTransactionState,
 } from '../store/store.actions';
 import {
+    H2M_INITIAL,
     H2M_PAYMENT_ATTACHED,
     H2M_PAYMENT_CONFIRMED, H2M_PAYMENT_REQUESTED,
 } from '../store/transactionStatus.constants';
 import {
+    M2M_INITIAL,
     M2M_PAYMENT_ATTACHED,
     M2M_PAYMENT_CONFIRMED,
     M2M_PAYMENT_REQUESTED,
 } from '../store/transactionM2MStatus.constants';
 import { Router } from '@angular/router';
 
-const refreshTransactionIntervalSeconds = 10;
+const refreshTransactionIntervalSeconds = 15;
+const timeoutSeconds = 900;
 
 @Component({
     selector: 'app-transactions',
@@ -62,9 +65,20 @@ export class TransactionsComponent {
                 console.log('addressToWatch: ', addressFromStore);
                 this.address = addressFromStore;
                 this.getAddressData();
+                let counter =  timeoutSeconds / refreshTransactionIntervalSeconds;
                 this.transactionTimer = setInterval(() => {
-                    this.getAddressData();
+                    if (counter <= 0) {
+                        this.store.dispatch(setAddressToWatch({ addressToWatch: null }));
+                        this.store.dispatch(setTransactionState({ transactionState: H2M_INITIAL }));
+                        this.router.navigate(['/standby']);
+                    } else {
+                        this.getAddressData();
+                        counter--;
+                    }
                 }, refreshTransactionIntervalSeconds * 1000);
+            } else {
+                console.log('clear ');
+                clearInterval(this.transactionTimer);
             }
         });
         this.addressM2M$.subscribe(addressM2MFromStore => {
@@ -72,8 +86,15 @@ export class TransactionsComponent {
                 console.log('addressM2MToWatch: ', addressM2MFromStore);
                 this.addressM2M = addressM2MFromStore;
                 this.getAddressM2MData();
+                let counter =  timeoutSeconds / refreshTransactionIntervalSeconds;
                 this.m2mTransactionTimer = setInterval(() => {
-                    this.getAddressM2MData();
+                    if (counter <= 0) {
+                        this.store.dispatch(setAddressM2MToWatch({ addressM2MToWatch: null }));
+                        this.store.dispatch(setM2mTransactionState({ m2mTransactionState: M2M_INITIAL, m2mTransactionValue: 0 }));
+                    } else {
+                        this.getAddressM2MData();
+                        counter--;
+                    }
                 }, refreshTransactionIntervalSeconds * 1000);
             }
         });
