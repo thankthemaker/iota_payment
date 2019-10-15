@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,12 +13,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { IotaApiService } from './iotaApi.service';
 import { HeaderComponent } from './header/header.component';
 import { NgxElectronModule } from 'ngx-electron';
+import * as Sentry from "@sentry/browser";
 
 import { StoreModule } from '@ngrx/store';
 import { storeReducer } from './store/store.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { FooterModule } from './footer/footer.module';
+
+Sentry.init({
+    dsn: "https://c3037c53dc2c47fa9a9e2c1622875de5@sentry.io/1777166",
+    environment: process.env.NODE_ENV
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+    constructor() {}
+    handleError(error) {
+        Sentry.captureException(error.originalError || error);
+    }
+}
 
 @NgModule({
     declarations: [AppComponent, HeaderComponent, TransactionsComponent],
@@ -34,6 +48,7 @@ import { FooterModule } from './footer/footer.module';
         FooterModule,
     ],
     providers: [
+        {provide: ErrorHandler, useClass: SentryErrorHandler},
         StatusBar,
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

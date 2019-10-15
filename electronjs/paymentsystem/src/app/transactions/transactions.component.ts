@@ -30,7 +30,7 @@ import {
 } from '../store/transactionM2MStatus.constants';
 import { Router } from '@angular/router';
 
-const refreshTransactionIntervalSeconds = 15;
+const refreshTransactionIntervalSeconds = 10;
 const timeoutSeconds = 900;
 
 @Component({

@@ -150,6 +150,8 @@ const addressDataThirdpartyPayment = confirmed => {
 server.post('/addresses', (req, res) => {
   cycle = 0;
   address = randStr(90);
+  // Test error
+  // res.header('access-control-allow-origin', '*').sendStatus(502);
 
   res.header('access-control-allow-origin', '*')
     .jsonp(

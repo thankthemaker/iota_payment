@@ -9,11 +9,11 @@ import { State } from '../store/store.reducer';
 import { setAddressToWatch, setPrice, setTransactionState } from '../store/store.actions';
 import Amplify, { Analytics } from 'aws-amplify';
 import { H2M_PAYMENT_ATTACHED, H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
+import * as Sentry from '@sentry/browser';
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';
 const staticAddress = undefined;
-const refreshTransactionIntervalSeconds = 5;
 
 @Component({
   selector: 'app-payment',

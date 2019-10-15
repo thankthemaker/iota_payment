@@ -1,9 +1,9 @@
-<div text-center>
+<div class="ion-text-center">
         <ion-grid fixed>
-                <ion-row justify-content-center align-items-center style='height: 100%'>
+                <ion-row class="ion-align-items-center ion-justify-content-center" style='height: 100%'>
                         <ion-col>
                                 <img src="assets/{{productcode}}.png" style="height: 250px" alt="coffee-cup"/> <br />
-                          </ion-col>                 
+                          </ion-col>
                            <ion-col>
                                <div>
                                     <img *ngIf="displayQrCode()" [height]="250" [width]="250" [src]="qrImage" />
@@ -12,7 +12,7 @@
                           </ion-col>
                 </ion-row>
         </ion-grid>
-            
+
     <div style="font-size: 20px">
             Dein {{product}} kostet {{iotas | thousandSuff : 2 }} IOTA ({{eurs.toLocaleString('de-De', {currencyDisplay: 'symbol'})}} €)
     </div>
