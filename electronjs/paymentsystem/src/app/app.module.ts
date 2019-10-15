@@ -22,7 +22,7 @@ import { environment } from '../environments/environment';
 import { FooterModule } from './footer/footer.module';
 
 Sentry.init({
-    dsn: "https://c3037c53dc2c47fa9a9e2c1622875de5@sentry.io/1777166",
+    dsn: "https://f30421445073428abd2b8cd9948b2487@sentry.io/1780576",
     environment: process.env.NODE_ENV
 });
 
