@@ -4,8 +4,8 @@ import * as Sentry from "@sentry/browser";
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-// const baseUrl = 'https://iota-api.thank-the-maker.org';
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://iota-api.thank-the-maker.org';
+// const baseUrl = 'http://localhost:3000';
 
 const options = {
     headers: {
