@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import QRCode from 'qrcode';
 import { IotaApiService } from '../iotaApi.service';
-import { isEmpty } from 'lodash';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from '../store/store.reducer';
 import { setAddressToWatch, setPrice, setTransactionState } from '../store/store.actions';
-import Amplify, { Analytics } from 'aws-amplify';
-import { H2M_PAYMENT_ATTACHED, H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
-import * as Sentry from '@sentry/browser';
+import Amplify from 'aws-amplify';
+import { H2M_PAYMENT_REQUESTED } from '../store/transactionStatus.constants';
 
 // For testing:
 // const staticAddress ='HO9WEOIPSJZDYOMIROARQTEMQ9MGNGICWDPXZKBEXCCEU9W9HBYHXEEHVJHAZHKUUGAUGBJYUTTIUXC9XCOIUYRHPB';

@@ -16,6 +16,7 @@ import { NgxElectronModule } from 'ngx-electron';
 import * as Sentry from "@sentry/browser";
 
 import { StoreModule } from '@ngrx/store';
+import { get } from 'lodash';
 import { storeReducer } from './store/store.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
@@ -23,14 +24,25 @@ import { FooterModule } from './footer/footer.module';
 
 Sentry.init({
     dsn: "https://f30421445073428abd2b8cd9948b2487@sentry.io/1780576",
-    environment: process.env.NODE_ENV
+    environment: process.env.NODE_ENV,
+    integrations(integrations) {
+        // this is to prevent double error-messages in sentry (default integration + custom handler)
+        // see https://github.com/getsentry/sentry-javascript/issues/2169
+        return integrations.filter(i => i.name !== "TryCatch");
+    }
 });
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
     constructor() {}
     handleError(error) {
-        Sentry.captureException(error.originalError || error);
+        if (get(error, 'name') === 'HttpErrorResponse') {
+            Sentry.setExtra('Api-Error', error);
+            Sentry.setTag('Type', 'Api-Error');
+            Sentry.captureException(new Error(error.message));
+        } else {
+            Sentry.captureException(error.originalError || error);
+        }
     }
 }
 
@@ -48,11 +60,11 @@ export class SentryErrorHandler implements ErrorHandler {
         FooterModule,
     ],
     providers: [
-        {provide: ErrorHandler, useClass: SentryErrorHandler},
         StatusBar,
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         IotaApiService,
+        {provide: ErrorHandler, useClass: SentryErrorHandler},
     ],
     bootstrap: [AppComponent],
 })
