@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  name: 'development',
+  name: 'mock',
   production: false,
-  mock: false,
+  mock: true,
   sentryEnabled: false
 };
 

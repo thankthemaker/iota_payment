@@ -15,6 +15,8 @@
     "electron-serve": "ng build --prod && electron .",
     "electron-start": "ionic build && npx cap copy && npx cap open electron",
     "ionic": "ionic serve",
+    "ionic-mock": "ionic serve --configuration=mock",
+    "ionic-prod": "ionic serve --configuration=production",
     "jsonserver": "nodemon --watch mock mock/server.js"
   },
   "private": true,

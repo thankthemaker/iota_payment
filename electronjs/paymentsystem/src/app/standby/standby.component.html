@@ -1,4 +1,4 @@
-<div text-center>
+<div class="ion-text-center">
     <p style="font-size: 18px">
         Bitte wähle ein Produkt an der Kaffeemaschine.
     </p>
@@ -17,5 +17,5 @@
             </ion-slide>
         </ion-slides>
     </div>
-    <ion-button *ngIf="false" color="secondary" (click)="router.navigate(['/payment/PAA/Kaffee/1'])">Kaffee</ion-button>
+    <ion-button *ngIf="!isProduction" color="secondary" (click)="router.navigate(['/payment/PAA/Kaffee/1'])">Kaffee</ion-button>
 </div>

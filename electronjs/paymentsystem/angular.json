@@ -46,6 +46,14 @@
             "es5BrowserSupport": true
           },
           "configurations": {
+            "mock": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.mock.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -83,6 +91,9 @@
           "configurations": {
             "production": {
               "browserTarget": "app:build:production"
+            },
+            "mock": {
+              "browserTarget": "app:build:mock"
             },
             "ci": {
               "progress": false

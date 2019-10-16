@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
+import { environment } from '../../environments/environment';
 
 const slideChangeIntervalInSeconds = 10;
 
@@ -12,8 +13,9 @@ const slideChangeIntervalInSeconds = 10;
 export class StandbyComponent implements OnInit {
   slides: any;
   slidesTimer: any;
+  isProduction = environment.production;
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   slideOptions = {
     initialSlide: 0,

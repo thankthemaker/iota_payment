@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
-const baseUrl = 'https://iota-api.thank-the-maker.org';
-// const baseUrl = 'http://localhost:3000';
+// TODO use Proxy in environment: https://angular.io/guide/build#proxying-to-a-backend-server
+const baseUrl = environment.mock ? 'http://localhost:3000' :'https://iota-api.thank-the-maker.org';
 
 const options = {
     headers: {

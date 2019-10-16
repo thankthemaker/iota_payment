@@ -22,19 +22,19 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { FooterModule } from './footer/footer.module';
 
-Sentry.init({
-    dsn: "https://f30421445073428abd2b8cd9948b2487@sentry.io/1780576",
-    environment: process.env.NODE_ENV,
-    integrations(integrations) {
-        // this is to prevent double error-messages in sentry (default integration + custom handler)
-        // see https://github.com/getsentry/sentry-javascript/issues/2169
-        return integrations.filter(i => i.name !== "TryCatch");
-    }
-});
-
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-    constructor() {}
+    constructor() {
+        Sentry.init({
+            dsn: "https://f30421445073428abd2b8cd9948b2487@sentry.io/1780576",
+            environment: environment.name,
+            integrations(integrations) {
+                // this is to prevent double error-messages in sentry (default integration + custom handler)
+                // see https://github.com/getsentry/sentry-javascript/issues/2169
+                return integrations.filter(i => i.name !== "TryCatch");
+            }
+        });
+    }
     handleError(error) {
         if (get(error, 'name') === 'HttpErrorResponse') {
             Sentry.setExtra('Api-Error', error);
@@ -44,6 +44,13 @@ export class SentryErrorHandler implements ErrorHandler {
             Sentry.captureException(error.originalError || error);
         }
     }
+}
+
+export function getErrorHandler(): ErrorHandler {
+    if (environment.sentryEnabled) {
+        return new SentryErrorHandler()
+    }
+    return new ErrorHandler()
 }
 
 @NgModule({
@@ -64,7 +71,7 @@ export class SentryErrorHandler implements ErrorHandler {
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         IotaApiService,
-        {provide: ErrorHandler, useClass: SentryErrorHandler},
+        {provide: ErrorHandler, useFactory: getErrorHandler},
     ],
     bootstrap: [AppComponent],
 })
