@@ -1,7 +1,7 @@
 <div *ngIf="iotaQuotes">
     <div style="padding-top:50px; font-size: 30px">
         <ion-icon src="assets/Iota_logo_black.svg"></ion-icon>
-        IOTA (MIOTA)
+        IOTA (MIOTA) <span style="font-size: 16px">last 24h</span>
     </div>
     <span *ngIf="iotaQuotes.price">
         <span style="font-size: 30px">{{iotaQuotes.price.toFixed(4)}}</span><span>EUR</span>
