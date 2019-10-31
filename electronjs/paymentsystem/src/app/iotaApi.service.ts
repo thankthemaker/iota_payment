@@ -11,6 +11,12 @@ const options = {
     }
 };
 
+const optionsSeeds = {
+    headers: {
+        'x-api-key': 'Bo69eTy4Mt3FTTUoePaKH60tUozeXceoaQqXwYY3'
+    }
+};
+
 @Injectable()
 export class IotaApiService {
     constructor(private http: HttpClient) {
@@ -22,11 +28,13 @@ export class IotaApiService {
 
     getAddressInfo = address => this.http.get<any>(baseUrl + '/addresses' + '/' + address, options);
 
-    getSeedInfo = () => this.http.get<any>(baseUrl + '/seeds' + '/' + '1', options);
+    getSeedInfo = seedId => this.http.get<any>(baseUrl + '/seeds' + '/' + seedId, optionsSeeds);
 
     getNodeInfo = () => this.http.get<any>(baseUrl + '/nodes', options);
 
     getIotaFromEur = eurs => this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
+
+    getEurFromMIota = miota => this.http.get<any>(baseUrl + '/market/price-conversion/MIOTA/' + miota, options);
 
     getIotaQuotes = () => this.http.get<any>(baseUrl + '/market/iota/quotes', options);
 }
