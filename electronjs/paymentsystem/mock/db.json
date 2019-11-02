@@ -39,5 +39,22 @@
       "coordinatorAddress": "EQSAUZXULTTYZCLNJNTXQTQHOMOFZERHTCGTXOLTVAHKSA9OGAZDEKECURBRIXIJWNPFCQIOVFVVXJVD9",
       "duration": 0
     }
+  ],
+  "seeds": [
+    {
+      "id": 2,
+      "name": "Kaffeekasse",
+      "totalBalance": 1212
+    },
+    {
+      "id": 3,
+      "name": "Stromanbieter",
+      "totalBalance": 3434
+    },
+    {
+      "id": 1,
+      "name": "Kaffeemaschine",
+      "totalBalance": 45454
+    }
   ]
 }

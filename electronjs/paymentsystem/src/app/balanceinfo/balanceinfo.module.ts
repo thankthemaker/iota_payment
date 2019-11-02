@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
-import { PaymentPage } from './payment.page';
+import { BalanceinfoComponent } from './balanceinfo.component';
 import { IotaPipeModule } from '../helpers/transformValue/IotaPipe.module';
 
 @NgModule({
@@ -12,14 +11,11 @@ import { IotaPipeModule } from '../helpers/transformValue/IotaPipe.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    IotaPipeModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: PaymentPage
-      }
-    ])
+    IotaPipeModule
   ],
-  declarations: [PaymentPage]
+  exports: [
+      BalanceinfoComponent
+  ],
+  declarations: [BalanceinfoComponent]
 })
-export class PaymentModule {}
+export class BalanceinfoModule {}

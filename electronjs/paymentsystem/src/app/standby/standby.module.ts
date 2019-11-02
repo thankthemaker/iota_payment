@@ -7,21 +7,20 @@ import { RouterModule } from '@angular/router';
 import { StandbyComponent } from './standby.component';
 import { NodeinfoComponent } from '../nodeinfo/nodeinfo.component';
 import { MarketdataComponent } from '../marketdata/marketdata.component';
+import { BalanceinfoModule } from '../balanceinfo/balanceinfo.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    BalanceinfoModule,
     RouterModule.forChild([
       {
         path: '',
         component: StandbyComponent,
       },
     ]),
-  ],
-  exports: [
-    NodeinfoComponent,
   ],
   declarations: [StandbyComponent, NodeinfoComponent, MarketdataComponent],
 })

@@ -15,6 +15,9 @@
                     <app-nodeinfo></app-nodeinfo>
                 </div>
             </ion-slide>
+            <ion-slide>
+                <app-balanceinfo></app-balanceinfo>
+            </ion-slide>
         </ion-slides>
     </div>
     <ion-button *ngIf="!isProduction" color="secondary" (click)="router.navigate(['/payment/PAA/Kaffee/1'])">Kaffee</ion-button>
