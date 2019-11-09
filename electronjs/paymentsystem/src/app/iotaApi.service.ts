@@ -30,6 +30,8 @@ export class IotaApiService {
 
     getSeedInfo = seedId => this.http.get<any>(baseUrl + '/seeds' + '/' + seedId, optionsSeeds);
 
+    updateSeedInfo = seedId => this.http.get<any>(baseUrl + '/seeds' + '/' + seedId + '/update', optionsSeeds);
+
     getNodeInfo = () => this.http.get<any>(baseUrl + '/nodes', options);
 
     getIotaFromEur = eurs => this.http.get<any>(baseUrl + '/market/price-conversion/EUR/' + eurs, options);
