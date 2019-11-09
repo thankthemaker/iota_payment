@@ -5,7 +5,7 @@
                 <div class="boxheader">
                     <ion-icon class="wallet-icon" src="assets/wallet-icon.svg"></ion-icon>
                 </div>
-                <div *ngIf="seed2balanceEur" class="boxtext">
+                <div *ngIf="seed2balanceEur || seed2balanceEur === 0" class="boxtext">
                     {{seed2balance | thousandSuff : 2 }}IOTA ({{seed2balanceEur.toFixed(2)}}€)
                 </div>
             </ion-col>

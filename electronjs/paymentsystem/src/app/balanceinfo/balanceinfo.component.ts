@@ -46,9 +46,9 @@ export class BalanceinfoComponent {
     updateBalanceinfo() {
         // Polling is necessary, because aws gateway limits requests to 30seconds
         this.iotaApi.getIotaQuotes().subscribe(quotes => {
-            this.iotaApi.updateSeedInfo(2).subscribe(() => {
+            this.iotaApi.updateSeedInfo(1).subscribe(() => {
                 const timer = setInterval(() => {
-                    this.iotaApi.getSeedInfo(2).subscribe(infos => {
+                    this.iotaApi.getSeedInfo(1).subscribe(infos => {
                         if (infos.updateState === 'COMPLETED') {
                             this.seed2balance = infos.balance;
                             this.seed2balanceEur = infos.balance / 1000000 * quotes.price;
