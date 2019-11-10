@@ -3,6 +3,14 @@
         <ion-row>
             <ion-col>
                 <div class="boxheader">
+                    <ion-icon class="coffee_machine-icon" src="assets/coffee_machine-icon.svg"></ion-icon>
+                </div>
+                <div *ngIf="seed1balanceEur || seed1balanceEur === 0" class="boxtext">
+                    {{seed1balance | thousandSuff : 2 }}IOTA ({{seed1balanceEur.toFixed(2)}}€)
+                </div>
+            </ion-col>
+            <ion-col>
+                <div class="boxheader">
                     <ion-icon class="wallet-icon" src="assets/wallet-icon.svg"></ion-icon>
                 </div>
                 <div *ngIf="seed2balanceEur || seed2balanceEur === 0" class="boxtext">
@@ -13,7 +21,7 @@
                 <div class="boxheader">
                     <ion-icon class="energy-icon" src="assets/energy-icon.svg"></ion-icon>
                 </div>
-                <div *ngIf="seed3balanceEur" class="boxtext">
+                <div *ngIf="seed3balanceEur || seed3balanceEur === 0" class="boxtext">
                     {{seed3balance | thousandSuff : 2 }}IOTA ({{seed3balanceEur.toFixed(2)}}€)
                 </div>
             </ion-col>
