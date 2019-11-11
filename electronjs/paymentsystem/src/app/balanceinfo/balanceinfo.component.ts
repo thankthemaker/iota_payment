@@ -71,6 +71,17 @@ export class BalanceinfoComponent {
     updateM2MBalanceinfo() {
         // Polling is necessary, because aws gateway limits requests to 30seconds
         this.iotaApi.getIotaQuotes().subscribe(quotes => {
+            this.iotaApi.updateSeedInfo(1).subscribe(() => {
+                const timer = setInterval(() => {
+                    this.iotaApi.getSeedInfo(1).subscribe(infos => {
+                        if (infos.updateState === 'COMPLETED') {
+                            this.seed1balance = infos.balance;
+                            this.seed1balanceEur = infos.balance / 1000000 * quotes.price;
+                            clearInterval(timer);
+                        }
+                    });
+                }, 5000);
+            });
             this.iotaApi.updateSeedInfo(2).subscribe(() => {
                 const timer = setInterval(() => {
                     this.iotaApi.getSeedInfo(2).subscribe(infos => {
