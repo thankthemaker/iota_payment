@@ -37,7 +37,7 @@ RUN npm install ionic @angular/cli -g
 #RUN    JOBS=MAX npm install --unsafe-perm --production \
 #    && node_modules/.bin/electron-rebuild
 
-RUN npm install && ionic build --prod && node_modules/.bin/electron-rebuild
+RUN npm install && ionic build --configuration=production --prod && node_modules/.bin/electron-rebuild
 
 ###
 # Runtime
